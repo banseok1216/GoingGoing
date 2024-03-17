@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  backend:
+    image: mainserver1.0:latest
+    container_name: backend
+    ports:
+      - "8080:8080"
+    networks:
+      dockernet:
+        ipv4_address: 10.10.20.144
+    environment:
+      TZ: Asia/Seoul
+
+  push:
+    image: pushserver1.0:latest
+    container_name: push
+    ports:
+      - "8081:8081"
+    networks:
+      dockernet:
+        ipv4_address: 10.10.20.145
+    environment:
+      TZ: Asia/Seoul
+networks:
+  dockernet:
+    external: true

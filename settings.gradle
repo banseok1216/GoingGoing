@@ -1,0 +1,5 @@
+rootProject.name = 'GoingGoing'
+include 'goinggoing-api'
+include 'goinggoing-domain'
+include 'goinggoing-push'
+include 'umbba-domain'
