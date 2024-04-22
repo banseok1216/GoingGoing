@@ -3,3 +3,5 @@ include 'goinggoing-api'
 include 'goinggoing-storage'
 include 'goinggoing-domain'
 include 'goinggoing-push'
+include 'goinggoing-common'
+

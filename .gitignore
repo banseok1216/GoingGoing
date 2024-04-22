@@ -4,7 +4,11 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-
+goinggoing-api/build/
+goinggoing-common/build/
+goinggoing-domain/build/
+goinggoing-push/build/
+goinggoing-storage/build/
 ### STS ###
 .apt_generated
 .classpath

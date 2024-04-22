@@ -16,8 +16,9 @@ public class UserEntityRepository implements UserRepository {
     public boolean check(User user) {
         return false;
     }
+
     @Override
-    public User readUserById(Long userId) {
+    public User readUserById(User.UserId userId) {
         return null;
     }
 }
