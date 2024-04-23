@@ -10,6 +10,8 @@ public interface UserRepository {
     User readUserById(User.UserId userId);
     RoutineWindow readRoutineByUserId(User.UserId userId);
     Routine readUserRoutine(Routine.RoutineId routineId);
+    void removeUser(User user);
+    void removeUserRoutine(Routine routine);
 }
 
 
