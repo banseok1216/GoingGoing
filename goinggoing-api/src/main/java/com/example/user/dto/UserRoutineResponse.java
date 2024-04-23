@@ -1,9 +1,6 @@
-package com.example.personal.dto;
+package com.example.user.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
-public record PersonalRoutineDetailResponse(
+public record UserRoutineResponse(
         Long routineDetailId,
         Long routineDetailTime,
         String routineDetailName,

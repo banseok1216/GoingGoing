@@ -1,6 +1,5 @@
 package com.example.user;
 
-import com.example.personal.RoutineWindow;
 import com.example.routine.Routine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

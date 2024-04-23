@@ -7,6 +7,7 @@ import com.example.personal.mapper.PersonalMapper;
 import com.example.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -15,12 +16,12 @@ public class PersonalScheduleService {
     private final PersonalReader personalReader;
     private final PersonalWriter personalWriter;
     private final PersonalRemover personalRemover;
-    private final PersonalMapper personalMapper;
 
     public PersonalSchedule loadPersonalSchedule(PersonalSchedule.PersonalScheduleId personalScheduleId) {
         return personalReader.readPersonalSchedule(personalScheduleId);
     }
 
+    @Transactional
     public void modifyPersonalSchedule(PersonalSchedule personalSchedule) {
         PersonalSchedule savedPersonalSchedule = personalReader.readPersonalSchedule(personalSchedule.getId());
         PersonalSchedule newPersonalSchedule = PersonalSchedule.withId(
@@ -37,6 +38,7 @@ public class PersonalScheduleService {
         personalWriter.savePersonalSchedule(personalSchedule.updateStatusAndTime());
     }
 
+    @Transactional
     public void removePersonalSchedule(PersonalSchedule.PersonalScheduleId personalScheduleId) {
         PersonalSchedule savedPersonalSchedule = personalReader.readPersonalSchedule(personalScheduleId);
         personalRemover.removePersonalSchedule(savedPersonalSchedule);

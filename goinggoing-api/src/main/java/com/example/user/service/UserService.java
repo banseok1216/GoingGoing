@@ -14,7 +14,7 @@ public class UserService {
     private final UserChecker userChecker;
     public User loginOAuthUser(User userLogin) {
         if (userChecker.isDuplicate(userLogin)) {
-            userWriter.save(userLogin);
+            userWriter.saveUser(userLogin);
             return userLogin;
         }
         return null;
@@ -42,7 +42,7 @@ public class UserService {
                     userRegister.getUserType(),
                     new User.Password(userRegister.getPassword().hashPassword())
             );
-            userWriter.save(newUser);
+            userWriter.saveUser(newUser);
             return newUser;
         } else {
             return null;

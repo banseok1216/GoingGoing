@@ -13,9 +13,9 @@ public class PersonalScheduleRoutineService {
     private final PersonalWriter personalWriter;
     private final PersonalReader personalReader;
     @Transactional
-    public void updateScheduleRoutine(PersonalSchedule.PersonalScheduleId personalScheduleId, Routine routine) {
+    public void modifyScheduleRoutine(PersonalSchedule.PersonalScheduleId personalScheduleId, Routine routine) {
         PersonalSchedule personalSchedule = personalReader.readPersonalSchedule(personalScheduleId);
-        personalSchedule.getScheduleRoutineWindow().addRoutine(routine);
+        personalSchedule.getScheduleRoutineWindow().modifyRoutine(routine);
         PersonalSchedule updatedPersonalSchedule = personalSchedule.updateStatusAndTime();
         personalWriter.savePersonalSchedule(updatedPersonalSchedule);
     }
@@ -23,6 +23,7 @@ public class PersonalScheduleRoutineService {
     public void createScheduleRoutine(PersonalSchedule.PersonalScheduleId personalScheduleId, Routine routine) {
         PersonalSchedule personalSchedule = personalReader.readPersonalSchedule(personalScheduleId);
         personalSchedule.getScheduleRoutineWindow().addRoutine(routine);
+        personalWriter.savePersonalSchedule(personalSchedule);
     }
     @Transactional
     public void deleteScheduleRoutine(PersonalSchedule.PersonalScheduleId personalScheduleId,Routine.RoutineId routineId) {

@@ -1,13 +1,13 @@
 package com.example.user;
 
-import com.example.personal.RoutineWindow;
 import com.example.routine.Routine;
+import com.example.routine.RoutineWindow;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserEntityRepository implements UserRepository {
     @Override
-    public void save(User user) {
+    public void saveUser(User user) {
 
     }
     @Override

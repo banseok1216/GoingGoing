@@ -1,10 +1,12 @@
 package com.example.user;
 
-import com.example.personal.RoutineWindow;
 import com.example.routine.Routine;
+import com.example.routine.RoutineWindow;
 
 public interface UserRepository {
-    void save(User user);
+    void saveUser(User user);
+    void saveUserRoutine(Routine routine);
+    void saveUserRoutines(RoutineWindow routineWindow);
     User read(User user);
     boolean check(User user);
     User readUserById(User.UserId userId);

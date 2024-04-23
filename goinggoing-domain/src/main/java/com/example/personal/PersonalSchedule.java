@@ -1,9 +1,9 @@
 package com.example.personal;
 
+import com.example.routine.RoutineWindow;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Value;
 
 import java.time.LocalDateTime;
 
@@ -44,18 +44,18 @@ public class PersonalSchedule {
 
     public record PersonalScheduleTime(LocalDateTime startTime, LocalDateTime doneTime) {
         public PersonalScheduleTime calculateStartTime(PersonalScheduleTime personalScheduleTime, Long totalTime, Integer duration) {
-            return new PersonalScheduleTime(personalScheduleTime.doneTime, doneTime.minusSeconds(totalTime).minusMinutes(duration));
+            return new PersonalScheduleTime(personalScheduleTime.doneTime, this.doneTime.minusSeconds(totalTime).minusMinutes(duration));
         }
 
         public PersonalScheduleTime calculateDoneTime(PersonalScheduleTime personalScheduleTime, Long totalTime) {
-            return new PersonalScheduleTime(personalScheduleTime.startTime, doneTime.minusSeconds(totalTime));
+            return new PersonalScheduleTime(personalScheduleTime.startTime, this.doneTime.minusSeconds(totalTime));
         }
 
         public PersonalScheduleStatus checkAndUpdateStatus() {
             LocalDateTime currentTime = LocalDateTime.now();
-            if (doneTime.isBefore(currentTime)) {
+            if (this.doneTime.isBefore(currentTime)) {
                 return new PersonalScheduleStatus(true, true);
-            } else if (startTime.isAfter(currentTime)) {
+            } else if (this.startTime.isAfter(currentTime)) {
                 return new PersonalScheduleStatus(false, false);
             } else {
                 return new PersonalScheduleStatus(true, false);
