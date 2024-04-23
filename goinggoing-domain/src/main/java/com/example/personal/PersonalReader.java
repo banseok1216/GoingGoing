@@ -1,5 +1,6 @@
 package com.example.personal;
 
+import com.example.routine.Routine;
 import com.example.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -8,7 +9,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PersonalReader {
     private final PersonalRepository personalRepository;
-    public Personal readByUserId(User.UserId userId){
-        return personalRepository.readByUserId(userId);
+    public PersonalSchedule readPersonalSchedule(PersonalSchedule.PersonalScheduleId personalScheduleId){
+        return personalRepository.readPersonalSchedule(personalScheduleId);
+    }
+    public Routine readRoutine(Routine.RoutineId routineId){
+        return personalRepository.readRoutine(routineId);
     }
 }

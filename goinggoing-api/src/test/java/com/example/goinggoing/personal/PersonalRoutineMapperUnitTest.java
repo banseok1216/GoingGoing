@@ -2,7 +2,7 @@
 //
 //import com.example.personal.dto.PersonalRoutineResponseDto;
 //import com.example.goinggoing.personal.mapper.PersonalRoutineMapper;
-//import com.example.goinggoingdomain.domain.personal.PersonalRoutine;
+//import com.example.goinggoingdomain.domain.personal.ScheduleRoutine;
 //import com.example.goinggoingdomain.domain.user.User;
 //import org.junit.jupiter.api.Test;
 //import org.mapper.factory.Mappers;
@@ -18,17 +18,17 @@
 //    void testToOnlyUserRoutineEntity() {
 //        String userRoutineName = "testRoutine";
 //        User fakeUser = User.builder().userId(1L).build();
-//        PersonalRoutine personalRoutine = mapper.toOnlyUserRoutineEntity(userRoutineName, fakeUser);
+//        ScheduleRoutine personalRoutine = mapper.toOnlyUserRoutineEntity(userRoutineName, fakeUser);
 //        assertEquals(userRoutineName, personalRoutine.getUserRoutineName());
 //        assertEquals(personalRoutine.getUser().getUserId(), fakeUser.getUserId());
 //    }
 //
 //    @Test
 //    void testToAllUserRoutine() {
-//        List<PersonalRoutine> personalRoutineList = new ArrayList<>();
-//        PersonalRoutine personalRoutine1 = PersonalRoutine.builder().userRoutineName("testRoutine1").build();
+//        List<ScheduleRoutine> personalRoutineList = new ArrayList<>();
+//        ScheduleRoutine personalRoutine1 = ScheduleRoutine.builder().userRoutineName("testRoutine1").build();
 //        personalRoutineList.add(personalRoutine1);
-//        PersonalRoutine personalRoutine2 = PersonalRoutine.builder().userRoutineName("testRoutine2").build();
+//        ScheduleRoutine personalRoutine2 = ScheduleRoutine.builder().userRoutineName("testRoutine2").build();
 //        personalRoutineList.add(personalRoutine2);
 //        List<PersonalRoutineResponseDto.GetUserRoutine> userRoutineResponseDtoList = mapper.toAllUserRoutine(personalRoutineList);
 //        assertEquals(2, userRoutineResponseDtoList.size());

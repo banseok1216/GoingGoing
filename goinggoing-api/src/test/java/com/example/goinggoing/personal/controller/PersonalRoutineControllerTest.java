@@ -2,7 +2,7 @@
 //import com.example.personal.dto.PersonalRoutineRequestDto;
 //import com.example.goinggoing.personal.service.PersonalRoutineService;
 //import com.example.goinggoing.user.service.UserService;
-//import com.example.goinggoingdomain.domain.personal.PersonalRoutine;
+//import com.example.goinggoingdomain.domain.personal.ScheduleRoutine;
 //import com.example.goinggoingdomain.domain.user.User;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.junit.jupiter.api.Test;
@@ -32,8 +32,8 @@
 //
 //    @Test
 //    void testGetUserSchedule() throws Exception {
-//        List<PersonalRoutine> personalRoutineList = new ArrayList<PersonalRoutine>();
-//        PersonalRoutine personalRoutine = PersonalRoutine.builder().userRoutineId(1L).userRoutineName("testRoutineName").build();
+//        List<ScheduleRoutine> personalRoutineList = new ArrayList<ScheduleRoutine>();
+//        ScheduleRoutine personalRoutine = ScheduleRoutine.builder().userRoutineId(1L).userRoutineName("testRoutineName").build();
 //        personalRoutineList.add(personalRoutine);
 //        when(personalRoutineService.getAllUserRoutineInfo(1L))
 //                .thenReturn(personalRoutineList);

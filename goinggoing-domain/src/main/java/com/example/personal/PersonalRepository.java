@@ -1,9 +1,11 @@
 package com.example.personal;
 
-import com.example.user.User;
+import com.example.routine.Routine;
 
 public interface PersonalRepository {
-    void save(Personal personal);
-    Personal read(Personal personal);
-    Personal readByUserId(User.UserId userId);
+    void savePersonalSchedule(PersonalSchedule personalSchedule);
+    void removePersonalSchedule(PersonalSchedule personalSchedule);
+    PersonalSchedule readPersonalSchedule(PersonalSchedule.PersonalScheduleId personalScheduleId);
+    Routine readRoutine(Routine.RoutineId routineId);
+    void removeRoutine(Routine routine);
 }

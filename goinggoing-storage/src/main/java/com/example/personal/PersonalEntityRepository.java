@@ -1,22 +1,28 @@
 package com.example.personal;
 
-import com.example.user.User;
+import com.example.routine.Routine;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class PersonalEntityRepository implements PersonalRepository {
+
     @Override
-    public void save(Personal personal) {
+    public void savePersonalSchedule(PersonalSchedule personalSchedule) {
 
     }
 
     @Override
-    public Personal read(Personal personal) {
+    public void removePersonalSchedule(PersonalSchedule personalSchedule) {
+
+    }
+
+    @Override
+    public PersonalSchedule readPersonalSchedule(PersonalSchedule.PersonalScheduleId personalScheduleId) {
         return null;
     }
 
     @Override
-    public Personal readByUserId(User.UserId userId) {
+    public Routine readRoutine(Routine.RoutineId routineId) {
         return null;
     }
 }

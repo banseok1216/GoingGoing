@@ -2,7 +2,7 @@
 //
 //import com.example.personal.dto.PersonalScheduleRoutineRequestDto;
 //import com.example.goinggoing.personal.service.PersonalScheduleRoutineService;
-//import com.example.goinggoingdomain.domain.personal.PersonalScheduleRoutine;
+//import com.example.goinggoingdomain.domain.personal.ScheduleRoutine;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@
 //    private PersonalScheduleRoutineService personalScheduleRoutineService;
 //
 //    @Captor
-//    ArgumentCaptor<PersonalScheduleRoutine> scheduleRoutineArgumentCaptor = ArgumentCaptor.forClass(PersonalScheduleRoutine.class);
+//    ArgumentCaptor<ScheduleRoutine> scheduleRoutineArgumentCaptor = ArgumentCaptor.forClass(ScheduleRoutine.class);
 //
 //
 //    @BeforeEach
@@ -51,7 +51,7 @@
 //                        .content(asJsonString(updateRoutineDto)))
 //                .andExpect(status().isOk());
 //        verify(personalScheduleRoutineService).updateScheduleRoutine(scheduleRoutineArgumentCaptor.capture());
-//        PersonalScheduleRoutine capturedPersonalScheduleRoutine = scheduleRoutineArgumentCaptor.getValue();
+//        ScheduleRoutine capturedPersonalScheduleRoutine = scheduleRoutineArgumentCaptor.getValue();
 //        assertEquals(capturedPersonalScheduleRoutine.getScheduleRoutineName(), updateRoutineDto.getScheduleRoutineName());
 //        assertEquals(capturedPersonalScheduleRoutine.getScheduleRoutineId(), updateRoutineDto.getScheduleRoutineId());
 //        assertEquals(capturedPersonalScheduleRoutine.getScheduleRoutineIndex(), updateRoutineDto.getScheduleRoutineIndex());
@@ -70,7 +70,7 @@
 //                        .content(asJsonString(createRoutineDto)))
 //                .andExpect(status().isOk());
 //        verify(personalScheduleRoutineService).createScheduleRoutine(scheduleRoutineArgumentCaptor.capture());
-//        PersonalScheduleRoutine capturedPersonalScheduleRoutine = scheduleRoutineArgumentCaptor.getValue();
+//        ScheduleRoutine capturedPersonalScheduleRoutine = scheduleRoutineArgumentCaptor.getValue();
 //        assertEquals(capturedPersonalScheduleRoutine.getScheduleRoutineName(), createRoutineDto.getScheduleRoutineName());
 //        assertEquals(capturedPersonalScheduleRoutine.getPersonalScheduleId(), createRoutineDto.getPersonalScheduleId());
 //        assertEquals(capturedPersonalScheduleRoutine.getScheduleRoutineIndex(), createRoutineDto.getScheduleRoutineIndex());

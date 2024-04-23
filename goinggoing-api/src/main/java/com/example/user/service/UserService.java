@@ -22,11 +22,11 @@ public class UserService {
 
 
     public User getUser(User.UserId id) {
-        return userReader.readUserById(id);
+        return userReader.readUser(id);
     }
 
     public User loginDefaultUser(User userLogin) {
-        User user = userReader.read(userLogin);
+        User user = userReader.readUser(userLogin.getId());
         if (user != null && userLogin.getPassword().matches(user.getPassword().password())) {
             return user;
         } else {

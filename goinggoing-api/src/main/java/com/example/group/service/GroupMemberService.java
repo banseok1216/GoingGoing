@@ -24,7 +24,7 @@ public class GroupMemberService {
     private final RedisPublisher redisPublisher;
 
     public List<User> getGroupMember(Group.GroupId groupId) {
-        return groupReader.readGroupUser(groupId);
+        return groupReader.readGroupUsers(groupId);
     }
 
     public void addGroupMember(Group.GroupId groupId) {
@@ -34,11 +34,11 @@ public class GroupMemberService {
 
     public void sendInviteMessage(Group.GroupId groupId, User.UserId userId) {
         DeviceToken deviceToken =deviceTokenRepository.findByUserId(String.valueOf(userId.getValue()));
-        User user = userReader.readUserById(userId);
+        User user = userReader.readUser(userId);
         Group group = groupReader.read(groupId);
         MessageDto messageDto = new MessageDto();
         messageDto.setDeviceToken(deviceToken.getDeviceToken());
-        messageDto.setScheduleId(group.getId().getValue());
+        messageDto.setScheduleId(group.getId().value());
         messageDto.setContent(user.getUserNickname() + "님이 일정에 초대했어요");
         redisPublisher.publish(messageDto);
     }

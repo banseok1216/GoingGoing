@@ -4,7 +4,7 @@
 //import com.example.personal.dto.PersonalScheduleRoutineRequestDto;
 //import com.example.personal.dto.PersonalScheduleRoutineResponseDto;
 //import com.example.goinggoing.personal.service.PersonalScheduleRoutineService;
-//import com.example.goinggoingdomain.domain.personal.PersonalScheduleRoutine;
+//import com.example.goinggoingdomain.domain.personal.ScheduleRoutine;
 //import jakarta.servlet.http.HttpServletRequest;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.ResponseEntity;
@@ -23,14 +23,14 @@
 //
 //    @PutMapping("/routineSchedule")
 //    public ResponseEntity<Object> updatePersonalScheduleRoutine(@RequestBody PersonalScheduleRoutineRequestDto.updateRoutineDto updateRoutineDto) {
-//        PersonalScheduleRoutine personalScheduleRoutine = PersonalScheduleRoutineMapper.INSTANCE.toUpdateEntity(updateRoutineDto);
+//        ScheduleRoutine personalScheduleRoutine = PersonalScheduleRoutineMapper.INSTANCE.toUpdateEntity(updateRoutineDto);
 //        personalScheduleRoutineService.updateScheduleRoutine(personalScheduleRoutine);
 //        return ResponseEntity.ok().body("success");
 //    }
 //
 //    @PostMapping("/routineSchedule")
 //    public ResponseEntity<Object> createPersonalScheduleRoutine(@RequestBody PersonalScheduleRoutineRequestDto.createRoutineDto createRoutineDto) {
-//        PersonalScheduleRoutine personalScheduleRoutine = PersonalScheduleRoutineMapper.INSTANCE.toCreateEntity(createRoutineDto);
+//        ScheduleRoutine personalScheduleRoutine = PersonalScheduleRoutineMapper.INSTANCE.toCreateEntity(createRoutineDto);
 //        Long scheduleRoutineId = personalScheduleRoutineService.createScheduleRoutine(personalScheduleRoutine);
 //        PersonalScheduleRoutineResponseDto.CreateScheduleId responseDto = PersonalScheduleRoutineMapper.INSTANCE.toCreateResponseDto(scheduleRoutineId);
 //        return ResponseEntity.ok().body(responseDto);

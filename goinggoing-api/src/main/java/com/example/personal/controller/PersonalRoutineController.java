@@ -30,7 +30,7 @@
 //    @GetMapping("/userRoutine")
 //    public ResponseEntity<Object> getPersonalSchedule(HttpServletRequest request) {
 //        Long userId = (Long) request.getAttribute("userId");
-//        List<PersonalRoutine> personalRoutineList = personalRoutineService.getAllUserRoutineInfo(userId);
+//        List<ScheduleRoutine> personalRoutineList = personalRoutineService.getAllUserRoutineInfo(userId);
 //        List<PersonalRoutineResponseDto.GetUserRoutine> getUserRoutine = PersonalRoutineMapper.INSTANCE.toAllUserRoutine(personalRoutineList);
 //        return ResponseEntity.ok().body(getUserRoutine);
 //    }

@@ -2,7 +2,7 @@
 //
 //import com.example.personal.dto.PersonalRoutineDetailRequestDto;
 //import com.example.goinggoing.personal.mapper.PersonalRoutineDetailMapper;
-//import com.example.goinggoingdomain.domain.personal.PersonalRoutine;
+//import com.example.goinggoingdomain.domain.personal.ScheduleRoutine;
 //import com.example.goinggoingdomain.domain.personal.PersonalUserRoutineDetail;
 //import org.junit.jupiter.api.Test;
 //
@@ -18,7 +18,7 @@
 //        personalRoutineDetailRequestDto.setRoutineDetailName("Exercise");
 //        personalRoutineDetailRequestDto.setRoutineDetailTime(60L);
 //        personalRoutineDetailRequestDto.setIndex(1);
-//        PersonalRoutine personalRoutine = PersonalRoutine.builder().userRoutineId(1L).build();
+//        ScheduleRoutine personalRoutine = ScheduleRoutine.builder().userRoutineId(1L).build();
 //        PersonalUserRoutineDetail personalUserRoutineDetail = mapper.toAddEntity(personalRoutineDetailRequestDto, personalRoutine);
 //
 //        assertNotNull(personalUserRoutineDetail);
