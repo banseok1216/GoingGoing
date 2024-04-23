@@ -32,9 +32,8 @@ public class GroupMemberService {
         groupWriter.save(group);
     }
 
-    public void sendInviteMessage(Group.GroupId groupId, User.UserId userId) {
-        DeviceToken deviceToken =deviceTokenRepository.findByUserId(String.valueOf(userId.getValue()));
-        User user = userReader.readUser(userId);
+    public void sendInviteMessage(Group.GroupId groupId, User user) {
+        DeviceToken deviceToken =deviceTokenRepository.findByUserId(String.valueOf(user.getId().getValue()));
         Group group = groupReader.read(groupId);
         MessageDto messageDto = new MessageDto();
         messageDto.setDeviceToken(deviceToken.getDeviceToken());

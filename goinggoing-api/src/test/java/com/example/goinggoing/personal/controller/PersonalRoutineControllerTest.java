@@ -20,7 +20,7 @@
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 //import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 //
-//@WebMvcTest(PersonalRoutineController.class)
+//@WebMvcTest(com.example.user.controller.PersonalRoutineController.class)
 //@AutoConfigureMockMvc(addFilters = false)
 //public class PersonalRoutineControllerTest {
 //    @Autowired

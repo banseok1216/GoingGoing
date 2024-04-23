@@ -1,8 +1,5 @@
 package com.example.user.service;
-import com.example.user.User;
-import com.example.user.UserChecker;
-import com.example.user.UserReader;
-import com.example.user.UserWriter;
+import com.example.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +7,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     private final UserReader userReader;
+    private final UserCachedReader userCachedReader;
     private final UserWriter userWriter;
     private final UserChecker userChecker;
+    private final UserRemover userRemover;
     public User loginOAuthUser(User userLogin) {
         if (userChecker.isDuplicate(userLogin)) {
             userWriter.saveUser(userLogin);
@@ -20,9 +19,17 @@ public class UserService {
         return null;
     }
 
-
     public User getUser(User.UserId id) {
-        return userReader.readUser(id);
+        User cachedUser = userCachedReader.get(id.getValue().toString());
+        if (cachedUser != null) {
+            return cachedUser;
+        } else {
+            User user = userReader.readUser(id);
+            if (user != null) {
+                userCachedReader.put(id.getValue().toString(), user);
+            }
+            return user;
+        }
     }
 
     public User loginDefaultUser(User userLogin) {
@@ -47,5 +54,16 @@ public class UserService {
         } else {
             return null;
         }
+    }
+    public void updateUser(User updateUser) {
+        User savedUser = getUser(updateUser.getId());
+        User newUser = User.withId(savedUser.getId(),updateUser.getUserNickname(), updateUser.getUserEmail(), updateUser.getUserType(),updateUser.getPassword());
+        userWriter.saveUser(newUser);
+        userCachedReader.put(updateUser.getId().getValue().toString(),newUser);
+    }
+    public void removeUser(User user) {
+        User savedUser = getUser(user.getId());
+        userRemover.removeUser(savedUser);
+        userCachedReader.remove(user.getId().getValue().toString());
     }
 }

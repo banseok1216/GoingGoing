@@ -47,7 +47,7 @@ public class UserController {
     @GetMapping("/user")
     public ResponseEntity<Object> getUser(HttpServletRequest request) {
         Long userId = (Long) request.getAttribute("userId");
-        User user = userService.getUser(new User.UserId(userId));
+        User user = userService.getUser(userMapper.mapToUserId(userId));
         UserResponse responseDto = userMapper.mapToUserResponseDto(user);
         return ResponseEntity.ok().body(responseDto);
     }

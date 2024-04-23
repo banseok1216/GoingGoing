@@ -31,4 +31,6 @@ public class UserMapper {
     public User.UserId mapToUserId(Long userId) {
         return new User.UserId(userId);
     }
+
+    public
 }
