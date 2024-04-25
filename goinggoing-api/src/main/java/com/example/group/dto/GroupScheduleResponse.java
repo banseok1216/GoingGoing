@@ -1,18 +1,29 @@
 package com.example.group.dto;
 
-import java.time.LocalDateTime;
-public record GroupScheduleResponse(
-        CreateScheduleId createScheduleId,
-        GetGroupSchedule getSchedule
-) {
-    public record CreateScheduleId(Long groupScheduleId) {}
+import com.example.group.GroupSchedule;
+import com.example.routine.RoutineWindow;
+import com.example.user.dto.UserRoutineResponse;
 
-    public record GetGroupSchedule(
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public record GroupScheduleResponse(
             Long groupScheduleId,
             String groupScheduleName,
             LocalDateTime groupScheduleDateTime,
             String groupScheduleLocation,
-            Boolean groupScheduleDone,
-            Long personalScheduleId
-    ) {}
+            String groupScheduleDescription
+    ) {
+    public static List<GroupScheduleResponse> of(List<GroupSchedule> groupScheduleResponses) {
+        return groupScheduleResponses.stream()
+                .map(groupSchedule -> new GroupScheduleResponse(
+                        groupSchedule.getId().value(),
+                        groupSchedule.getName(),
+                        groupSchedule.getDate(),
+                        groupSchedule.getLocation(),
+                        groupSchedule.getDescription()
+                ))
+                .collect(Collectors.toList());
+    }
 }

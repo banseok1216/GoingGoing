@@ -32,10 +32,6 @@ public class UserRoutineService {
     }
 
     public void createUserRoutine(Routine routine,User.UserId userId) {
-        RoutineWindow routineWindow = userReader.readUserRoutines(userId);
-        userWriter.saveUserRoutine(
-                Routine.withoutId(routine.getRoutineTime(),
-                        routine.getRoutineName(),
-                        routineWindow.getNextRoutinesIndex()));
+        userWriter.saveUserRoutine(routine,userId);
     }
 }

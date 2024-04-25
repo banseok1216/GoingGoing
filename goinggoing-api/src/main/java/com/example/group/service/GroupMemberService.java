@@ -27,9 +27,10 @@ public class GroupMemberService {
         return groupReader.readGroupUsers(groupId);
     }
 
-    public void addGroupMember(Group.GroupId groupId) {
+    public void addGroupMember(User.UserId userId,Group.GroupId groupId) {
         Group group = groupReader.read(groupId);
-        groupWriter.save(group);
+        group.getUsers().add(userReader.readUser(userId));
+        groupWriter.saveGroup(group);
     }
 
     public void sendInviteMessage(Group.GroupId groupId, User user) {

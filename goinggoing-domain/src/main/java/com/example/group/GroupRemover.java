@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class GroupRemover {
     private final GroupRepository groupRepository;
-    public void remove(Group group){
-        groupRepository.remove(group);
+    public void removeGroupSchedule(GroupSchedule.GroupScheduleId groupScheduleId){
+        groupRepository.removeGroupSchedule(groupScheduleId);
     }
 }

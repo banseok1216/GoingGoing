@@ -12,8 +12,8 @@ public class UserWriter {
     public void saveUser(User user){
         userRepository.saveUser(user);
     }
-    public void saveUserRoutine(Routine userRoutine){
-        userRepository.saveUserRoutine(userRoutine);
+    public void saveUserRoutine(Routine userRoutine,User.UserId userId){
+        userRepository.saveUserRoutine(userRoutine, userId);
     }
     public void saveUserRoutines(RoutineWindow userRoutines){
         userRepository.saveUserRoutines(userRoutines);

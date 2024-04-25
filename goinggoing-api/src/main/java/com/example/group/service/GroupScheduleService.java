@@ -1,13 +1,12 @@
 package com.example.group.service;
 
-import com.example.group.Group;
-import com.example.group.GroupReader;
-import com.example.group.GroupRemover;
-import com.example.group.GroupWriter;
+import com.example.group.*;
 import com.example.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,18 +16,26 @@ public class GroupScheduleService {
     private final GroupRemover groupRemover;
 
     @Transactional
-    public void updateUserSchedule(Group group) {
-        Group savedGroup = groupReader.read(group.getId());
-        Group updatedGroup = Group.withId(savedGroup.getId(),group.getUserId(),group.getGroupSchedule());
-        groupWriter.save(updatedGroup);
+    public void modifyGroupSchedule(GroupSchedule groupSchedule) {
+        GroupSchedule savedGroupSchedule = groupReader.readGroupSchedule(groupSchedule.getId());
+        GroupSchedule newGroupSchedule = GroupSchedule.withId(
+                savedGroupSchedule.getId(),
+                groupSchedule.getName(),
+                groupSchedule.getDescription(),
+                groupSchedule.getLocation(),
+                groupSchedule.getDate(),
+                savedGroupSchedule.getPersonalSchedules());
+        groupWriter.updateGroupSchedule(newGroupSchedule);
     }
 
-    public void createGroupSchedule(Group group){
-        groupWriter.save(group);
+    public void createGroupSchedule(GroupSchedule groupSchedule, User.UserId userId){
+        groupWriter.saveGroupSchedule(groupSchedule, userId);
+    }
+    public List<GroupSchedule> loadGroupSchedules(User.UserId userId){
+        return groupReader.readGroupSchedules(userId);
     }
     @Transactional
-    public void deleteUserSchedule(Group.GroupId groupId) {
-        Group savedGroup = groupReader.read(groupId);
-        groupRemover.remove(savedGroup);
+    public void deleteUserSchedule(GroupSchedule.GroupScheduleId groupScheduleId) {
+        groupRemover.removeGroupSchedule(groupScheduleId);
     }
 }

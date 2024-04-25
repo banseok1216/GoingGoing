@@ -5,7 +5,7 @@ import com.example.routine.RoutineWindow;
 
 public interface UserRepository {
     void saveUser(User user);
-    void saveUserRoutine(Routine routine);
+    void saveUserRoutine(Routine routine, User.UserId userId);
     void saveUserRoutines(RoutineWindow routineWindow);
     User read(User user);
     boolean check(User user);

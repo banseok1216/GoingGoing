@@ -8,7 +8,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class GroupWriter {
     private final GroupRepository groupRepository;
-    public void save(Group group){
+    public void saveGroup(Group group){
         groupRepository.save(group);
     }
+    public void updateGroupSchedule(GroupSchedule groupSchedule){groupRepository.updateGroupSchedule(groupSchedule);}
+    public void saveGroupSchedule(GroupSchedule groupSchedule, User.UserId userId){groupRepository.saveGroupSchedule(groupSchedule,userId);}
+
 }

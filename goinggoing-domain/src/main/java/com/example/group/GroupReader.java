@@ -13,6 +13,12 @@ public class GroupReader {
     public Group read(Group.GroupId groupId){
         return groupRepository.read(groupId);
     }
+    public List<GroupSchedule> readGroupSchedules(User.UserId userId){
+        return groupRepository.readGroupSchedules(userId);
+    }
+    public GroupSchedule readGroupSchedule(GroupSchedule.GroupScheduleId groupScheduleId){
+        return groupRepository.readGroupSchedule(groupScheduleId);
+    }
     public List<User> readGroupUsers(Group.GroupId groupId){
         return groupRepository.readGroupUser(groupId);
     }

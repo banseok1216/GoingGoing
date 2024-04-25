@@ -1,17 +1,16 @@
 package com.example.group.dto;
+import com.example.user.User;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public record GroupMemberResponse(
-        List<GetGroup> getGroupList,
-        AddGroup addGroup
+    Long userId,
+    String userNickname
 ) {
-    public record GetGroup(
-            Long userId,
-            String userNickname
-    ) {
-    }
-    public record AddGroup(
-            Long personalScheduleId
-    ) {
+    public static List<GroupMemberResponse> of(List<User> users){
+        return users.stream()
+                .map(user -> new GroupMemberResponse(user.getId().getValue(), user.getUserNickname()))
+                .collect(Collectors.toList());
     }
 }

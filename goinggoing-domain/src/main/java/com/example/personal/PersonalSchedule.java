@@ -1,11 +1,14 @@
 package com.example.personal;
 
+import com.example.group.GroupSchedule;
 import com.example.routine.RoutineWindow;
+import com.example.user.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -15,27 +18,24 @@ public class PersonalSchedule {
     private final PersonalScheduleTime personalScheduleTime;
     private final PersonalScheduleStatus personalScheduleStatus;
     private final RoutineWindow scheduleRoutineWindow;
-
-    public static PersonalSchedule withoutId(
-            Integer personalDuration,
-            PersonalScheduleTime personalScheduleTime,
-            PersonalScheduleStatus personalScheduleStatus,
-            RoutineWindow scheduleRoutineWindow) {
-        return new PersonalSchedule(null, personalDuration, personalScheduleTime,personalScheduleStatus,scheduleRoutineWindow);
-    }
+    private User user;
 
     public static PersonalSchedule withId(
             PersonalScheduleId personalScheduleId,
             Integer personalDuration,
             PersonalScheduleTime personalScheduleTime,
             PersonalScheduleStatus personalScheduleStatus,
-            RoutineWindow scheduleRoutineWindow) {
-        return new PersonalSchedule(personalScheduleId, personalDuration, personalScheduleTime,personalScheduleStatus,scheduleRoutineWindow);
+            RoutineWindow scheduleRoutineWindow,
+            User user) {
+        return new PersonalSchedule(personalScheduleId, personalDuration, personalScheduleTime,personalScheduleStatus,scheduleRoutineWindow,user);
+    }
+    public static PersonalSchedule initialized() {
+        return new PersonalSchedule(null, 0, null,null,null,null);
     }
     public PersonalSchedule updateStatusAndTime() {
-        PersonalScheduleTime newPersonalScheduleTime = this.personalScheduleTime.calculateStartTime(this.personalScheduleTime,this.scheduleRoutineWindow.calculateTotalTime(),this.personalDuration);
+        PersonalScheduleTime newPersonalScheduleTime = this.personalScheduleTime.calculateTime(this.scheduleRoutineWindow.calculateTotalTime(),this.personalDuration);
         PersonalScheduleStatus newPersonalScheduleStatus = newPersonalScheduleTime.checkAndUpdateStatus();
-        return new PersonalSchedule(this.id, this.personalDuration,newPersonalScheduleTime,newPersonalScheduleStatus,this.scheduleRoutineWindow);
+        return new PersonalSchedule(this.id, this.personalDuration,newPersonalScheduleTime,newPersonalScheduleStatus,this.scheduleRoutineWindow,this.user);
     }
 
     public record PersonalScheduleId(Long value) {
@@ -43,13 +43,10 @@ public class PersonalSchedule {
 
 
     public record PersonalScheduleTime(LocalDateTime startTime, LocalDateTime doneTime) {
-        public PersonalScheduleTime calculateStartTime(PersonalScheduleTime personalScheduleTime, Long totalTime, Integer duration) {
-            return new PersonalScheduleTime(personalScheduleTime.doneTime, this.doneTime.minusSeconds(totalTime).minusMinutes(duration));
+        public PersonalScheduleTime calculateTime( Long totalTime, Integer duration) {
+            return new PersonalScheduleTime(this.doneTime.minusSeconds(totalTime).minusMinutes(duration), this.doneTime.minusSeconds(totalTime));
         }
 
-        public PersonalScheduleTime calculateDoneTime(PersonalScheduleTime personalScheduleTime, Long totalTime) {
-            return new PersonalScheduleTime(personalScheduleTime.startTime, this.doneTime.minusSeconds(totalTime));
-        }
 
         public PersonalScheduleStatus checkAndUpdateStatus() {
             LocalDateTime currentTime = LocalDateTime.now();

@@ -48,6 +48,7 @@ public class UserService {
                     userRegister.getUserEmail(),
                     userRegister.getUserType(),
                     new User.Password(userRegister.getPassword().hashPassword())
+                    ,null
             );
             userWriter.saveUser(newUser);
             return newUser;
@@ -55,13 +56,13 @@ public class UserService {
             return null;
         }
     }
-    public void updateUser(User updateUser) {
+    public void modifyUser(User updateUser) {
         User savedUser = getUser(updateUser.getId());
-        User newUser = User.withId(savedUser.getId(),updateUser.getUserNickname(), updateUser.getUserEmail(), updateUser.getUserType(),updateUser.getPassword());
+        User newUser = User.withId(savedUser.getId(),updateUser.getUserNickname(), updateUser.getUserEmail(), updateUser.getUserType(),updateUser.getPassword(), updateUser.getDeviceToken());
         userWriter.saveUser(newUser);
         userCachedReader.put(updateUser.getId().getValue().toString(),newUser);
     }
-    public void removeUser(User user) {
+    public void deleteUser(User user) {
         User savedUser = getUser(user.getId());
         userRemover.removeUser(savedUser);
         userCachedReader.remove(user.getId().getValue().toString());

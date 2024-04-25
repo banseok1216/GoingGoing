@@ -20,12 +20,14 @@ public class User {
 
     private final Password password;
 
-    public static User withoutId(String userNickname, String userEmail, UserType userType, Password password) {
-        return new User(null, userNickname, userEmail, userType, password);
+    private final String deviceToken;
+
+    public static User withoutId(String userNickname, String userEmail, UserType userType, Password password,String deviceToken) {
+        return new User(null, userNickname, userEmail, userType, password,deviceToken);
     }
 
-    public static User withId(UserId userId, String userNickname, String userEmail, UserType userType, Password password) {
-        return new User(userId, userNickname, userEmail, userType, password);
+    public static User withId(UserId userId, String userNickname, String userEmail, UserType userType, Password password,String deviceToken) {
+        return new User(userId, userNickname, userEmail, userType, password, deviceToken);
     }
 
     @Value

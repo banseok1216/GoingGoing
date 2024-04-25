@@ -1,27 +1,35 @@
 package com.example.group;
 
+import com.example.personal.PersonalSchedule;
 import com.example.user.User;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Group {
     private final GroupId id;
-    private final User.UserId userId;
-    private final GroupSchedule groupSchedule;
+    private final List<User> users;
 
     public static Group withoutId(
-            User.UserId userId,
-            GroupSchedule groupSchedule) {
-        return new Group(null, userId, groupSchedule);
+            List<User> users) {
+        return new Group(null, users);
     }
 
     public static Group withId(
             GroupId groupId,
-            User.UserId userId,
-            GroupSchedule groupSchedule) {
-        return new Group(groupId, userId, groupSchedule);
+            List<User> users
+    ) {
+        return new Group(groupId, users);
     }
 
     public record GroupId(Long value) {}
+
+    public static List<User> createGroupWithSingeUser(User user) {
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        return users;
+    }
 }

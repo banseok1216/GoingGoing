@@ -2,10 +2,12 @@ package com.example.user.controller;
 
 import com.example.group.dto.GroupScheduleResponse;
 import com.example.personal.PersonalSchedule;
+import com.example.routine.Routine;
 import com.example.routine.RoutineWindow;
 import com.example.user.User;
+import com.example.user.dto.UserResponse;
 import com.example.user.dto.UserRoutineRequest;
-import com.example.user.mapper.UserMapper;
+import com.example.user.dto.UserRoutineResponse;
 import com.example.user.service.UserRoutineService;
 import com.example.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,48 +24,30 @@ import org.springframework.web.bind.annotation.*;
 
 public class UserRoutineController {
     private final UserRoutineService userRoutineService;
-    private final UserService userService;
-    private final UserMapper userMapper;
 
     @GetMapping("/userRoutine")
-    public ResponseEntity<Object> getAllUserRoutineInfo(HttpServletRequest request) {
-        Long userId = (Long) request.getAttribute("userId");
-        RoutineWindow routineWindow = userRoutineService.getAllUserRoutine(userMapper.mapToUserId(userId));
-        return ResponseEntity.ok().body(getUserRoutine);
+    public ResponseEntity<Object> getAllUserRoutine(
+            @RequestAttribute Long userId
+    ) {
+        RoutineWindow routineWindow = userRoutineService.getAllUserRoutine(new User.UserId(userId));
+        return ResponseEntity.ok().body(UserRoutineResponse.of(routineWindow));
     }
 
     @DeleteMapping("/userRoutine")
     public ResponseEntity<Object> deleteUserRoutine(
-            HttpServletRequest request
+            @RequestAttribute Long userId,
+            @RequestParam Long userRoutineId
     ) {
-        Long userRoutineId = Long.valueOf(request.getParameter("userRoutineId"));
-        personalRoutineService.deletePersonalRoutineInfo(userRoutineId);
-        return ResponseEntity.ok().body("success");
-    }
-
-    @DeleteMapping("/userRoutineDetail")
-    public ResponseEntity<Object> deletePersonalDetailSchedule(HttpServletRequest request) {
-        Long userRoutineId = Long.valueOf(request.getParameter("routineDetailId"));
-        personalRoutineService.deletePersonalRoutineDetailInfo(userRoutineId);
+        userRoutineService.deleteUserRoutine(new User.UserId(userId),new Routine.RoutineId(userRoutineId));
         return ResponseEntity.ok().body("success");
     }
 
     @PostMapping("/userRoutine")
-    public ResponseEntity<Object> createUserSchedule(
-            HttpServletRequest request,
-            @RequestBody UserRoutineRequest userRoutineRequestDto) {
-        Long userId = (Long) request.getAttribute("userId");
-        User user = userService.getUser(userMapper.mapToUserId(userId));
-
-        personalRoutineService.createPersonalRoutineInfo(, user);
+    public ResponseEntity<Object> createUserRoutine(
+            @RequestAttribute Long userId,
+            @RequestBody UserRoutineRequest userRoutineRequest
+    ) {
+        userRoutineService.createUserRoutine(userRoutineRequest.toRoutine(),new User.UserId(userId));
         return ResponseEntity.ok().body("success");
-    }
-
-    @GetMapping("/schedule")
-    public ResponseEntity<Object> getUserSchedule(HttpServletRequest request) {
-        Long userId = (Long) request.getAttribute("userId");
-        List<PersonalSchedule> scheduleList = personalScheduleService.getAllPersonalSchedule(userId);
-        List<GroupScheduleResponse.GetGroupSchedule> responseDto = PersonalScheduleMapper.INSTANCE.toResponseScheduleListDto(scheduleList);
-        return ResponseEntity.ok().body(responseDto);
     }
 }

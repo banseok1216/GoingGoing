@@ -10,7 +10,6 @@ public record PersonalScheduleResponse(
         Long personalScheduleId,
         Integer duration,
         Long scheduleId,
-        List<PersonalScheduleRoutineResponse.GetScheduleRoutine> scheduleRoutineDtoList,
         Boolean scheduleDone,
         Boolean scheduleStart,
         LocalDateTime scheduleStartTime,

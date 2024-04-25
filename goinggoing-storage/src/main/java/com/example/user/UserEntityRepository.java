@@ -10,6 +10,17 @@ public class UserEntityRepository implements UserRepository {
     public void saveUser(User user) {
 
     }
+
+    @Override
+    public void saveUserRoutine(Routine routine, User.UserId userId) {
+
+    }
+
+    @Override
+    public void saveUserRoutines(RoutineWindow routineWindow) {
+
+    }
+
     @Override
     public User read(User user) {
         return null;
