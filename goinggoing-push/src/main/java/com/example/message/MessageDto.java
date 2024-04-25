@@ -1,4 +1,4 @@
-package com.example.push.message;
+package com.example.message;
 
 import lombok.Data;
 

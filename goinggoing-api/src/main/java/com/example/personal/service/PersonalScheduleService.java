@@ -29,7 +29,8 @@ public class PersonalScheduleService {
                 savedPersonalSchedule.getPersonalScheduleTime(),
                 savedPersonalSchedule.getPersonalScheduleStatus(),
                 savedPersonalSchedule.getScheduleRoutineWindow(),
-                savedPersonalSchedule.getUser()
+                savedPersonalSchedule.getUser(),
+                savedPersonalSchedule.getPersonalScheduleSend()
         );
         newPersonalSchedule.updateStatusAndTime();
         personalWriter.savePersonalSchedule(newPersonalSchedule.updateStatusAndTime());

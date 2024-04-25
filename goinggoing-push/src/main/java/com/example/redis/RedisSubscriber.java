@@ -1,10 +1,9 @@
-package com.example.push.redis;
+package com.example.redis;
 
-import com.example.push.device.DeviceToken;
 import com.example.push.device.service.DeviceTokenService;
-import com.example.push.message.FirebaseCloudMessageService;
-import com.example.push.message.MessageDto;
-import com.example.push.message.MessageDtoConverter;
+import com.example.message.FirebaseCloudMessageService;
+import com.example.message.MessageDto;
+import com.example.message.MessageDtoConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.redis.connection.Message;

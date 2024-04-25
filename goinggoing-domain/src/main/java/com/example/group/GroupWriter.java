@@ -12,6 +12,7 @@ public class GroupWriter {
         groupRepository.save(group);
     }
     public void updateGroupSchedule(GroupSchedule groupSchedule){groupRepository.updateGroupSchedule(groupSchedule);}
-    public void saveGroupSchedule(GroupSchedule groupSchedule, User.UserId userId){groupRepository.saveGroupSchedule(groupSchedule,userId);}
-
+    public GroupSchedule saveGroupSchedule(GroupSchedule groupSchedule, User user){groupRepository.saveGroupSchedule(groupSchedule,user);
+        return groupSchedule;
+    }
 }

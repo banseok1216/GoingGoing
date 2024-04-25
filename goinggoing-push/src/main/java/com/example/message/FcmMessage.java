@@ -1,4 +1,4 @@
-package com.example.push.message;
+package com.example.message;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

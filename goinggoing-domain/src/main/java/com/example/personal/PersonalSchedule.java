@@ -19,6 +19,8 @@ public class PersonalSchedule {
     private final PersonalScheduleStatus personalScheduleStatus;
     private final RoutineWindow scheduleRoutineWindow;
     private User user;
+    private final PersonalScheduleSend personalScheduleSend;
+
 
     public static PersonalSchedule withId(
             PersonalScheduleId personalScheduleId,
@@ -26,20 +28,22 @@ public class PersonalSchedule {
             PersonalScheduleTime personalScheduleTime,
             PersonalScheduleStatus personalScheduleStatus,
             RoutineWindow scheduleRoutineWindow,
-            User user) {
-        return new PersonalSchedule(personalScheduleId, personalDuration, personalScheduleTime,personalScheduleStatus,scheduleRoutineWindow,user);
+            User user,
+            PersonalScheduleSend personalScheduleSend) {
+        return new PersonalSchedule(personalScheduleId, personalDuration, personalScheduleTime,personalScheduleStatus,scheduleRoutineWindow,user,personalScheduleSend);
     }
     public static PersonalSchedule initialized() {
-        return new PersonalSchedule(null, 0, null,null,null,null);
+        return new PersonalSchedule(null, 0, null,null,null,null,null);
     }
     public PersonalSchedule updateStatusAndTime() {
         PersonalScheduleTime newPersonalScheduleTime = this.personalScheduleTime.calculateTime(this.scheduleRoutineWindow.calculateTotalTime(),this.personalDuration);
         PersonalScheduleStatus newPersonalScheduleStatus = newPersonalScheduleTime.checkAndUpdateStatus();
-        return new PersonalSchedule(this.id, this.personalDuration,newPersonalScheduleTime,newPersonalScheduleStatus,this.scheduleRoutineWindow,this.user);
+        return new PersonalSchedule(this.id, this.personalDuration,newPersonalScheduleTime,newPersonalScheduleStatus,this.scheduleRoutineWindow,this.user,this.personalScheduleSend);
     }
 
     public record PersonalScheduleId(Long value) {
     }
+    public record PersonalScheduleSend(Boolean sendStartMessage, Boolean sendEndMessage) {}
 
 
     public record PersonalScheduleTime(LocalDateTime startTime, LocalDateTime doneTime) {

@@ -9,12 +9,23 @@ import java.util.List;
 public class GroupEntityRepository implements GroupRepository {
 
     @Override
-    public void save(Group group) {
+    public Group.GroupId save(Group group) {
+
+        return null;
+    }
+
+    @Override
+    public void saveGroupSchedule(GroupSchedule groupSchedule, User user) {
 
     }
 
     @Override
-    public Group read(Group.GroupId groupId) {
+    public void updateGroupSchedule(GroupSchedule groupSchedule) {
+
+    }
+
+    @Override
+    public Group readGroup(Group.GroupId groupId) {
         return null;
     }
 
@@ -23,9 +34,18 @@ public class GroupEntityRepository implements GroupRepository {
         return null;
     }
 
+    @Override
+    public List<GroupSchedule> readGroupSchedules(User user) {
+        return null;
+    }
 
     @Override
-    public void remove(Group group) {
+    public GroupSchedule readGroupSchedule(GroupSchedule.GroupScheduleId groupScheduleId) {
+        return null;
+    }
+
+    @Override
+    public void removeGroupSchedule(GroupSchedule.GroupScheduleId groupScheduleId) {
 
     }
 }

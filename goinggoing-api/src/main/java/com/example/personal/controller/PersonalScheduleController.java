@@ -3,8 +3,7 @@ import com.example.group.GroupSchedule;
 import com.example.personal.PersonalSchedule;
 import com.example.personal.dto.PersonalScheduleRequest;
 import com.example.personal.service.PersonalScheduleService;
-import com.example.user.User;
-import jakarta.servlet.http.HttpServletRequest;
+import com.example.utils.response.HttpResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +24,10 @@ public class PersonalScheduleController {
     }
 
     @PutMapping("/personal/schedule")
-    public ResponseEntity<Object> modifyPersonalSchedule(
+    public HttpResponse<Object> modifyPersonalSchedule(
             @RequestBody PersonalScheduleRequest request
     ) {
         personalScheduleService.modifyPersonalSchedule(request.toUpdatePersonalSchedule());
-        return ResponseEntity.ok().body("success");
+        return HttpResponse.successOnly();
     }
 }

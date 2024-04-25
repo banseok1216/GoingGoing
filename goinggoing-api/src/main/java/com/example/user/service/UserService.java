@@ -1,4 +1,5 @@
 package com.example.user.service;
+
 import com.example.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,11 @@ public class UserService {
     private final UserWriter userWriter;
     private final UserChecker userChecker;
     private final UserRemover userRemover;
+
     public User loginOAuthUser(User userLogin) {
-        if (userChecker.isDuplicate(userLogin)) {
-            userWriter.saveUser(userLogin);
-            return userLogin;
-        }
-        return null;
+        userChecker.isDuplicate(userLogin);
+        userWriter.saveUser(userLogin);
+        return userLogin;
     }
 
     public User getUser(User.UserId id) {
@@ -40,28 +40,27 @@ public class UserService {
             return null;
         }
     }
+
     public User registUser(User userRegister) {
-        boolean isDuplicate = userChecker.isDuplicate(userRegister);
-        if (!isDuplicate) {
-            User newUser = User.withoutId(
-                    userRegister.getUserNickname(),
-                    userRegister.getUserEmail(),
-                    userRegister.getUserType(),
-                    new User.Password(userRegister.getPassword().hashPassword())
-                    ,null
-            );
-            userWriter.saveUser(newUser);
-            return newUser;
-        } else {
-            return null;
-        }
+        userChecker.isDuplicate(userRegister);
+        User newUser = User.withoutId(
+                userRegister.getUserNickname(),
+                userRegister.getUserEmail(),
+                userRegister.getUserType(),
+                new User.Password(userRegister.getPassword().hashPassword())
+                , null
+        );
+        userWriter.saveUser(newUser);
+        return newUser;
     }
+
     public void modifyUser(User updateUser) {
         User savedUser = getUser(updateUser.getId());
-        User newUser = User.withId(savedUser.getId(),updateUser.getUserNickname(), updateUser.getUserEmail(), updateUser.getUserType(),updateUser.getPassword(), updateUser.getDeviceToken());
+        User newUser = User.withId(savedUser.getId(), updateUser.getUserNickname(), updateUser.getUserEmail(), updateUser.getUserType(), updateUser.getPassword(), updateUser.getDeviceToken());
         userWriter.saveUser(newUser);
-        userCachedReader.put(updateUser.getId().getValue().toString(),newUser);
+        userCachedReader.put(updateUser.getId().getValue().toString(), newUser);
     }
+
     public void deleteUser(User user) {
         User savedUser = getUser(user.getId());
         userRemover.removeUser(savedUser);

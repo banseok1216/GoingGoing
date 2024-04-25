@@ -1,11 +1,14 @@
 package com.example.routine;
 
+import com.example.error.BusinessException;
+import com.example.error.ErrorCode;
 import com.example.routine.Routine;
 import lombok.*;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class RoutineWindow {
     private final List<Routine> routines;
@@ -28,19 +31,21 @@ public class RoutineWindow {
     public void addRoutine(Routine routine) {
         this.routines.add(routine);
     }
-    public void modifyRoutine(Routine scheduleRoutineDetail) {
-        this.routines.stream()
-                .filter(routine -> routine.getRoutineId().equals(scheduleRoutineDetail.getRoutineId()))
-                .findFirst()
-                .ifPresent(existingRoutine -> {
-                    Routine updatedRoutine = Routine.withId(
-                            existingRoutine.getRoutineId(),
-                            scheduleRoutineDetail.getRoutineTime(),
-                            scheduleRoutineDetail.getRoutineName(),
-                            scheduleRoutineDetail.getIndex()
-                    );
-                    this.routines.set(this.routines.indexOf(existingRoutine), updatedRoutine);
-                });
+    public void modifyRoutine(Routine userRoutine) {
+        Optional<Routine> existingRoutineOptional = this.routines.stream()
+                .filter(routine -> routine.getRoutineId().equals(userRoutine.getRoutineId()))
+                .findFirst();
+        if (existingRoutineOptional.isEmpty()) {
+            throw new BusinessException(ErrorCode.USER_ROUTINE_NOT_FOUND);
+        }
+        Routine existingRoutine = existingRoutineOptional.get();
+        Routine updatedRoutine = Routine.withId(
+                existingRoutine.getRoutineId(),
+                userRoutine.getRoutineTime(),
+                userRoutine.getRoutineName(),
+                userRoutine.getIndex()
+        );
+        this.routines.set(this.routines.indexOf(existingRoutine), updatedRoutine);
     }
     public void changeRoutineOrderByRemove(Routine removedRoutine) {
         this.routines.stream()

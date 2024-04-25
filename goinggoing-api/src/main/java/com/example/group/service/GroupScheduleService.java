@@ -2,6 +2,7 @@ package com.example.group.service;
 
 import com.example.group.*;
 import com.example.user.User;
+import com.example.user.UserReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroupScheduleService {
     private final GroupReader groupReader;
+    private final UserReader userReader;
     private final GroupWriter groupWriter;
     private final GroupRemover groupRemover;
 
@@ -28,11 +30,13 @@ public class GroupScheduleService {
         groupWriter.updateGroupSchedule(newGroupSchedule);
     }
 
-    public void createGroupSchedule(GroupSchedule groupSchedule, User.UserId userId){
-        groupWriter.saveGroupSchedule(groupSchedule, userId);
+    public GroupSchedule createGroupSchedule(GroupSchedule groupSchedule, User.UserId userId){
+        User user = userReader.readUser(userId);
+        return groupWriter.saveGroupSchedule(groupSchedule, user);
     }
     public List<GroupSchedule> loadGroupSchedules(User.UserId userId){
-        return groupReader.readGroupSchedules(userId);
+        User user = userReader.readUser(userId);
+        return groupReader.readGroupSchedules(user);
     }
     @Transactional
     public void deleteUserSchedule(GroupSchedule.GroupScheduleId groupScheduleId) {

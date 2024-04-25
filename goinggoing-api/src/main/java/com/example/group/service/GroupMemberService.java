@@ -28,14 +28,14 @@ public class GroupMemberService {
     }
 
     public void addGroupMember(User.UserId userId,Group.GroupId groupId) {
-        Group group = groupReader.read(groupId);
+        Group group = groupReader.readGroup(groupId);
         group.getUsers().add(userReader.readUser(userId));
         groupWriter.saveGroup(group);
     }
 
     public void sendInviteMessage(Group.GroupId groupId, User user) {
         DeviceToken deviceToken =deviceTokenRepository.findByUserId(String.valueOf(user.getId().getValue()));
-        Group group = groupReader.read(groupId);
+        Group group = groupReader.readGroup(groupId);
         MessageDto messageDto = new MessageDto();
         messageDto.setDeviceToken(deviceToken.getDeviceToken());
         messageDto.setScheduleId(group.getId().value());

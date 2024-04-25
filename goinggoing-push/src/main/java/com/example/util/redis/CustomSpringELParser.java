@@ -1,4 +1,4 @@
-package com.example.push.util.redis;
+package com.example.util.redis;
 
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;

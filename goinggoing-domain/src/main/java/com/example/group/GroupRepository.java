@@ -5,12 +5,12 @@ import com.example.user.User;
 import java.util.List;
 
 public interface GroupRepository {
-    void save(Group group);
-    void saveGroupSchedule(GroupSchedule groupSchedule, User.UserId userId);
+    Group.GroupId save(Group group);
+    void saveGroupSchedule(GroupSchedule groupSchedule, User user);
     void updateGroupSchedule(GroupSchedule groupSchedule);
-    Group read(Group.GroupId groupId);
+    Group readGroup(Group.GroupId groupId);
     List<User> readGroupUser(Group.GroupId groupId);
-    List<GroupSchedule> readGroupSchedules(User.UserId userId);
+    List<GroupSchedule> readGroupSchedules(User user);
     GroupSchedule readGroupSchedule(GroupSchedule.GroupScheduleId groupScheduleId);
 
     void removeGroupSchedule(GroupSchedule.GroupScheduleId groupScheduleId);

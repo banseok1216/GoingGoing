@@ -5,8 +5,9 @@ import com.example.group.dto.GroupScheduleRequest;
 import com.example.group.dto.GroupScheduleResponse;
 import com.example.group.service.GroupScheduleService;
 import com.example.user.User;
+import com.example.utils.response.DefaultId;
+import com.example.utils.response.HttpResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,38 +19,38 @@ public class GroupScheduleController {
     private final GroupScheduleService groupScheduleService;
 
     @PostMapping("/group/schedule")
-    public ResponseEntity<Object> createGroupSchedule(
+    public HttpResponse<DefaultId> createGroupSchedule(
             @RequestBody GroupScheduleRequest request,
             @RequestAttribute Long userId
     ) {
         GroupSchedule groupSchedule = request.toCreateGroupSchedule();
-        groupScheduleService.createGroupSchedule(groupSchedule,new User.UserId(userId));
-        return ResponseEntity.ok().body("success");
+        GroupSchedule.GroupScheduleId groupScheduleId = groupScheduleService.createGroupSchedule(groupSchedule,new User.UserId(userId)).getId();
+        return HttpResponse.success(DefaultId.of(groupScheduleId.value()));
     }
 
     @GetMapping("/group/schedule")
-    public ResponseEntity<Object> getAllGroupSchedule(
+    public HttpResponse<List<GroupScheduleResponse>> getAllGroupSchedule(
             @RequestAttribute Long userId
     ) {
         List<GroupSchedule> groupSchedules = groupScheduleService.loadGroupSchedules(new User.UserId(userId));
-        return ResponseEntity.ok().body(GroupScheduleResponse.of(groupSchedules));
+        return HttpResponse.success(GroupScheduleResponse.of(groupSchedules));
     }
 
     @PutMapping("/group/schedule")
-    public ResponseEntity<Object> updateGroupSchedule(
+    public HttpResponse<Object> updateGroupSchedule(
             @RequestBody GroupScheduleRequest request
     ) {
         GroupSchedule groupSchedule = request.toModifyGroupSchedule();
         groupScheduleService.modifyGroupSchedule(groupSchedule);
-        return ResponseEntity.ok().body("success");
+        return HttpResponse.successOnly();
     }
 
     @DeleteMapping("/group/schedule")
-    public ResponseEntity<Object> deleteGroupSchedule(
+    public HttpResponse<Object> deleteGroupSchedule(
             @RequestParam Long groupScheduleId
     ) {
         groupScheduleService.deleteUserSchedule(new GroupSchedule.GroupScheduleId(groupScheduleId));
-        return ResponseEntity.ok().body("success");
+        return HttpResponse.successOnly();
     }
 }
 

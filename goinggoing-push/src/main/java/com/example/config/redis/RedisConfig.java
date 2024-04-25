@@ -1,6 +1,6 @@
-package com.example.push.config.redis;
+package com.example.config.redis;
 
-import com.example.push.redis.RedisSubscriber;
+import com.example.redis.RedisSubscriber;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

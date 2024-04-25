@@ -1,6 +1,5 @@
-package com.example.push.message;
+package com.example.message;
 
-import com.example.push.message.MessageDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.redis.connection.Message;
 

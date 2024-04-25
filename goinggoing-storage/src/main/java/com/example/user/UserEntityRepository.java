@@ -12,8 +12,9 @@ public class UserEntityRepository implements UserRepository {
     }
 
     @Override
-    public void saveUserRoutine(Routine routine, User.UserId userId) {
+    public Routine.RoutineId saveUserRoutine(Routine routine, User.UserId userId) {
 
+        return null;
     }
 
     @Override

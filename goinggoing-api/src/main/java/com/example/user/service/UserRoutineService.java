@@ -7,7 +7,6 @@ import com.example.user.UserReader;
 import com.example.user.UserRemover;
 import com.example.user.UserWriter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +30,7 @@ public class UserRoutineService {
         userWriter.saveUserRoutines(routineWindow);
     }
 
-    public void createUserRoutine(Routine routine,User.UserId userId) {
-        userWriter.saveUserRoutine(routine,userId);
+    public Routine.RoutineId createUserRoutine(Routine routine, User.UserId userId) {
+        return userWriter.saveUserRoutine(routine,userId);
     }
 }

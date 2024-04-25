@@ -18,6 +18,6 @@ public record PersonalScheduleRequest(
                 null,
                 null,
                 null,
-                null);
+                null,null);
     }
 }

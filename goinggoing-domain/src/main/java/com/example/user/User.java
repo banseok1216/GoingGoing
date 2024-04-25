@@ -5,6 +5,7 @@ import lombok.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.Optional;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -34,7 +35,6 @@ public class User {
     public static class UserId {
         Long value;
     }
-
 
     public record Password(String password) {
         public String hashPassword() {

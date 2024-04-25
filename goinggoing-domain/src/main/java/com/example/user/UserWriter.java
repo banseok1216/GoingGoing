@@ -9,13 +9,16 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserWriter {
     private final UserRepository userRepository;
-    public void saveUser(User user){
+
+    public void saveUser(User user) {
         userRepository.saveUser(user);
     }
-    public void saveUserRoutine(Routine userRoutine,User.UserId userId){
-        userRepository.saveUserRoutine(userRoutine, userId);
+
+    public Routine.RoutineId saveUserRoutine(Routine userRoutine, User.UserId userId) {
+        return userRepository.saveUserRoutine(userRoutine, userId);
     }
-    public void saveUserRoutines(RoutineWindow userRoutines){
+
+    public void saveUserRoutines(RoutineWindow userRoutines) {
         userRepository.saveUserRoutines(userRoutines);
     }
 }
