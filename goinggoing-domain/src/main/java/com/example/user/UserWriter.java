@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 public class UserWriter {
     private final UserRepository userRepository;
 
-    public void saveUser(User user) {
-        userRepository.saveUser(user);
+    public User.UserId saveUser(User user) {
+        return userRepository.saveUser(user);
     }
 
-    public Routine.RoutineId saveUserRoutine(Routine userRoutine, User.UserId userId) {
-        return userRepository.saveUserRoutine(userRoutine, userId);
+    public Routine.RoutineId saveUserRoutine(Routine userRoutine, User user) {
+        return userRepository.saveUserRoutine(userRoutine, user);
     }
 
     public void saveUserRoutines(RoutineWindow userRoutines) {

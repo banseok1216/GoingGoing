@@ -10,7 +10,7 @@ public record GroupMemberResponse(
 ) {
     public static List<GroupMemberResponse> of(List<User> users){
         return users.stream()
-                .map(user -> new GroupMemberResponse(user.getId().getValue(), user.getUserNickname()))
+                .map(user -> new GroupMemberResponse(user.getId().value(), user.getUserNickname()))
                 .collect(Collectors.toList());
     }
 }

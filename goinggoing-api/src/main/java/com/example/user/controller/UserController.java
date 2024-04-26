@@ -67,7 +67,7 @@ public class UserController {
         HttpHeaders headers = new HttpHeaders();
         headers.add(accessHeaderString, tokenPrefix + jwtTokenUtil.createAccessToken(user));
         headers.add(refreshHeaderString, tokenPrefix + jwtTokenUtil.createRefreshToken(user));
-        return HttpResponse.success(DefaultId.of(user.getId().getValue()));
+        return HttpResponse.success(DefaultId.of(user.getId().value()));
     }
 
     @DeleteMapping("/logout")
@@ -93,7 +93,7 @@ public class UserController {
         HttpHeaders headers = new HttpHeaders();
         headers.add(accessHeaderString, tokenPrefix + jwtTokenUtil.createAccessToken(loginedUser));
         headers.add(refreshHeaderString, tokenPrefix + jwtTokenUtil.createRefreshToken(loginedUser));
-        return HttpResponse.success(DefaultId.of(user.getId().getValue()));
+        return HttpResponse.success(DefaultId.of(user.getId().value()));
     }
 
 }

@@ -16,17 +16,17 @@ public class DeviceTokenService {
     public void setDeviceToken(User user) {
         DeviceToken existingToken = deviceTokenRepository.findByDeviceToken(user.getDeviceToken());
         if (existingToken != null) {
-            existingToken.updateDeviceToken(user.getId().getValue().toString());
+            existingToken.updateDeviceToken(user.getId().value().toString());
         } else {
             DeviceToken newToken = DeviceToken.builder()
                     .deviceToken(user.getDeviceToken())
-                    .userId(user.getId().getValue().toString())
+                    .userId(user.getId().value().toString())
                     .build();
             deviceTokenRepository.save(newToken);
         }
     }
     public void removeDeviceToken(User.UserId userId, String deviceToken) {
-        DeviceToken existingToken = deviceTokenRepository.findByUserIdAndDeviceToken(userId.getValue().toString(),deviceToken);
+        DeviceToken existingToken = deviceTokenRepository.findByUserIdAndDeviceToken(userId.value().toString(),deviceToken);
         if (existingToken != null) {
             deviceTokenRepository.delete(existingToken);
         }

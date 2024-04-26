@@ -1,5 +1,6 @@
 package com.example.user;
 
+import com.example.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor
 @Table(name = "user", schema = "goinggoing")
-public class UserJpaEntity {
+public class UserJpaEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "User_Id")
@@ -28,35 +29,23 @@ public class UserJpaEntity {
     @Basic
     @Column(name = "User_Password")
     private String password;
-    @Basic
+    @Enumerated(EnumType.STRING)
     @Column(name = "User_Type")
-    private String userType;
+    private User.UserType userType;
+    @Basic
+    @Column(name = "User_DeviceToken")
+    private String userDeviceToken;
+
 
     @Builder
     public UserJpaEntity(Long userId, String userNickname, String userEmail,
-                         String userRole, String password, String userType) {
+                         String userRole, String password, User.UserType userType, String userDeviceToken) {
         this.userId = userId;
         this.userNickname = userNickname;
         this.userEmail = userEmail;
         this.userRole = userRole;
         this.password = password;
         this.userType = userType;
+        this.userDeviceToken = userDeviceToken;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserJpaEntity that = (UserJpaEntity) o;
-        return userId == that.userId &&
-                Objects.equals(userNickname, that.userNickname) &&
-                Objects.equals(userEmail, that.userEmail) &&
-                Objects.equals(userRole, that.userRole);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId, userNickname, userEmail, userRole);
-    }
-
 }

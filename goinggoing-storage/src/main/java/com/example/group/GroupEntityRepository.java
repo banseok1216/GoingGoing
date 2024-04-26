@@ -8,10 +8,8 @@ import java.util.List;
 @Repository
 public class GroupEntityRepository implements GroupRepository {
 
-    @Override
     public Group.GroupId save(Group group) {
-
-        return null;
+        return group.getId();
     }
 
     @Override

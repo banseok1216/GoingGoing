@@ -15,18 +15,18 @@ public class UserService {
 
     public User loginOAuthUser(User userLogin) {
         userChecker.isDuplicate(userLogin);
-        userWriter.saveUser(userLogin);
-        return userLogin;
+        User.UserId userId = userWriter.saveUser(userLogin);
+        return userReader.readUser(userId);
     }
 
     public User getUser(User.UserId id) {
-        User cachedUser = userCachedReader.get(id.getValue().toString());
+        User cachedUser = userCachedReader.get(id.value().toString());
         if (cachedUser != null) {
             return cachedUser;
         } else {
             User user = userReader.readUser(id);
             if (user != null) {
-                userCachedReader.put(id.getValue().toString(), user);
+                userCachedReader.put(id.value().toString(), user);
             }
             return user;
         }
@@ -58,12 +58,12 @@ public class UserService {
         User savedUser = getUser(updateUser.getId());
         User newUser = User.withId(savedUser.getId(), updateUser.getUserNickname(), updateUser.getUserEmail(), updateUser.getUserType(), updateUser.getPassword(), updateUser.getDeviceToken());
         userWriter.saveUser(newUser);
-        userCachedReader.put(updateUser.getId().getValue().toString(), newUser);
+        userCachedReader.put(updateUser.getId().value().toString(), newUser);
     }
 
     public void deleteUser(User user) {
         User savedUser = getUser(user.getId());
         userRemover.removeUser(savedUser);
-        userCachedReader.remove(user.getId().getValue().toString());
+        userCachedReader.remove(user.getId().value().toString());
     }
 }

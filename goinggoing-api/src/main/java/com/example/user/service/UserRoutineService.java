@@ -23,6 +23,7 @@ public class UserRoutineService {
 
     @Transactional
     public void deleteUserRoutine(User.UserId userId,Routine.RoutineId userRoutineId) {
+        User user = userReader.readUser(userId);
         RoutineWindow routineWindow = userReader.readUserRoutines(userId);
         Routine userRoutine = userReader.readUserRoutine(userRoutineId);
         userRemover.removeUserRoutine(userRoutine);
@@ -31,6 +32,7 @@ public class UserRoutineService {
     }
 
     public Routine.RoutineId createUserRoutine(Routine routine, User.UserId userId) {
-        return userWriter.saveUserRoutine(routine,userId);
+        User user = userReader.readUser(userId);
+        return userWriter.saveUserRoutine(routine,user);
     }
 }

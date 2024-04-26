@@ -4,10 +4,10 @@ import com.example.routine.Routine;
 import com.example.routine.RoutineWindow;
 
 public interface UserRepository {
-    void saveUser(User user);
-    Routine.RoutineId saveUserRoutine(Routine routine, User.UserId userId);
+    User.UserId saveUser(User user);
+    Routine.RoutineId saveUserRoutine(Routine routine, User user);
+
     void saveUserRoutines(RoutineWindow routineWindow);
-    User read(User user);
     boolean check(User user);
     User readUserById(User.UserId userId);
     RoutineWindow readRoutineByUserId(User.UserId userId);
