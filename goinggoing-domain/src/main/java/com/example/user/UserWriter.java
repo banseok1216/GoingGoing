@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 public class UserWriter {
     private final UserRepository userRepository;
 
-    public User.UserId saveUser(User user) {
+    public User.UserId saveUser(User user)
+    {
         return userRepository.saveUser(user);
     }
 

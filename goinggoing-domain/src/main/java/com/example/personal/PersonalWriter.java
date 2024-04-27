@@ -7,7 +7,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PersonalWriter {
     private final PersonalRepository personalRepository;
-    public void savePersonalSchedule(PersonalSchedule personalSchedule){
-        personalRepository.savePersonalSchedule(personalSchedule);
+    public void modifyRoutineOrder(PersonalSchedule personalSchedule){
+        personalRepository.modifyRoutineOrder(personalSchedule);
     }
+    public void saveRoutine(PersonalSchedule personalSchedule){
+        personalRepository.saveRoutine(personalSchedule);
+    }
+    public void modifyPersonalSchedule(PersonalSchedule personalSchedule){
+        personalRepository.modifyPersonalSchedule(personalSchedule);
+    }
+
 }

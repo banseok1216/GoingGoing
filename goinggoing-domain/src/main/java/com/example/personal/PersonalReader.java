@@ -1,5 +1,6 @@
 package com.example.personal;
 
+import com.example.group.Group;
 import com.example.group.GroupSchedule;
 import com.example.routine.Routine;
 import com.example.user.User;
@@ -15,8 +16,8 @@ public class PersonalReader {
     public PersonalSchedule readPersonalSchedule(PersonalSchedule.PersonalScheduleId personalScheduleId){
         return personalRepository.readPersonalSchedule(personalScheduleId);
     }
-    public List<PersonalSchedule> readPersonalSchedules(GroupSchedule.GroupScheduleId groupScheduleId){
-        return personalRepository.readPersonalSchedules(groupScheduleId);
+    public List<PersonalSchedule> readPersonalSchedules(Group.GroupId groupId){
+        return personalRepository.readPersonalSchedules(groupId);
     }
     public Routine readRoutine(Routine.RoutineId routineId){
         return personalRepository.readRoutine(routineId);

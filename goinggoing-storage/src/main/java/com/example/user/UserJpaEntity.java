@@ -1,10 +1,12 @@
 package com.example.user;
 
 import com.example.BaseEntity;
+import com.example.group.GroupJpaEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.Objects;
 
@@ -24,9 +26,6 @@ public class UserJpaEntity extends BaseEntity {
     @Column(name = "User_Email")
     private String userEmail;
     @Basic
-    @Column(name = "User_Role")
-    private String userRole;
-    @Basic
     @Column(name = "User_Password")
     private String password;
     @Enumerated(EnumType.STRING)
@@ -36,16 +35,27 @@ public class UserJpaEntity extends BaseEntity {
     @Column(name = "User_DeviceToken")
     private String userDeviceToken;
 
-
     @Builder
     public UserJpaEntity(Long userId, String userNickname, String userEmail,
-                         String userRole, String password, User.UserType userType, String userDeviceToken) {
+                         String password, User.UserType userType, String userDeviceToken) {
         this.userId = userId;
         this.userNickname = userNickname;
         this.userEmail = userEmail;
-        this.userRole = userRole;
         this.password = password;
         this.userType = userType;
         this.userDeviceToken = userDeviceToken;
+    }
+    public static UserJpaEntity ofDomain(User user) {
+        return UserJpaEntity.builder()
+                .userId(user.getId().value())
+                .userNickname(user.getUserNickname())
+                .userEmail(user.getUserEmail())
+                .password(user.getPassword().password())
+                .userType(user.getUserType())
+                .userDeviceToken(user.getDeviceToken())
+                .build();
+    }
+    public User toUser() {
+        return User.withId(new User.UserId(this.userId),this.userNickname,this.userEmail,this.userType,new User.Password(this.password), this.userDeviceToken);
     }
 }

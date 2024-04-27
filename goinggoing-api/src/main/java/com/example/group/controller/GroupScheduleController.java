@@ -1,5 +1,6 @@
 package com.example.group.controller;
 
+import com.example.group.Group;
 import com.example.group.GroupSchedule;
 import com.example.group.dto.GroupScheduleRequest;
 import com.example.group.dto.GroupScheduleResponse;
@@ -24,8 +25,8 @@ public class GroupScheduleController {
             @RequestAttribute Long userId
     ) {
         GroupSchedule groupSchedule = request.toCreateGroupSchedule();
-        GroupSchedule.GroupScheduleId groupScheduleId = groupScheduleService.createGroupSchedule(groupSchedule,new User.UserId(userId)).getId();
-        return HttpResponse.success(DefaultId.of(groupScheduleId.value()));
+        Group.GroupId groupId = groupScheduleService.createGroupSchedule(groupSchedule,new User.UserId(userId));
+        return HttpResponse.success(DefaultId.of(groupId.value()));
     }
 
     @GetMapping("/group/schedule")

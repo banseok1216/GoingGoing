@@ -1,5 +1,6 @@
 package com.example.personal.service;
 
+import com.example.group.Group;
 import com.example.group.GroupSchedule;
 import com.example.personal.*;
 
@@ -16,8 +17,8 @@ public class PersonalScheduleService {
     private final PersonalReader personalReader;
     private final PersonalWriter personalWriter;
 
-    public List<PersonalSchedule> loadPersonalSchedules(GroupSchedule.GroupScheduleId groupScheduleId) {
-        return personalReader.readPersonalSchedules(groupScheduleId);
+    public List<PersonalSchedule> loadPersonalSchedules(Group.GroupId groupId) {
+        return personalReader.readPersonalSchedules(groupId);
     }
 
     @Transactional
@@ -32,7 +33,6 @@ public class PersonalScheduleService {
                 savedPersonalSchedule.getUser(),
                 savedPersonalSchedule.getPersonalScheduleSend()
         );
-        newPersonalSchedule.updateStatusAndTime();
-        personalWriter.savePersonalSchedule(newPersonalSchedule.updateStatusAndTime());
+        personalWriter.modifyPersonalSchedule(newPersonalSchedule.updateStatusAndTime());
     }
 }

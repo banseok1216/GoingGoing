@@ -1,9 +1,15 @@
 package com.example.personal;
 
+import com.example.routine.Routine;
+import com.example.user.UserJpaEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -26,22 +32,33 @@ public class PersonalScheduleRoutineJpaEntity {
     @Column(name = "Schedule_Routine_Index")
     private Integer scheduleRoutineIndex;
 
-
-    @Column(name = "personal_schedule_id")
-    private Long personalScheduleId;
-
+    @ManyToOne(targetEntity = PersonalScheduleJpaEntity.class,fetch = FetchType.LAZY)
+    @JoinColumn(name = "Personal_Schedule_Id")
+    private PersonalScheduleJpaEntity personalScheduleJpaEntity;
     @Builder
-    public PersonalScheduleRoutineJpaEntity(Long scheduleRoutineId, String scheduleRoutineName, Long scheduleRoutineTime, Long personalScheduleId, Integer scheduleRoutineIndex, boolean scheduleRoutineDone) {
+    public PersonalScheduleRoutineJpaEntity(Long scheduleRoutineId, String scheduleRoutineName, Long scheduleRoutineTime, Integer scheduleRoutineIndex,PersonalScheduleJpaEntity personalScheduleJpaEntity) {
         this.scheduleRoutineId = scheduleRoutineId;
         this.scheduleRoutineName = scheduleRoutineName;
         this.scheduleRoutineTime = scheduleRoutineTime;
-        this.personalScheduleId = personalScheduleId;
         this.scheduleRoutineIndex = scheduleRoutineIndex;
+        this.personalScheduleJpaEntity =personalScheduleJpaEntity;
     }
 
-    public void updateScheduleRoutineInfo(PersonalScheduleRoutineJpaEntity updatePersonalScheduleRoutine){
-        this.scheduleRoutineName = updatePersonalScheduleRoutine.getScheduleRoutineName();
-        this.scheduleRoutineIndex = updatePersonalScheduleRoutine.getScheduleRoutineIndex();
-        this.scheduleRoutineTime = updatePersonalScheduleRoutine.getScheduleRoutineTime();
+    public Routine toRoutine(){
+        return Routine.withId(new Routine.RoutineId(this.scheduleRoutineId),
+                this.scheduleRoutineTime,
+                this.scheduleRoutineName,
+                this.scheduleRoutineIndex);
+    }
+    public static List<PersonalScheduleRoutineJpaEntity> ofDomain(PersonalSchedule personalSchedule) {
+        return personalSchedule.getScheduleRoutineWindow().getRoutines().stream()
+                .map(routine -> PersonalScheduleRoutineJpaEntity.builder()
+                        .scheduleRoutineId(personalSchedule.getId().value())
+                        .scheduleRoutineIndex(routine.getIndex())
+                        .scheduleRoutineTime(routine.getRoutineTime())
+                        .scheduleRoutineName(routine.getRoutineName())
+                        .personalScheduleJpaEntity(PersonalScheduleJpaEntity.builder().personalScheduleId(personalSchedule.getId().value()).build())
+                        .build())
+                .collect(Collectors.toList());
     }
 }

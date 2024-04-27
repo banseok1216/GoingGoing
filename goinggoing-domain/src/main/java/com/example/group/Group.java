@@ -11,25 +11,21 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Group {
     private final GroupId id;
-    private final List<User> users;
+    private final GroupSchedule groupSchedule;
+    private final List<PersonalSchedule> personalSchedules;
 
     public static Group withoutId(
-            List<User> users) {
-        return new Group(null, users);
+            GroupSchedule groupSchedule, List<PersonalSchedule> personalSchedules) {
+        return new Group(null,groupSchedule,personalSchedules);
     }
 
     public static Group withId(
             GroupId groupId,
-            List<User> users
+            GroupSchedule groupSchedule,
+            List<PersonalSchedule> personalSchedules
     ) {
-        return new Group(groupId, users);
+        return new Group(groupId, groupSchedule,personalSchedules);
     }
 
     public record GroupId(Long value) {}
-
-    public static List<User> createGroupWithSingeUser(User user) {
-        List<User> users = new ArrayList<>();
-        users.add(user);
-        return users;
-    }
 }

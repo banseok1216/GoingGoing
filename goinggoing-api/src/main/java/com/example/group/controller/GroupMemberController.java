@@ -3,8 +3,10 @@ package com.example.group.controller;
 import com.example.group.Group;
 import com.example.group.dto.GroupMemberResponse;
 import com.example.group.service.GroupMemberService;
+import com.example.personal.PersonalSchedule;
 import com.example.user.User;
 import com.example.user.service.UserService;
+import com.example.utils.response.DefaultId;
 import com.example.utils.response.HttpResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +33,8 @@ public class GroupMemberController {
             @RequestAttribute Long userId,
             @RequestParam Long groupId
     ) {
-        groupMemberService.addGroupMember(new User.UserId(userId), new Group.GroupId(groupId));
-        return HttpResponse.successOnly();
+        PersonalSchedule.PersonalScheduleId personalScheduleId = groupMemberService.addGroupMember(new User.UserId(userId), new Group.GroupId(groupId));
+        return HttpResponse.success(DefaultId.of(personalScheduleId.value()));
     }
 
     @PostMapping("/group/invite")

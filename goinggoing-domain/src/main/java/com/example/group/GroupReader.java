@@ -19,8 +19,8 @@ public class GroupReader {
         }
         return group;
     }
-    public List<GroupSchedule> readGroupSchedules(User user){
-        return groupRepository.readGroupSchedules(user);
+    public List<Group> readGroupList(User user){
+        return groupRepository.readGroupList(user);
     }
     public GroupSchedule readGroupSchedule(GroupSchedule.GroupScheduleId groupScheduleId){
         GroupSchedule groupSchedule= groupRepository.readGroupSchedule(groupScheduleId);
@@ -28,9 +28,5 @@ public class GroupReader {
             throw new BusinessException(ErrorCode.GROUP_NOT_FOUND);
         }
         return groupRepository.readGroupSchedule(groupScheduleId);
-    }
-    public List<User> readGroupUsers(Group.GroupId groupId)
-    {
-        return groupRepository.readGroupUser(groupId);
     }
 }

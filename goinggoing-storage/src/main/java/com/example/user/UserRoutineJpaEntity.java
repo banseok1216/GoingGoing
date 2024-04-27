@@ -1,5 +1,6 @@
 package com.example.user;
 
+import com.example.routine.Routine;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,8 +26,9 @@ public class UserRoutineJpaEntity {
     @Basic
     @Column(name = "Routine_Index")
     private Integer index;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+
+    @ManyToOne(targetEntity =UserJpaEntity.class,fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_Id")
     private UserJpaEntity user;
 
     @Builder
@@ -37,5 +39,15 @@ public class UserRoutineJpaEntity {
         this.index = index;
         this.user = user;
     }
-
+    public static UserRoutineJpaEntity ofDomain(Routine routine, User user) {
+        return UserRoutineJpaEntity.builder()
+                .routineName(routine.getRoutineName())
+                .routineTime(routine.getRoutineTime())
+                .index(routine.getIndex())
+                .user(UserJpaEntity.ofDomain(user))
+                .build();
+    }
+    public Routine toRoutine() {
+        return Routine.withId(new Routine.RoutineId(this.routineId),this.routineTime,this.routineName,this.index);
+    }
 }

@@ -18,28 +18,13 @@ public class UserEntityRepository implements UserRepository {
 
     @Override
     public User.UserId saveUser(User user) {
-        UserJpaEntity userJpaEntity = UserJpaEntity.builder().
-                userEmail(user.getUserEmail()).
-                userRole(user.getUserType().name()).
-                userNickname(user.getUserNickname()).
-                password(user.getPassword().password()).build();
+        UserJpaEntity userJpaEntity = UserJpaEntity.ofDomain(user);
         return new User.UserId(userJpaRepository.save(userJpaEntity).getUserId());
     }
 
     @Override
     public Routine.RoutineId saveUserRoutine(Routine routine, User user) {
-        UserJpaEntity userJpaEntity = UserJpaEntity.builder()
-                .userEmail(user.getUserEmail())
-                .userRole(user.getUserType().name())
-                .userNickname(user.getUserNickname())
-                .password(user.getPassword().password())
-                .build();
-        UserRoutineJpaEntity userRoutineJpaEntity = UserRoutineJpaEntity.builder()
-                .routineName(routine.getRoutineName())
-                .routineTime(routine.getRoutineTime())
-                .index(routine.getIndex())
-                .user(userJpaEntity)
-                .build();
+        UserRoutineJpaEntity userRoutineJpaEntity = UserRoutineJpaEntity.ofDomain(routine,user);
         return new Routine.RoutineId(userRoutineJpaRepository.save(userRoutineJpaEntity).getRoutineId());
     }
 
@@ -59,24 +44,15 @@ public class UserEntityRepository implements UserRepository {
     @Override
     public User readUserById(User.UserId userId) {
         UserJpaEntity userJpaEntity = userJpaRepository.findByUserId(userId.value());
-        return User.withId(new User.UserId(userJpaEntity.getUserId()),
-                userJpaEntity.getUserNickname(),
-                userJpaEntity.getUserEmail(),
-                userJpaEntity.getUserType(),
-                new User.Password(userJpaEntity.getPassword()),
-                userJpaEntity.getUserDeviceToken());
+        return userJpaEntity.toUser();
     }
 
     @Override
     public RoutineWindow readRoutineByUserId(User.UserId userId) {
         List<UserRoutineJpaEntity> routines = userRoutineJpaRepository.readAllByUserUserId(userId.value());
         List<Routine> routineList = routines.stream()
-                .map(routine -> Routine.withId(
-                        new Routine.RoutineId(routine.getRoutineId()),
-                        routine.getRoutineTime(),
-                        routine.getRoutineName(),
-                        routine.getIndex()
-                ))
+                .map(UserRoutineJpaEntity::toRoutine
+                )
                 .toList();
         return new RoutineWindow(routineList);
     }
@@ -84,10 +60,7 @@ public class UserEntityRepository implements UserRepository {
     @Override
     public Routine readUserRoutine(Routine.RoutineId routineId) {
         UserRoutineJpaEntity routine = userRoutineJpaRepository.findByRoutineId(routineId.value());
-        return Routine.withId(new Routine.RoutineId(routine.getRoutineId()),
-                routine.getRoutineTime(),
-                routine.getRoutineName(),
-                routine.getIndex());
+        return routine.toRoutine();
     }
 
     @Override

@@ -25,18 +25,18 @@ public class GroupScheduleService {
                 groupSchedule.getName(),
                 groupSchedule.getDescription(),
                 groupSchedule.getLocation(),
-                groupSchedule.getDate(),
-                savedGroupSchedule.getPersonalSchedules());
+                groupSchedule.getDate());
         groupWriter.updateGroupSchedule(newGroupSchedule);
     }
 
-    public GroupSchedule createGroupSchedule(GroupSchedule groupSchedule, User.UserId userId){
+    public Group.GroupId createGroupSchedule(GroupSchedule groupSchedule, User.UserId userId){
         User user = userReader.readUser(userId);
         return groupWriter.saveGroupSchedule(groupSchedule, user);
     }
-    public List<GroupSchedule> loadGroupSchedules(User.UserId userId){
+
+    public List<Group> loadGroup(User.UserId userId){
         User user = userReader.readUser(userId);
-        return groupReader.readGroupSchedules(user);
+        return groupReader.readGroupList(user);
     }
     @Transactional
     public void deleteUserSchedule(GroupSchedule.GroupScheduleId groupScheduleId) {

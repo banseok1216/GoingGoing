@@ -1,4 +1,5 @@
 package com.example.personal.controller;
+import com.example.group.Group;
 import com.example.group.GroupSchedule;
 import com.example.personal.PersonalSchedule;
 import com.example.personal.dto.PersonalScheduleRequest;
@@ -17,9 +18,9 @@ public class PersonalScheduleController {
     private final PersonalScheduleService personalScheduleService;
     @GetMapping("/personal/schedule")
     public ResponseEntity<Object> getPersonalSchedules(
-            @RequestParam Long groupScheduleId
+            @RequestParam Long groupId
     ) {
-        List<PersonalSchedule> personalSchedules = personalScheduleService.loadPersonalSchedules(new GroupSchedule.GroupScheduleId(groupScheduleId));
+        List<PersonalSchedule> personalSchedules = personalScheduleService.loadPersonalSchedules(new Group.GroupId(groupId));
         return ResponseEntity.ok().body(personalSchedules);
     }
 

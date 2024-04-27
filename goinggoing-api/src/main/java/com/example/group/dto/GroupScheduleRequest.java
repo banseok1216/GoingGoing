@@ -19,12 +19,12 @@ public record GroupScheduleRequest(
     public GroupSchedule toCreateGroupSchedule() {
         return GroupSchedule.withoutId(this.groupScheduleName,
                 this.groupDescription, this.groupScheduleLocation,
-                this.groupScheduleDateTime, List.of(PersonalSchedule.initialized()));
+                this.groupScheduleDateTime);
     }
     public GroupSchedule toModifyGroupSchedule() {
         return GroupSchedule.withId(new GroupSchedule.GroupScheduleId(groupScheduleId) ,this.groupScheduleName,
                 this.groupDescription, this.groupScheduleLocation,
-                this.groupScheduleDateTime,List.of(PersonalSchedule.initialized()));
+                this.groupScheduleDateTime);
     }
 }
 

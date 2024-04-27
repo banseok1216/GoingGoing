@@ -1,5 +1,6 @@
 package com.example.group;
 
+import com.example.personal.PersonalSchedule;
 import com.example.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -8,11 +9,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class GroupWriter {
     private final GroupRepository groupRepository;
-    public void saveGroup(Group group){
-        groupRepository.save(group);
+    public PersonalSchedule.PersonalScheduleId addMember(Group group, PersonalSchedule personalSchedule){
+        return groupRepository.addMember(group,personalSchedule);
     }
     public void updateGroupSchedule(GroupSchedule groupSchedule){groupRepository.updateGroupSchedule(groupSchedule);}
-    public GroupSchedule saveGroupSchedule(GroupSchedule groupSchedule, User user){groupRepository.saveGroupSchedule(groupSchedule,user);
-        return groupSchedule;
+    public Group.GroupId saveGroupSchedule(GroupSchedule groupSchedule, User user){
+        return groupRepository.saveGroupSchedule(groupSchedule,user);
     }
 }

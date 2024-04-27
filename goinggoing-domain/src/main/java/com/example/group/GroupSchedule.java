@@ -16,17 +16,15 @@ public class GroupSchedule {
     private final String description;
     private final String location;
     private final LocalDateTime date;
-    private final List<PersonalSchedule> personalSchedules;
-
     public record GroupScheduleId(Long value) {
     }
 
-    public static GroupSchedule withoutId(String name,String description, String location,LocalDateTime date,List<PersonalSchedule> personalSchedules) {
-        return new GroupSchedule(null,name,description,location,date,personalSchedules);
+    public static GroupSchedule withoutId(String name,String description, String location,LocalDateTime date) {
+        return new GroupSchedule(null,name,description,location,date);
     }
 
-    public static GroupSchedule withId(GroupScheduleId id,String name,String description, String location,LocalDateTime date,List<PersonalSchedule> personalSchedules) {
-        return new GroupSchedule(id,name,description,location,date,personalSchedules);
+    public static GroupSchedule withId(GroupScheduleId id,String name,String description, String location,LocalDateTime date) {
+        return new GroupSchedule(id,name,description,location,date);
     }
 
 }
