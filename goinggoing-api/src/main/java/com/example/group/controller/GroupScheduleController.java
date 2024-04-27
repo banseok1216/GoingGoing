@@ -15,9 +15,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v2")
-@RequiredArgsConstructor
 public class GroupScheduleController {
     private final GroupScheduleService groupScheduleService;
+
+    public GroupScheduleController(GroupScheduleService groupScheduleService) {
+        this.groupScheduleService = groupScheduleService;
+    }
 
     @PostMapping("/group/schedule")
     public HttpResponse<DefaultId> createGroupSchedule(
@@ -27,14 +30,6 @@ public class GroupScheduleController {
         GroupSchedule groupSchedule = request.toCreateGroupSchedule();
         Group.GroupId groupId = groupScheduleService.createGroupSchedule(groupSchedule,new User.UserId(userId));
         return HttpResponse.success(DefaultId.of(groupId.value()));
-    }
-
-    @GetMapping("/group/schedule")
-    public HttpResponse<List<GroupScheduleResponse>> getAllGroupSchedule(
-            @RequestAttribute Long userId
-    ) {
-        List<GroupSchedule> groupSchedules = groupScheduleService.loadGroupSchedules(new User.UserId(userId));
-        return HttpResponse.success(GroupScheduleResponse.of(groupSchedules));
     }
 
     @PutMapping("/group/schedule")

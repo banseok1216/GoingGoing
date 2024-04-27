@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
 public class PersonalScheduleRoutineController {
     private final PersonalScheduleRoutineService personalScheduleRoutineService;
+
+    public PersonalScheduleRoutineController(PersonalScheduleRoutineService personalScheduleRoutineService) {
+        this.personalScheduleRoutineService = personalScheduleRoutineService;
+    }
+
     @PutMapping("/routineSchedule")
     public HttpResponse<Object> modifyPersonalScheduleRoutine(
             @RequestBody ScheduleRoutineRequest request,

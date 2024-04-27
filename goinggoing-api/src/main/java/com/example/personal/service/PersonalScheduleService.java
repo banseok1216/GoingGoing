@@ -17,8 +17,8 @@ public class PersonalScheduleService {
     private final PersonalReader personalReader;
     private final PersonalWriter personalWriter;
 
-    public List<PersonalSchedule> loadPersonalSchedules(Group.GroupId groupId) {
-        return personalReader.readPersonalSchedules(groupId);
+    public PersonalSchedule loadPersonalSchedule(PersonalSchedule.PersonalScheduleId personalScheduleId) {
+        return personalReader.readPersonalSchedule(personalScheduleId);
     }
 
     @Transactional

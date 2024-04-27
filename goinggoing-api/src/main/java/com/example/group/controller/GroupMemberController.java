@@ -15,10 +15,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v2")
-@RequiredArgsConstructor
 public class GroupMemberController {
     private final GroupMemberService groupMemberService;
     private final UserService userService;
+
+    public GroupMemberController(GroupMemberService groupMemberService, UserService userService) {
+        this.groupMemberService = groupMemberService;
+        this.userService = userService;
+    }
 
     @GetMapping("/group")
     public HttpResponse<List<GroupMemberResponse>> getGroupMember(

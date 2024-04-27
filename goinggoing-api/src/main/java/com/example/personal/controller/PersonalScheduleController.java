@@ -13,15 +13,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
 public class PersonalScheduleController {
     private final PersonalScheduleService personalScheduleService;
+
+    public PersonalScheduleController(PersonalScheduleService personalScheduleService) {
+        this.personalScheduleService = personalScheduleService;
+    }
+
     @GetMapping("/personal/schedule")
-    public ResponseEntity<Object> getPersonalSchedules(
-            @RequestParam Long groupId
+    public ResponseEntity<Object> getPersonalSchedule(
+            @RequestParam Long personalScheduleId
     ) {
-        List<PersonalSchedule> personalSchedules = personalScheduleService.loadPersonalSchedules(new Group.GroupId(groupId));
-        return ResponseEntity.ok().body(personalSchedules);
+        PersonalSchedule getPersonalSchedule = personalScheduleService.loadPersonalSchedule(new PersonalSchedule.PersonalScheduleId(personalScheduleId));
+        return ResponseEntity.ok().body(getPersonalSchedule);
     }
 
     @PutMapping("/personal/schedule")

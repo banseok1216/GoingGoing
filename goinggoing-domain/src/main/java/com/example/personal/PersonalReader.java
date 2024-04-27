@@ -16,9 +16,6 @@ public class PersonalReader {
     public PersonalSchedule readPersonalSchedule(PersonalSchedule.PersonalScheduleId personalScheduleId){
         return personalRepository.readPersonalSchedule(personalScheduleId);
     }
-    public List<PersonalSchedule> readPersonalSchedules(Group.GroupId groupId){
-        return personalRepository.readPersonalSchedules(groupId);
-    }
     public Routine readRoutine(Routine.RoutineId routineId){
         return personalRepository.readRoutine(routineId);
     }

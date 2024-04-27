@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserJpaRepository extends JpaRepository<UserJpaEntity, Long> {
     UserJpaEntity findByUserId(Long userId);
-    Boolean checkByUserId(Long userId);
+    boolean existsByUserId(Long userId);
 }

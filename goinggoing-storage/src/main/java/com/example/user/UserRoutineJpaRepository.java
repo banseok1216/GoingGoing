@@ -11,7 +11,7 @@ public interface UserRoutineJpaRepository extends JpaRepository<UserRoutineJpaEn
     @Modifying
     @Query("UPDATE UserRoutineJpaEntity ur " +
             "SET ur.index = :index " +
-            "WHERE ur.routineId = : routineId")
+            "WHERE ur.routineId = :routineId")
     void updateUserRoutineIndex(
             @Param("routineId") Long routineId,
             @Param("index") Integer index

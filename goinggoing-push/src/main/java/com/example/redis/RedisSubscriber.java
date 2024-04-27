@@ -1,6 +1,5 @@
 package com.example.redis;
 
-import com.example.push.device.service.DeviceTokenService;
 import com.example.message.FirebaseCloudMessageService;
 import com.example.message.MessageDto;
 import com.example.message.MessageDtoConverter;

@@ -17,10 +17,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
-
 public class UserRoutineController {
     private final UserRoutineService userRoutineService;
+
+    public UserRoutineController(UserRoutineService userRoutineService) {
+        this.userRoutineService = userRoutineService;
+    }
 
     @GetMapping("/userRoutine")
     public HttpResponse<List<UserRoutineResponse>> getAllUserRoutine(

@@ -15,7 +15,6 @@ import org.springframework.http.*;
 
 @RestController
 @RequestMapping("/api/v2")
-@RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
@@ -31,6 +30,12 @@ public class UserController {
     private String accessHeaderString;
     @Value("${jwt.refresh.header-string}")
     private String refreshHeaderString;
+
+    public UserController(UserService userService, JwtTokenUtil jwtTokenUtil, DeviceTokenService deviceTokenService) {
+        this.userService = userService;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.deviceTokenService = deviceTokenService;
+    }
 
     @PostMapping("/auth/kakao")
     public HttpResponse<DefaultId> postKakaoLogin(

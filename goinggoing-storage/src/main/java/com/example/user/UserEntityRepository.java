@@ -35,10 +35,9 @@ public class UserEntityRepository implements UserRepository {
         });
     }
 
-
     @Override
     public boolean check(User user) {
-        return userJpaRepository.checkByUserId(user.getId().value());
+        return userJpaRepository.existsByUserId(user.getId().value());
     }
 
     @Override
