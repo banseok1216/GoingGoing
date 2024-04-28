@@ -5,7 +5,7 @@
 //import com.example.goinggoing.group.mapper.GroupMemberMapper;
 //import com.example.goinggoingdomain.domain.group.GroupSchedule;
 //import com.example.goinggoingdomain.domain.personal.PersonalSchedule;
-//import com.example.goinggoingdomain.domain.user.User;
+//import com.example.goinggoingdomain.domain.controller.User;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;
 //import org.mapper.factory.Mappers;
@@ -50,10 +50,10 @@
 //    @Test
 //    @DisplayName("Personal엔티티로 바꾸는 테스트")
 //    public void testToEntity() {
-//        User user = User.builder().userId(1L).build();
+//        User controller = User.builder().userId(1L).build();
 //        GroupSchedule groupSchedule = GroupSchedule.builder().scheduleId(2L).build();
-//        PersonalSchedule result = mapper.toEntity(user, groupSchedule);
-//        assertEquals(user.getUserId(), result.getUser().getUserId());
+//        PersonalSchedule result = mapper.toEntity(controller, groupSchedule);
+//        assertEquals(controller.getUserId(), result.getUser().getUserId());
 //        assertEquals(groupSchedule.getScheduleId(), result.getGroupSchedule().getScheduleId());
 //    }
 //}

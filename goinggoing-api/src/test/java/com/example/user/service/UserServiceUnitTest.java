@@ -1,12 +1,12 @@
-//package com.example.goinggoing.user;
+//package com.example.goinggoing.controller;
 //
 //import static org.junit.jupiter.api.Assertions.assertEquals;
 //import static org.junit.jupiter.api.Assertions.assertNull;
 //import static org.mockito.Mockito.*;
 //
-//import com.example.goinggoing.user.service.UserService;
-//import com.example.goinggoingdomain.domain.user.User;
-//import com.example.goinggoingdomain.domain.user.repository.UserRepository;
+//import com.example.goinggoing.controller.service.UserService;
+//import com.example.goinggoingdomain.domain.controller.User;
+//import com.example.goinggoingdomain.domain.controller.repository.UserRepository;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;
@@ -45,7 +45,7 @@
 //        verify(userRepository, times(1)).save(userArgumentCaptor.capture());
 //        User savedUser = userArgumentCaptor.getValue();
 //        assertEquals(savedUser.getUserNickname(), userNickname);
-//        assertEquals(savedUser.getUserRole(), "user");
+//        assertEquals(savedUser.getUserRole(), "controller");
 //        assertEquals(savedUser.getUserType(), "kakao");
 //        assertEquals(savedUser.getUserEmail(), userEmail);
 //    }
@@ -80,10 +80,10 @@
 //    @DisplayName("특정 ID에 해당하는 사용자 가져오기")
 //    public void testGetUserById() {
 //        Long userId = 1L;
-//        User user = User.builder().userId(userId).build();
-//        when(userRepository.findByUserId(userId)).thenReturn(user);
+//        User controller = User.builder().userId(userId).build();
+//        when(userRepository.findByUserId(userId)).thenReturn(controller);
 //        User retrievedUser = userService.getUser(userId);
-//        assertEquals(user, retrievedUser);
+//        assertEquals(controller, retrievedUser);
 //        verify(userRepository, times(1)).findByUserId(userId);
 //    }
 //    @Test

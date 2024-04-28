@@ -9,8 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController //(1)
-@RequestMapping("/api")
+@RestController
+@RequestMapping("/api/v2")
 public class JwtTokenController {
     @Value("${jwt.token-prefix}")
     private String TOKEN_PREFIX;

@@ -4,8 +4,8 @@
 //import com.example.group.dto.GroupMemeberDto;
 //import com.example.goinggoing.group.mapper.GroupMemberMapper;
 //import com.example.goinggoing.group.service.GroupMemberService;
-//import com.example.goinggoing.user.service.UserService;
-//import com.example.goinggoingdomain.domain.user.User;
+//import com.example.goinggoing.controller.service.UserService;
+//import com.example.goinggoingdomain.domain.controller.User;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;

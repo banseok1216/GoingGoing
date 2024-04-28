@@ -2,13 +2,11 @@ package com.example.user.controller;
 
 import com.example.redis.device.service.DeviceTokenService;
 import com.example.user.User;
-import com.example.user.dto.UserRequest;
-import com.example.user.dto.UserResponse;
+import com.example.user.dto.*;
 import com.example.user.service.UserService;
 import com.example.utils.jwt.JwtTokenUtil;
 import com.example.utils.response.DefaultId;
 import com.example.utils.response.HttpResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
@@ -17,12 +15,8 @@ import org.springframework.http.*;
 @RequestMapping("/api/v2")
 public class UserController {
     private final UserService userService;
-
     private final JwtTokenUtil jwtTokenUtil;
-
     private final DeviceTokenService deviceTokenService;
-
-
     @Value("${jwt.token-prefix}")
     private String tokenPrefix;
 
@@ -39,32 +33,28 @@ public class UserController {
 
     @PostMapping("/auth/kakao")
     public HttpResponse<DefaultId> postKakaoLogin(
-            @RequestBody UserRequest request,
+            @RequestBody UserRequest.UserOauthLogin request,
             @RequestHeader String deviceToken
     ) {
         return handleOAuthLogin(request.toKakaoLoginUser(deviceToken));
     }
-
     @PostMapping("/auth/google")
     public HttpResponse<DefaultId> postGoogleLogin(
-            @RequestBody UserRequest request,
+            @RequestBody UserRequest.UserOauthLogin request,
             @RequestHeader String deviceToken
     ) {
         return handleOAuthLogin(request.toGoogleLoginUser(deviceToken));
     }
-
-
     @GetMapping("/user")
-    public ResponseEntity<Object> getUser(
+    public HttpResponse<UserResponse> getUser(
             @RequestAttribute Long userId
     ) {
         User user = userService.getUser(new User.UserId(userId));
-        return ResponseEntity.ok().body(UserResponse.of(user));
+        return HttpResponse.success(UserResponse.of(user));
     }
-
     @PostMapping("/login")
     public HttpResponse<DefaultId> login(
-            @RequestBody UserRequest request,
+            @RequestBody UserRequest.UserLogin request,
             @RequestHeader String deviceToken
     ) {
         User user = userService.loginDefaultUser(request.toDefaultLoginUser(deviceToken));
@@ -74,7 +64,6 @@ public class UserController {
         headers.add(refreshHeaderString, tokenPrefix + jwtTokenUtil.createRefreshToken(user));
         return HttpResponse.success(DefaultId.of(user.getId().value()));
     }
-
     @DeleteMapping("/logout")
     public HttpResponse<Object> logOut(
             @RequestAttribute Long userId,
@@ -83,13 +72,13 @@ public class UserController {
         deviceTokenService.removeDeviceToken(new User.UserId(userId),deviceToken);
         return HttpResponse.successOnly();
     }
-
     @PostMapping("/register")
-    public HttpResponse<Object> postRegister(@RequestBody UserRequest request) {
+    public HttpResponse<Object> register(
+            @RequestBody UserRequest.UserRegister request
+    ) {
         userService.registUser(request.toDefaultRegisterUser());
         return HttpResponse.successOnly();
     }
-
     private HttpResponse<DefaultId> handleOAuthLogin(
             User user
     ) {
@@ -98,7 +87,6 @@ public class UserController {
         HttpHeaders headers = new HttpHeaders();
         headers.add(accessHeaderString, tokenPrefix + jwtTokenUtil.createAccessToken(loginedUser));
         headers.add(refreshHeaderString, tokenPrefix + jwtTokenUtil.createRefreshToken(loginedUser));
-        return HttpResponse.success(DefaultId.of(user.getId().value()));
+        return HttpResponse.success(DefaultId.of(loginedUser.getId().value()));
     }
-
 }

@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "user", schema = "goinggoing")
+@Table(name = "controller", schema = "goinggoing")
 public class UserJpaEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

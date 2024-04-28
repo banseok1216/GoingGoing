@@ -6,7 +6,7 @@
 //import com.example.goinggoingdomain.domain.personal.PersonalUserRoutineDetail;
 //import com.example.goinggoingdomain.domain.personal.repository.UserRoutineDetailRepository;
 //import com.example.goinggoingdomain.domain.personal.repository.PersonalRoutineRepository;
-//import com.example.goinggoingdomain.domain.user.User;
+//import com.example.goinggoingdomain.domain.controller.User;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //import org.mockito.*;
@@ -63,7 +63,7 @@
 //    void createUserRoutineInfo() {
 //        String routineName = "testRoutineName";
 //        String routineDetailName = "testRoutineDetailName";
-//        User user = new User();
+//        User controller = new User();
 //        ScheduleRoutine personalRoutine = ScheduleRoutine.builder().userRoutineId(1L).userRoutineName(routineName).build();
 //        PersonalUserRoutineDetail personalUserRoutineDetail = PersonalUserRoutineDetail.builder().routineDetailName(routineDetailName).personalRoutine(personalRoutine).build();
 //        PersonalRoutineRequestDto userRoutineDto = new PersonalRoutineRequestDto();
@@ -73,6 +73,6 @@
 //        userRoutineDto.setRoutineDetail(Collections.singletonList(detailDto));
 //        when(personalRoutineRepository.save(any(ScheduleRoutine.class))).thenReturn(personalRoutine);
 //        when(personalRoutineDetailRepository.save(any(PersonalUserRoutineDetail.class))).thenReturn(personalUserRoutineDetail);
-//        personalRoutineService.createPersonalRoutineInfo(userRoutineDto,user);
+//        personalRoutineService.createPersonalRoutineInfo(userRoutineDto,controller);
 //    }
 //}

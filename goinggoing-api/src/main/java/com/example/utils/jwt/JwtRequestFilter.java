@@ -34,7 +34,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwtAccessHeader = request.getHeader(ACCESS_HEADER_STRING);
         String requestURI = request.getRequestURI();
-        if (requestURI.equals("/api/login") || requestURI.equals("/api/oauth/token") || requestURI.equals("/api/register") || requestURI.equals("/api/auth/kakao")) {
+        if (requestURI.equals("/api/v2/login") || requestURI.equals("/api/v2/oauth/token") || requestURI.equals("/api/register") || requestURI.equals("/api/auth/kakao")) {
             filterChain.doFilter(request, response);
             return;
         }

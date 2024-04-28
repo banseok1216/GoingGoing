@@ -8,8 +8,8 @@
 //import com.example.goinggoingdomain.domain.group.repository.GroupScheduleRepository;
 //import com.example.goinggoingdomain.domain.personal.PersonalSchedule;
 //import com.example.goinggoingdomain.domain.personal.repository.PersonalScheduleRepository;
-//import com.example.goinggoingdomain.domain.user.User;
-//import com.example.goinggoingdomain.domain.user.repository.UserRepository;
+//import com.example.goinggoingdomain.domain.controller.User;
+//import com.example.goinggoingdomain.domain.controller.repository.UserRepository;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Test;
@@ -44,8 +44,8 @@
 //        List<PersonalSchedule> personalSchedules = new ArrayList<>();
 //        User testUser1 = User.builder().userId(1L).userNickname("testUser1").build();
 //        User testUser2 = User.builder().userId(2L).userNickname("testUser2").build();
-//        PersonalSchedule personalSchedule1 = PersonalSchedule.builder().user(testUser1).build();
-//        PersonalSchedule personalSchedule2 = PersonalSchedule.builder().user(testUser2).build();
+//        PersonalSchedule personalSchedule1 = PersonalSchedule.builder().controller(testUser1).build();
+//        PersonalSchedule personalSchedule2 = PersonalSchedule.builder().controller(testUser2).build();
 //        personalSchedules.add(personalSchedule1);
 //        personalSchedules.add(personalSchedule2);
 //        GroupMemeberDto groupMemeberDto = new GroupMemeberDto();
@@ -67,11 +67,11 @@
 //        groupMemeberDto.setScheduleId(123L);
 //        groupMemeberDto.setUserId(456L);
 //
-//        User user = User.builder().userId(123L).build();
+//        User controller = User.builder().userId(123L).build();
 //        GroupSchedule groupSchedule =  GroupSchedule.builder().scheduleId(456L).build();
 //        PersonalSchedule savedpersonalSchedule = PersonalSchedule.builder().personalScheduleId(789L).build();
 //
-//        when(userRepository.findByUserId(groupMemeberDto.getUserId())).thenReturn(user);
+//        when(userRepository.findByUserId(groupMemeberDto.getUserId())).thenReturn(controller);
 //        when(groupScheduleRepository.findByScheduleId(groupMemeberDto.getScheduleId())).thenReturn(groupSchedule);
 //        when(personalScheduleRepository.save(any(PersonalSchedule.class))).thenReturn(savedpersonalSchedule);
 //

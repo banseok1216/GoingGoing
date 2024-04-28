@@ -1,9 +1,9 @@
 //package com.example.goinggoing.personal.controller;
 //import com.example.personal.dto.PersonalRoutineRequestDto;
 //import com.example.goinggoing.personal.service.PersonalRoutineService;
-//import com.example.goinggoing.user.service.UserService;
+//import com.example.goinggoing.controller.service.UserService;
 //import com.example.goinggoingdomain.domain.personal.ScheduleRoutine;
-//import com.example.goinggoingdomain.domain.user.User;
+//import com.example.goinggoingdomain.domain.controller.User;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@
 //import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 //import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 //
-//@WebMvcTest(com.example.user.controller.PersonalRoutineController.class)
+//@WebMvcTest(com.example.controller.controller.PersonalRoutineController.class)
 //@AutoConfigureMockMvc(addFilters = false)
 //public class PersonalRoutineControllerTest {
 //    @Autowired

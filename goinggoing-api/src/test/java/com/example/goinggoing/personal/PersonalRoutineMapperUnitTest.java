@@ -3,7 +3,7 @@
 //import com.example.personal.dto.PersonalRoutineResponseDto;
 //import com.example.goinggoing.personal.mapper.PersonalRoutineMapper;
 //import com.example.goinggoingdomain.domain.personal.ScheduleRoutine;
-//import com.example.goinggoingdomain.domain.user.User;
+//import com.example.goinggoingdomain.domain.controller.User;
 //import org.junit.jupiter.api.Test;
 //import org.mapper.factory.Mappers;
 //import java.util.ArrayList;

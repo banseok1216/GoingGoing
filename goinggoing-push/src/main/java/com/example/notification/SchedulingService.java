@@ -2,13 +2,13 @@
 //
 //import com.example.goinggoingdomain.domain.personal.PersonalSchedule;
 //import com.example.goinggoingdomain.domain.personal.repository.PersonalScheduleRepository;
-//import com.example.goinggoingdomain.domain.user.User;
+//import com.example.goinggoingdomain.domain.controller.User;
 //import com.example.message.FirebaseCloudMessageService;
 //import com.example.personal.PersonalReader;
 //import com.example.personal.PersonalSchedule;
 //import com.example.push.config.redissen.DistributeLock;
 //import com.example.push.device.service.DeviceTokenService;
-//import com.example.user.UserReader;
+//import com.example.controller.UserReader;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.scheduling.annotation.Async;
 //import org.springframework.scheduling.annotation.Scheduled;
@@ -51,12 +51,12 @@
 //    public void sendStartNotifications(PersonalSchedule personalSchedule) throws IOException {
 //        List<PersonalSchedule> personalScheduleList = personalScheduleRepository.findAllByUserUserIdWithSchedule(personalSchedule.getGroupSchedule().getScheduleId());
 //        for (PersonalSchedule tempPersonalSchedule : personalScheduleList) {
-//            User user = tempPersonalSchedule.getUser();
-//            if (user != null) {
-//                Long userId = user.getUserId();
+//            User controller = tempPersonalSchedule.getUser();
+//            if (controller != null) {
+//                Long userId = controller.getUserId();
 //                DeviceToken deviceToken = deviceTokenService.getDeviceToken(String.valueOf(userId));
 //                if (deviceToken != null) {
-//                    String userName = user.getUserNickname();
+//                    String userName = controller.getUserNickname();
 //                    firebaseCloudMessageService.sendMessageTo(deviceToken.getDeviceToken(), "친구가 일정을 시작했어요", userName + "님이 일정을 시작했어요");
 //                }
 //            }
@@ -67,12 +67,12 @@
 //    public void sendDoneNotifications(PersonalSchedule personalSchedule) throws IOException {
 //        List<PersonalSchedule> personalScheduleList = personalScheduleRepository.findAllByUserUserIdWithSchedule(personalSchedule.getGroupSchedule().getScheduleId());
 //        for (PersonalSchedule tempPersonalSchedule : personalScheduleList) {
-//            User user = tempPersonalSchedule.getUser();
-//            if (user != null) {
-//                Long userId = user.getUserId();
+//            User controller = tempPersonalSchedule.getUser();
+//            if (controller != null) {
+//                Long userId = controller.getUserId();
 //                DeviceToken deviceToken = deviceTokenService.getDeviceToken(String.valueOf(userId));
 //                if (deviceToken != null) {
-//                    String userName = user.getUserNickname();
+//                    String userName = controller.getUserNickname();
 //                    firebaseCloudMessageService.sendMessageTo(deviceToken.getDeviceToken(), "친구가 일정을 종료했어요", userName + "님이 일정을 종료했어요");
 //                }
 //            }

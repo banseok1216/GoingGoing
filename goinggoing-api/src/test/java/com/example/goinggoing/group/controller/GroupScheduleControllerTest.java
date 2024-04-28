@@ -3,10 +3,10 @@
 //import com.example.group.dto.GroupScheduleRequestDto;
 //import com.example.goinggoing.group.service.GroupScheduleService;
 //import com.example.goinggoing.personal.service.PersonalScheduleService;
-//import com.example.goinggoing.user.service.UserService;
+//import com.example.goinggoing.controller.service.UserService;
 //import com.example.goinggoingdomain.domain.group.GroupSchedule;
 //import com.example.goinggoingdomain.domain.personal.PersonalSchedule;
-//import com.example.goinggoingdomain.domain.user.User;
+//import com.example.goinggoingdomain.domain.controller.User;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
@@ -72,10 +72,10 @@
 //        GroupScheduleRequestDto groupScheduleRequestDto = new GroupScheduleRequestDto();
 //        groupScheduleRequestDto.setScheduleId(1L);
 //        groupScheduleRequestDto.setScheduleName("testScheduleName");
-//        User user = createFakeUser();
+//        User controller = createFakeUser();
 //        GroupSchedule groupSchedule = createFakeSchedule();
 //        when(groupScheduleService.createUserSchedule(any(GroupSchedule.class))).thenReturn(groupSchedule);
-//        when(userService.getUser(1L)).thenReturn(user);
+//        when(userService.getUser(1L)).thenReturn(controller);
 //        mockMvc.perform(post("/api/schedule")
 //                        .contentType(MediaType.APPLICATION_JSON)
 //                        .content(asJsonString(groupScheduleRequestDto))
