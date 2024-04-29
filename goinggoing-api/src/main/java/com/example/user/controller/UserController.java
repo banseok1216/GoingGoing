@@ -33,14 +33,14 @@ public class UserController {
 
     @PostMapping("/auth/kakao")
     public HttpResponse<DefaultId> postKakaoLogin(
-            @RequestBody UserRequest.UserOauthLogin request,
+            @RequestBody UserRequest.oauthLogin request,
             @RequestHeader String deviceToken
     ) {
         return handleOAuthLogin(request.toKakaoLoginUser(deviceToken));
     }
     @PostMapping("/auth/google")
     public HttpResponse<DefaultId> postGoogleLogin(
-            @RequestBody UserRequest.UserOauthLogin request,
+            @RequestBody UserRequest.oauthLogin request,
             @RequestHeader String deviceToken
     ) {
         return handleOAuthLogin(request.toGoogleLoginUser(deviceToken));
@@ -54,7 +54,7 @@ public class UserController {
     }
     @PostMapping("/login")
     public HttpResponse<DefaultId> login(
-            @RequestBody UserRequest.UserLogin request,
+            @RequestBody UserRequest.defaultLogin request,
             @RequestHeader String deviceToken
     ) {
         User user = userService.loginDefaultUser(request.toDefaultLoginUser(deviceToken));
@@ -74,7 +74,7 @@ public class UserController {
     }
     @PostMapping("/register")
     public HttpResponse<Object> register(
-            @RequestBody UserRequest.UserRegister request
+            @RequestBody UserRequest.register request
     ) {
         userService.registUser(request.toDefaultRegisterUser());
         return HttpResponse.successOnly();

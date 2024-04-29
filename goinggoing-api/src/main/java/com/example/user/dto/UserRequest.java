@@ -1,11 +1,11 @@
 package com.example.user.dto;
 import com.example.user.User;
 public record UserRequest(
-        UserLogin loginRequest,
-        UserOauthLogin oauthLoginRequest,
-        UserRegister registerRequest
+        defaultLogin loginRequest,
+        oauthLogin oauthLoginRequest,
+        register registerRequest
     ) {
-    public record UserLogin(
+    public record defaultLogin(
             String userEmail,
             String password
     ) {
@@ -13,7 +13,7 @@ public record UserRequest(
             return User.withoutId(null, userEmail, User.UserType.OAUTH_DEFAULT, new User.Password(password), deviceToken);
         }
     }
-    public record UserOauthLogin(
+    public record oauthLogin(
             String userEmail,
             String userNickname
     ) {
@@ -24,7 +24,7 @@ public record UserRequest(
             return User.withoutId(userNickname, userEmail, User.UserType.OAUTH_GOOGLE, null, deviceToken);
         }
     }
-    public record UserRegister(
+    public record register(
             String userEmail,
             String password,
             String userNickname

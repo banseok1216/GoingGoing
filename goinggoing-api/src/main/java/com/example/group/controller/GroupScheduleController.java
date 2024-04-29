@@ -24,7 +24,7 @@ public class GroupScheduleController {
 
     @PostMapping("/group/schedule")
     public HttpResponse<DefaultId> createGroupSchedule(
-            @RequestBody GroupScheduleRequest request,
+            @RequestBody GroupScheduleRequest.Create request,
             @RequestAttribute Long userId
     ) {
         GroupSchedule groupSchedule = request.toCreateGroupSchedule();
@@ -34,7 +34,7 @@ public class GroupScheduleController {
 
     @PutMapping("/group/schedule")
     public HttpResponse<Object> updateGroupSchedule(
-            @RequestBody GroupScheduleRequest request
+            @RequestBody GroupScheduleRequest.Update request
     ) {
         GroupSchedule groupSchedule = request.toModifyGroupSchedule();
         groupScheduleService.modifyGroupSchedule(groupSchedule);
