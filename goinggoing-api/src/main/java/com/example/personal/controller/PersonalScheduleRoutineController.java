@@ -5,12 +5,10 @@ import com.example.personal.dto.ScheduleRoutineRequest;
 import com.example.personal.service.PersonalScheduleRoutineService;
 import com.example.routine.Routine;
 import com.example.utils.response.HttpResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v2")
 public class PersonalScheduleRoutineController {
     private final PersonalScheduleRoutineService personalScheduleRoutineService;
 
@@ -20,19 +18,19 @@ public class PersonalScheduleRoutineController {
 
     @PutMapping("/routineSchedule")
     public HttpResponse<Object> modifyPersonalScheduleRoutine(
-            @RequestBody ScheduleRoutineRequest request,
+            @RequestBody ScheduleRoutineRequest.Update request,
             @RequestParam Long personalScheduleId
     ) {
-        personalScheduleRoutineService.modifyScheduleRoutine(new PersonalSchedule.PersonalScheduleId(personalScheduleId),request.mapToUpdateRoutine());
+        personalScheduleRoutineService.modifyScheduleRoutine(new PersonalSchedule.PersonalScheduleId(personalScheduleId),request.toUpdateRoutine());
         return HttpResponse.successOnly();
     }
 
     @PostMapping("/routineSchedule")
-    public ResponseEntity<Object> createPersonalScheduleRoutine(
-            @RequestBody ScheduleRoutineRequest request,
+    public HttpResponse<Object> createPersonalScheduleRoutine(
+            @RequestBody ScheduleRoutineRequest.Create request,
             @RequestParam Long personalScheduleId) {
-        personalScheduleRoutineService.createScheduleRoutine(new PersonalSchedule.PersonalScheduleId(personalScheduleId),request.mapToCreateRoutine());
-        return ResponseEntity.ok().body("success");
+        personalScheduleRoutineService.createScheduleRoutine(new PersonalSchedule.PersonalScheduleId(personalScheduleId),request.toCreateRoutine());
+        return HttpResponse.successOnly();
     }
 
     @DeleteMapping("/routineSchedule")

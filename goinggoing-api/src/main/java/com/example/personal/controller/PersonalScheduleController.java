@@ -1,18 +1,13 @@
 package com.example.personal.controller;
-import com.example.group.Group;
-import com.example.group.GroupSchedule;
 import com.example.personal.PersonalSchedule;
 import com.example.personal.dto.PersonalScheduleRequest;
+import com.example.personal.dto.PersonalScheduleResponse;
 import com.example.personal.service.PersonalScheduleService;
 import com.example.utils.response.HttpResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v2")
 public class PersonalScheduleController {
     private final PersonalScheduleService personalScheduleService;
 
@@ -21,11 +16,11 @@ public class PersonalScheduleController {
     }
 
     @GetMapping("/personal/schedule")
-    public ResponseEntity<Object> getPersonalSchedule(
+    public HttpResponse<PersonalScheduleResponse> getPersonalSchedule(
             @RequestParam Long personalScheduleId
     ) {
         PersonalSchedule getPersonalSchedule = personalScheduleService.loadPersonalSchedule(new PersonalSchedule.PersonalScheduleId(personalScheduleId));
-        return ResponseEntity.ok().body(getPersonalSchedule);
+        return HttpResponse.success(PersonalScheduleResponse.of(getPersonalSchedule));
     }
 
     @PutMapping("/personal/schedule")

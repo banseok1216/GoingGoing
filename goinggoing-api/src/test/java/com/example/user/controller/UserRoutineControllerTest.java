@@ -51,11 +51,10 @@ public class UserRoutineControllerTest {
 
     @Test
     public void testGetAllUserRoutine() throws Exception {
-        List<Routine> routineList = Arrays.asList(
+        RoutineWindow routineWindow = new RoutineWindow(Arrays.asList(
                 Routine.withId(new Routine.RoutineId(123L), 1L, "testName1", 1),
                 Routine.withId(new Routine.RoutineId(456L), 2L, "testName2", 2)
-        );
-        RoutineWindow routineWindow = new RoutineWindow(routineList);
+        ));
         Mockito.when(userRoutineService.getAllUserRoutine(new User.UserId(123L))).thenReturn(routineWindow);
         mockMvc.perform(get("/api/v2/userRoutine")
                         .requestAttr("userId", 123L))
