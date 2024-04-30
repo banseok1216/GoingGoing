@@ -1,5 +1,4 @@
 package com.example.user.controller;
-import com.example.redis.device.service.DeviceTokenService;
 import com.example.routine.Routine;
 import com.example.routine.RoutineWindow;
 import com.example.user.User;

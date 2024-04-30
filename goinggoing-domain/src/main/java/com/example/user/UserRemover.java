@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserRemover {
     private final UserRepository userRepository;
-    public void removeUser(User user){
-        userRepository.removeUser(user);
+    public void logout(User user){
+        userRepository.logout(user);
     }
     public void removeUserRoutine(Routine routine){
         userRepository.removeUserRoutine(routine);

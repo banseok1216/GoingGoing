@@ -6,35 +6,28 @@ import static org.mockito.Mockito.*;
 import com.example.error.BusinessException;
 import com.example.error.ErrorCode;
 import com.example.user.*;
-import com.example.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.mockito.Mockito.when;
 
 public class UserServiceUnitTest {
     @Mock
     private UserChecker userChecker;
-
     @Mock
     private UserWriter userWriter;
-
     @Mock
     private UserReader userReader;
     @Mock
     private UserCachedReader userCachedReader;
-
     @InjectMocks
     private UserService userService;
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
-
     @Captor
     ArgumentCaptor<User> argumentCaptor = ArgumentCaptor.forClass(User.class);
 

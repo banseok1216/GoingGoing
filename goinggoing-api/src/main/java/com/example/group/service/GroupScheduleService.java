@@ -13,7 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroupScheduleService {
     private final GroupReader groupReader;
-    private final UserReader userReader;
     private final GroupWriter groupWriter;
     private final GroupRemover groupRemover;
 
@@ -29,13 +28,11 @@ public class GroupScheduleService {
         groupWriter.updateGroupSchedule(newGroupSchedule);
     }
 
-    public Group.GroupId createGroupSchedule(GroupSchedule groupSchedule, User.UserId userId){
-        User user = userReader.readUser(userId);
+    public Group.GroupId createGroupSchedule(GroupSchedule groupSchedule, User user){
         return groupWriter.saveGroupSchedule(groupSchedule, user);
     }
 
-    public List<Group> loadGroup(User.UserId userId){
-        User user = userReader.readUser(userId);
+    public List<Group> loadGroup(User user){
         return groupReader.readGroupList(user);
     }
     @Transactional

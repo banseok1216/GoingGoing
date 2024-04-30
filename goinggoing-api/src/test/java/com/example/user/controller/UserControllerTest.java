@@ -1,5 +1,4 @@
 package com.example.user.controller;
-import com.example.redis.device.service.DeviceTokenService;
 import com.example.user.User;
 import com.example.user.controller.UserController;
 import com.example.user.service.UserService;
@@ -39,9 +38,6 @@ public class UserControllerTest {
     @MockBean
     private JwtTokenUtil jwtTokenUtil;
 
-    @MockBean
-    private DeviceTokenService deviceTokenService;
-
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -73,7 +69,6 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
         verify(userService).loginOAuthUser(userCaptor.capture());
         assertEquals(User.UserType.OAUTH_KAKAO, userCaptor.getValue().getUserType());
-        verify(deviceTokenService).setDeviceToken(user);
     }
     @Test
     public void testGoogleLogin() throws Exception {
@@ -90,7 +85,6 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
         verify(userService).loginOAuthUser(userCaptor.capture());
         assertEquals(User.UserType.OAUTH_GOOGLE, userCaptor.getValue().getUserType());
-        verify(deviceTokenService).setDeviceToken(user);
     }
     @Test
     public void testLogOut() throws Exception {
@@ -100,8 +94,6 @@ public class UserControllerTest {
                         .requestAttr("userId", String.valueOf(userId))
                         .header("deviceToken", deviceToken))
                 .andExpect(status().isOk());
-
-        verify(deviceTokenService, times(1)).removeDeviceToken(new User.UserId(userId), deviceToken);
     }
     @Test
     public void testLogin() throws Exception {
@@ -116,7 +108,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.data.id").value(user.getId().value()))
                 .andExpect(status().isOk());
         verify(userService).loginDefaultUser(any(User.class));
-        verify(deviceTokenService).setDeviceToken(user);
     }
     @Test
     public void testGetUser() throws Exception {

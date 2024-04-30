@@ -37,7 +37,8 @@ public class GroupMemberController {
             @RequestAttribute Long userId,
             @RequestParam Long groupId
     ) {
-        PersonalSchedule.PersonalScheduleId personalScheduleId = groupMemberService.addGroupMember(new User.UserId(userId), new Group.GroupId(groupId));
+       User user = userService.getUser(new User.UserId(userId));
+        PersonalSchedule.PersonalScheduleId personalScheduleId = groupMemberService.addGroupMember(user, new Group.GroupId(groupId));
         return HttpResponse.success(DefaultId.of(personalScheduleId.value()));
     }
 

@@ -63,7 +63,7 @@ public class UserEntityRepository implements UserRepository {
     }
 
     @Override
-    public void removeUser(User user) {
+    public void logout(User user) {
         userJpaRepository.deleteById(user.getId().value());
     }
 

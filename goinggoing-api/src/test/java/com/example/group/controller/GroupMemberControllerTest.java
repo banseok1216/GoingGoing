@@ -69,6 +69,7 @@ public class GroupMemberControllerTest {
     public void testAppendGroupMember() throws Exception {
         PersonalSchedule.PersonalScheduleId personalScheduleId = new PersonalSchedule.PersonalScheduleId(123L);
         when(groupMemberService.addGroupMember(any(),any())).thenReturn(personalScheduleId);
+        when(userService.getUser(any())).thenReturn(User.withId(new User.UserId(123L),null,null,null,null,null));
         mockMvc.perform(post("/api/v2/group")
                         .param("groupId","123")
                         .requestAttr("userId","123"))

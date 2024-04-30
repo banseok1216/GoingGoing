@@ -30,6 +30,7 @@ public class User {
         return new User(userId, userNickname, userEmail, userType, password, deviceToken);
     }
 
+
     public record UserId(Long value) {}
 
     public record Password(String password) {

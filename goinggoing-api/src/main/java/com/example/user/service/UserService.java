@@ -41,7 +41,6 @@ public class UserService {
             throw new BusinessException(USER_LOGIN_PASSWORD_FAIL);
         }
     }
-
     public void registerUser(User userRegister) {
         userChecker.isDuplicate(userRegister);
         User newUser = User.withoutId(
@@ -60,9 +59,9 @@ public class UserService {
         userWriter.saveUser(newUser);
         userCachedReader.put(updateUser.getId().value().toString(), newUser);
     }
-    public void deleteUser(User user) {
-        User savedUser = getUser(user.getId());
-        userRemover.removeUser(savedUser);
-        userCachedReader.remove(user.getId().value().toString());
+    public void logout(User.UserId userId) {
+        User savedUser = getUser(userId);
+        userRemover.logout(savedUser);
+        userCachedReader.remove(userId.toString());
     }
 }

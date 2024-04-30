@@ -1,6 +1,5 @@
 package com.example.user.controller;
 
-import com.example.redis.device.service.DeviceTokenService;
 import com.example.user.User;
 import com.example.user.dto.*;
 import com.example.user.service.UserService;
@@ -16,7 +15,6 @@ import org.springframework.http.*;
 public class UserController {
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil;
-    private final DeviceTokenService deviceTokenService;
     @Value("${jwt.token-prefix}")
     private String tokenPrefix;
 
@@ -25,10 +23,9 @@ public class UserController {
     @Value("${jwt.refresh.header-string}")
     private String refreshHeaderString;
 
-    public UserController(UserService userService, JwtTokenUtil jwtTokenUtil, DeviceTokenService deviceTokenService) {
+    public UserController(UserService userService, JwtTokenUtil jwtTokenUtil) {
         this.userService = userService;
         this.jwtTokenUtil = jwtTokenUtil;
-        this.deviceTokenService = deviceTokenService;
     }
 
     @PostMapping("/auth/kakao")
@@ -58,7 +55,6 @@ public class UserController {
             @RequestHeader String deviceToken
     ) {
         User user = userService.loginDefaultUser(request.toDefaultLoginUser(deviceToken));
-        deviceTokenService.setDeviceToken(user);
         HttpHeaders headers = new HttpHeaders();
         headers.add(accessHeaderString, tokenPrefix + jwtTokenUtil.createAccessToken(user));
         headers.add(refreshHeaderString, tokenPrefix + jwtTokenUtil.createRefreshToken(user));
@@ -66,10 +62,9 @@ public class UserController {
     }
     @DeleteMapping("/logout")
     public HttpResponse<Object> logOut(
-            @RequestAttribute Long userId,
-            @RequestHeader String deviceToken
+            @RequestAttribute Long userId
     ){
-        deviceTokenService.removeDeviceToken(new User.UserId(userId),deviceToken);
+        userService.logout(new User.UserId(userId));
         return HttpResponse.successOnly();
     }
     @PostMapping("/register")
@@ -83,7 +78,6 @@ public class UserController {
             User user
     ) {
         User loginedUser = userService.loginOAuthUser(user);
-        deviceTokenService.setDeviceToken(loginedUser);
         HttpHeaders headers = new HttpHeaders();
         headers.add(accessHeaderString, tokenPrefix + jwtTokenUtil.createAccessToken(loginedUser));
         headers.add(refreshHeaderString, tokenPrefix + jwtTokenUtil.createRefreshToken(loginedUser));

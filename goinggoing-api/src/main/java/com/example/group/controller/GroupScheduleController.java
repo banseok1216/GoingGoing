@@ -3,12 +3,11 @@ package com.example.group.controller;
 import com.example.group.Group;
 import com.example.group.GroupSchedule;
 import com.example.group.dto.GroupScheduleRequest;
-import com.example.group.dto.GroupScheduleResponse;
 import com.example.group.service.GroupScheduleService;
 import com.example.user.User;
+import com.example.user.service.UserService;
 import com.example.utils.response.DefaultId;
 import com.example.utils.response.HttpResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +16,11 @@ import java.util.List;
 @RequestMapping("/api/v2")
 public class GroupScheduleController {
     private final GroupScheduleService groupScheduleService;
+    private final UserService userService;
 
-    public GroupScheduleController(GroupScheduleService groupScheduleService) {
+    public GroupScheduleController(GroupScheduleService groupScheduleService, UserService userService) {
         this.groupScheduleService = groupScheduleService;
+        this.userService = userService;
     }
 
     @PostMapping("/group/schedule")
@@ -28,7 +29,8 @@ public class GroupScheduleController {
             @RequestAttribute Long userId
     ) {
         GroupSchedule groupSchedule = request.toCreateGroupSchedule();
-        Group.GroupId groupId = groupScheduleService.createGroupSchedule(groupSchedule,new User.UserId(userId));
+        User user = userService.getUser(new User.UserId(userId));
+        Group.GroupId groupId = groupScheduleService.createGroupSchedule(groupSchedule,user);
         return HttpResponse.success(DefaultId.of(groupId.value()));
     }
 

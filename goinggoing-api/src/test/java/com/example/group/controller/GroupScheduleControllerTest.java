@@ -4,6 +4,7 @@ import com.example.group.Group;
 import com.example.group.GroupSchedule;
 import com.example.group.service.GroupScheduleService;
 import com.example.user.User;
+import com.example.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,13 @@ public class GroupScheduleControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private GroupScheduleService groupScheduleService;
+    @MockBean
+    private UserService userService;
 
     @Test
     public void testCreateGroupSchedule() throws Exception {
         when(groupScheduleService.createGroupSchedule(any(),any())).thenReturn(new Group.GroupId(123L));
+        when(userService.getUser(any())).thenReturn(User.withId(new User.UserId(123L),null,null,null,null,null));
         mockMvc.perform(post("/api/v2/group/schedule")
                         .requestAttr("userId",123L)
                         .contentType(MediaType.APPLICATION_JSON)
