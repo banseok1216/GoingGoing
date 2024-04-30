@@ -1,11 +1,10 @@
-<img width="1267" alt="goinggoing" src="https://github.com/banseok1216/GoingGoing/assets/114564687/8473e02a-eb28-4479-a057-30efcaac60c6">
-
+![KakaoTalk_20240430_163159921](https://github.com/banseok1216/GoingGoing/assets/114564687/c87f30af-6077-4374-9e16-c1ed8c156359)
 - 일정을 기록하고 기억하기 위한 플래너
 - 나만의 외출 준비 루틴을 계획
 - 나의 준비 상황을 일행과 공유해주는 푸시 알림
 
 # Back-End
-
+<img width="1267" alt="goinggoing" src="https://github.com/banseok1216/GoingGoing/assets/114564687/8473e02a-eb28-4479-a057-30efcaac60c6">
 - 멀티 모듈 사용
     - common 모듈, api 모듈, domain 모듈, storage 모듈으로 관심사 분리
 - JPA N+1 문제 해결
