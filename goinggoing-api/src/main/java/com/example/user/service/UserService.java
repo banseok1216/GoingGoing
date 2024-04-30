@@ -1,8 +1,11 @@
 package com.example.user.service;
 
+import com.example.error.BusinessException;
 import com.example.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static com.example.error.ErrorCode.USER_LOGIN_PASSWORD_FAIL;
 
 @Service
 @RequiredArgsConstructor
@@ -21,37 +24,34 @@ public class UserService {
 
     public User getUser(User.UserId id) {
         User cachedUser = userCachedReader.get(id.value().toString());
-        if (cachedUser != null) {
-            return cachedUser;
-        } else {
+        if (cachedUser == null) {
             User user = userReader.readUser(id);
-            if (user != null) {
-                userCachedReader.put(id.value().toString(), user);
-            }
+            userCachedReader.put(id.value().toString(), user);
             return user;
+        } else {
+            return cachedUser;
         }
     }
 
     public User loginDefaultUser(User userLogin) {
         User user = userReader.readUser(userLogin.getId());
-        if (user != null && userLogin.getPassword().matches(user.getPassword().password())) {
+        if (userLogin.getPassword().matches(user.getPassword().password())) {
             return user;
         } else {
-            return null;
+            throw new BusinessException(USER_LOGIN_PASSWORD_FAIL);
         }
     }
 
-    public User registUser(User userRegister) {
+    public void registerUser(User userRegister) {
         userChecker.isDuplicate(userRegister);
         User newUser = User.withoutId(
                 userRegister.getUserNickname(),
                 userRegister.getUserEmail(),
                 userRegister.getUserType(),
-                new User.Password(userRegister.getPassword().hashPassword())
+                userRegister.getPassword().hashPassword()
                 , null
         );
         userWriter.saveUser(newUser);
-        return newUser;
     }
 
     public void modifyUser(User updateUser) {
@@ -60,7 +60,6 @@ public class UserService {
         userWriter.saveUser(newUser);
         userCachedReader.put(updateUser.getId().value().toString(), newUser);
     }
-
     public void deleteUser(User user) {
         User savedUser = getUser(user.getId());
         userRemover.removeUser(savedUser);

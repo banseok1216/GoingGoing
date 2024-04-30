@@ -33,18 +33,17 @@ public class User {
     public record UserId(Long value) {}
 
     public record Password(String password) {
-        public String hashPassword() {
+        public Password hashPassword() {
             try {
                 MessageDigest digest = MessageDigest.getInstance("SHA-256");
                 byte[] hash = digest.digest(password.getBytes());
-                return Base64.getEncoder().encodeToString(hash);
+                return new Password(Base64.getEncoder().encodeToString(hash));
             } catch (NoSuchAlgorithmException e) {
                 return null;
             }
         }
-
         public boolean matches(String hashedPassword) {
-            return hashPassword().equals(hashedPassword);
+            return hashPassword().password.equals(hashedPassword);
         }
     }
 

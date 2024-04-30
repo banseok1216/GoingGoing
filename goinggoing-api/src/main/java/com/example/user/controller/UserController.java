@@ -76,7 +76,7 @@ public class UserController {
     public HttpResponse<Object> register(
             @RequestBody UserRequest.register request
     ) {
-        userService.registUser(request.toDefaultRegisterUser());
+        userService.registerUser(request.toDefaultRegisterUser());
         return HttpResponse.successOnly();
     }
     private HttpResponse<DefaultId> handleOAuthLogin(

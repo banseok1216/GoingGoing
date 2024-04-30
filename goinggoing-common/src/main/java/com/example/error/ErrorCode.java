@@ -18,7 +18,7 @@ public enum ErrorCode {
     USER_NOT_FOUND("USER_001", "회원을 찾을 수 없습니다."),
     USER_IS_DUPLICATE("USER_002", "회원이 중복되었습니다."),
     USER_LOGIN_PASSWORD_FAIL("USER_003", "로그인 비밀번호가 잘못 되었습니다."),
-    USER_ROUTINE_NOT_FOUND("USER_004", "회원을 찾을 수 없습니다."),
+    USER_ROUTINE_NOT_FOUND("USER_004", "회원 루틴을 찾을 수 없습니다."),
     GROUP_NOT_FOUND("GROUP_011", "그룹을 찾을 수 없습니다.");
 
 

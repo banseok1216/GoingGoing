@@ -53,7 +53,7 @@ public class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"userEmail\": \"test@example.com\", \"password\": \"testPassword\"}"))
                 .andExpect(status().isOk());
-        verify(userService, times(1)).registUser(argThat(user ->
+        verify(userService, times(1)).registerUser(argThat(user ->
                 user.getUserEmail().equals("test@example.com") &&
                         user.getPassword().password().equals("testPassword")
         ));
