@@ -17,22 +17,18 @@ public class UserRoutineService {
     private final UserRemover userRemover;
     private final UserWriter userWriter;
 
-    public RoutineWindow getAllUserRoutine(User.UserId userId) {
-        return userReader.readUserRoutines(userId);
+    public RoutineWindow getAllUserRoutine(User user) {
+        return userReader.readUserRoutines(user.getId());
     }
 
     @Transactional
-    public void deleteUserRoutine(User.UserId userId,Routine.RoutineId userRoutineId) {
-        User user = userReader.readUser(userId);
-        RoutineWindow routineWindow = userReader.readUserRoutines(userId);
-        Routine userRoutine = userReader.readUserRoutine(userRoutineId);
-        userRemover.removeUserRoutine(userRoutine);
-        routineWindow.changeRoutineOrderByRemove(userRoutine);
+    public void deleteUserRoutine(User user,Routine.RoutineId userRoutineId) {
+        RoutineWindow routineWindow = userReader.readUserRoutines(user.getId());
+        routineWindow.changeRoutineRemove(userRoutineId);
         userWriter.saveUserRoutines(routineWindow);
     }
 
-    public Routine.RoutineId createUserRoutine(Routine routine, User.UserId userId) {
-        User user = userReader.readUser(userId);
+    public Routine.RoutineId createUserRoutine(Routine routine, User user) {
         return userWriter.saveUserRoutine(routine,user);
     }
 }

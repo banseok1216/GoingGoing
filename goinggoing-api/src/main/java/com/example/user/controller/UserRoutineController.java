@@ -6,6 +6,7 @@ import com.example.user.User;
 import com.example.user.dto.UserRoutineRequest;
 import com.example.user.dto.UserRoutineResponse;
 import com.example.user.service.UserRoutineService;
+import com.example.user.service.UserService;
 import com.example.utils.response.DefaultId;
 import com.example.utils.response.HttpResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,16 +20,18 @@ import java.util.List;
 @RequestMapping("/api/v2")
 public class UserRoutineController {
     private final UserRoutineService userRoutineService;
+    private final UserService userService;
 
-    public UserRoutineController(UserRoutineService userRoutineService) {
+    public UserRoutineController(UserRoutineService userRoutineService, UserService userService) {
         this.userRoutineService = userRoutineService;
+        this.userService = userService;
     }
 
     @GetMapping("/userRoutine")
     public HttpResponse<List<UserRoutineResponse>> getAllUserRoutine(
             @RequestAttribute Long userId
     ) {
-        RoutineWindow routineWindow = userRoutineService.getAllUserRoutine(new User.UserId(userId));
+        RoutineWindow routineWindow = userRoutineService.getAllUserRoutine(userService.getUser(new User.UserId(userId)));
         return HttpResponse.success(UserRoutineResponse.of(routineWindow));
     }
 
@@ -37,7 +40,7 @@ public class UserRoutineController {
             @RequestAttribute Long userId,
             @RequestParam Long userRoutineId
     ) {
-        userRoutineService.deleteUserRoutine(new User.UserId(userId),new Routine.RoutineId(userRoutineId));
+        userRoutineService.deleteUserRoutine(userService.getUser(new User.UserId(userId)),new Routine.RoutineId(userRoutineId));
         return HttpResponse.successOnly();
     }
 
@@ -46,7 +49,7 @@ public class UserRoutineController {
             @RequestAttribute Long userId,
             @RequestBody UserRoutineRequest userRoutineRequest
     ) {
-        Routine.RoutineId routineId = userRoutineService.createUserRoutine(userRoutineRequest.toRoutine(),new User.UserId(userId));
+        Routine.RoutineId routineId = userRoutineService.createUserRoutine(userRoutineRequest.toRoutine(),userService.getUser(new User.UserId(userId)));
         return HttpResponse.success(DefaultId.of(routineId.value()));
     }
 }

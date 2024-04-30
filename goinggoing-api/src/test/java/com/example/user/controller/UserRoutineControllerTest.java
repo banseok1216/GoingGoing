@@ -1,13 +1,14 @@
 package com.example.user.controller;
-
-import com.example.group.GroupSchedule;
 import com.example.redis.device.service.DeviceTokenService;
 import com.example.routine.Routine;
 import com.example.routine.RoutineWindow;
 import com.example.user.User;
+import com.example.user.controller.UserController;
 import com.example.user.service.UserRoutineService;
 import com.example.user.service.UserService;
+
 import com.example.utils.jwt.JwtTokenUtil;
+import com.example.utils.response.DefaultId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -19,21 +20,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static reactor.core.publisher.Mono.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserRoutineController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -43,6 +39,9 @@ public class UserRoutineControllerTest {
 
     @MockBean
     private UserRoutineService userRoutineService;
+    @MockBean
+    private UserService userService;
+
 
     @BeforeEach
     public void setUp() {
@@ -55,7 +54,9 @@ public class UserRoutineControllerTest {
                 Routine.withId(new Routine.RoutineId(123L), 1L, "testName1", 1),
                 Routine.withId(new Routine.RoutineId(456L), 2L, "testName2", 2)
         ));
-        Mockito.when(userRoutineService.getAllUserRoutine(new User.UserId(123L))).thenReturn(routineWindow);
+        User user = User.withId(new User.UserId(123L), null, null, null, null, null);
+        when(userRoutineService.getAllUserRoutine(user)).thenReturn(routineWindow);
+        when(userService.getUser(user.getId())).thenReturn(user);
         mockMvc.perform(get("/api/v2/userRoutine")
                         .requestAttr("userId", 123L))
                 .andExpect(jsonPath("$.code").value(200))
@@ -65,25 +66,29 @@ public class UserRoutineControllerTest {
                 .andExpect(jsonPath("$.data[0].routineName").value("testName1"))
                 .andExpect(jsonPath("$.data[0].index").value("1"))
                 .andExpect(status().isOk());
-        verify(userRoutineService).getAllUserRoutine(new User.UserId(123L));
+        verify(userRoutineService).getAllUserRoutine(user);
     }
     @Test
     public void testDeleteUserRoutine() throws Exception {
+        User user = User.withId(new User.UserId(123L), null, null, null, null, null);
+        when(userService.getUser(user.getId())).thenReturn(user);
         mockMvc.perform(delete("/api/v2/userRoutine")
                         .requestAttr("userId", 123L)
                         .param("userRoutineId","456"))
                 .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.message").value("Success"))
                 .andExpect(status().isOk());
-        verify(userRoutineService).deleteUserRoutine(new User.UserId(123L),new Routine.RoutineId(456L));
+        verify(userRoutineService).deleteUserRoutine(user,new Routine.RoutineId(456L));
     }
     @Test
     public void testCreateUserRoutine() throws Exception {
         ArgumentCaptor<Routine> argumentCaptor = ArgumentCaptor.forClass(Routine.class);
-        Mockito.when(userRoutineService.createUserRoutine(
+        User user = User.withId(new User.UserId(123L), null, null, null, null, null);
+        when(userRoutineService.createUserRoutine(
                         argumentCaptor.capture(),
-                        Mockito.eq(new User.UserId(123L))))
+                        Mockito.eq(user)))
                 .thenReturn(new Routine.RoutineId(456L));
+        when(userService.getUser(user.getId())).thenReturn(user);
         mockMvc.perform(post("/api/v2/userRoutine")
                         .requestAttr("userId", 123L)
                         .param("userRoutineId", "456")
@@ -97,7 +102,7 @@ public class UserRoutineControllerTest {
                 .andExpect(status().isOk());
         verify(userRoutineService).createUserRoutine(
                 argumentCaptor.capture(),
-                Mockito.eq(new User.UserId(123L)));
+                Mockito.eq(user));
         Routine capturedRoutine = argumentCaptor.getValue();
         assertEquals(123L, capturedRoutine.getRoutineTime());
         assertEquals("testName", capturedRoutine.getRoutineName());
