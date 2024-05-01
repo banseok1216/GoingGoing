@@ -1,11 +1,10 @@
 package com.example.personal;
 
-import com.example.group.Group;
+import com.example.group.model.Group;
 import com.example.group.GroupJpaEntity;
-import com.example.group.GroupScheduleJpaEntity;
-import com.example.routine.Routine;
-import com.example.routine.RoutineWindow;
-import com.example.user.User;
+import com.example.personal.model.PersonalSchedule;
+import com.example.routine.domain.Routine;
+import com.example.routine.domain.RoutineWindow;
 import com.example.user.UserJpaEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -13,9 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Getter

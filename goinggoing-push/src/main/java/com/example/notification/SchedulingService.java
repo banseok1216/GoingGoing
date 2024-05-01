@@ -4,8 +4,8 @@
 //import com.example.goinggoingdomain.domain.personal.repository.PersonalScheduleRepository;
 //import com.example.goinggoingdomain.domain.controller.User;
 //import com.example.message.FirebaseCloudMessageService;
-//import com.example.personal.PersonalReader;
-//import com.example.personal.PersonalSchedule;
+//import com.example.personal.service.PersonalReader;
+//import com.example.personal.model.PersonalSchedule;
 //import com.example.push.config.redissen.DistributeLock;
 //import com.example.push.device.service.DeviceTokenService;
 //import com.example.controller.UserReader;

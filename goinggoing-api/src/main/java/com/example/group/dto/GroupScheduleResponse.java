@@ -1,8 +1,6 @@
 package com.example.group.dto;
 
-import com.example.group.GroupSchedule;
-import com.example.routine.RoutineWindow;
-import com.example.user.dto.UserRoutineResponse;
+import com.example.group.model.GroupSchedule;
 
 import java.time.LocalDateTime;
 import java.util.List;

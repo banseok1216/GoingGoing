@@ -1,5 +1,5 @@
 package com.example.user.dto;
-import com.example.user.User;
+import com.example.user.domain.User;
 public record UserRequest(
         defaultLogin loginRequest,
         oauthLogin oauthLoginRequest,

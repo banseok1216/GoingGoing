@@ -1,5 +1,5 @@
 package com.example.personal.controller;
-import com.example.personal.PersonalSchedule;
+import com.example.personal.model.PersonalSchedule;
 import com.example.personal.dto.PersonalScheduleRequest;
 import com.example.personal.dto.PersonalScheduleResponse;
 import com.example.personal.service.PersonalScheduleService;

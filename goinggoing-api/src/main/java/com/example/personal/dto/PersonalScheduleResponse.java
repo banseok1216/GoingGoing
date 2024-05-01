@@ -1,13 +1,9 @@
 package com.example.personal.dto;
 
-import com.example.personal.PersonalSchedule;
-import com.example.routine.RoutineWindow;
-import lombok.Getter;
-import lombok.Setter;
+import com.example.personal.model.PersonalSchedule;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public record PersonalScheduleResponse(
         Long personalScheduleId,

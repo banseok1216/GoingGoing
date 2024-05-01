@@ -1,6 +1,6 @@
 package com.example.personal.dto;
 
-import com.example.routine.Routine;
+import com.example.routine.domain.Routine;
 
 public record ScheduleRoutineRequest(
         Create create,

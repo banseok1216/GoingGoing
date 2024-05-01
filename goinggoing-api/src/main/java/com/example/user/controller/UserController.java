@@ -1,6 +1,6 @@
 package com.example.user.controller;
 
-import com.example.user.User;
+import com.example.user.domain.User;
 import com.example.user.dto.*;
 import com.example.user.service.UserService;
 import com.example.utils.jwt.JwtTokenUtil;

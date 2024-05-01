@@ -1,8 +1,9 @@
 package com.example.group.controller;
 
 import com.example.group.service.GroupMemberService;
-import com.example.personal.PersonalSchedule;
-import com.example.user.User;
+import com.example.personal.model.PersonalSchedule;
+import com.example.redis.pub.RedisPublisher;
+import com.example.user.domain.User;
 import com.example.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,9 @@ public class GroupMemberControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private GroupMemberService groupMemberService;
+
+    @MockBean
+    private RedisPublisher redisPublisher;
     @MockBean
     private UserService userService;
 
@@ -63,7 +67,6 @@ public class GroupMemberControllerTest {
                 .andExpect(jsonPath("$.code").value(200))
                 .andExpect(jsonPath("$.message").value("Success"))
                 .andExpect(status().isOk());
-        groupMemberService.sendInviteMessage(any(),any(User.class));
     }
     @Test
     public void testAppendGroupMember() throws Exception {

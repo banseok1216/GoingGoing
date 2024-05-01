@@ -1,14 +1,15 @@
 package com.example.group.controller;
 
-import com.example.group.Group;
+import com.example.group.model.Group;
 import com.example.group.dto.GroupMemberResponse;
 import com.example.group.service.GroupMemberService;
-import com.example.personal.PersonalSchedule;
-import com.example.user.User;
+import com.example.personal.model.PersonalSchedule;
+import com.example.redis.message.Message;
+import com.example.redis.pub.RedisPublisher;
+import com.example.user.domain.User;
 import com.example.user.service.UserService;
 import com.example.utils.response.DefaultId;
 import com.example.utils.response.HttpResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +19,12 @@ import java.util.List;
 public class GroupMemberController {
     private final GroupMemberService groupMemberService;
     private final UserService userService;
+    private final RedisPublisher redisPublisher;
 
-    public GroupMemberController(GroupMemberService groupMemberService, UserService userService) {
+    public GroupMemberController(GroupMemberService groupMemberService, UserService userService, RedisPublisher redisPublisher) {
         this.groupMemberService = groupMemberService;
         this.userService = userService;
+        this.redisPublisher = redisPublisher;
     }
 
     @GetMapping("/group")
@@ -47,9 +50,9 @@ public class GroupMemberController {
             @RequestAttribute Long userId,
             @RequestParam Long groupId
     ) {
-        groupMemberService.sendInviteMessage(
-                new Group.GroupId(groupId),
-                userService.getUser(new User.UserId(userId)));
+        User user = userService.getUser(new User.UserId(userId));
+        Message message = Message.of(user,new Group.GroupId(groupId));
+        redisPublisher.publish(message);
         return HttpResponse.successOnly();
     }
 }

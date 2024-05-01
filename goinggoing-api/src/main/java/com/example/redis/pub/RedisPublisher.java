@@ -1,6 +1,6 @@
 package com.example.redis.pub;
 
-import com.example.redis.message.MessageDto;
+import com.example.redis.message.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RedisPublisher {
 
-    private final RedisTemplate<String, MessageDto> redisTemplate;
-    public void publish(MessageDto message){
+    private final RedisTemplate<String, Message> redisTemplate;
+    public void publish(Message message){
         redisTemplate.convertAndSend("server-to-server-channel", message);
     }
 }

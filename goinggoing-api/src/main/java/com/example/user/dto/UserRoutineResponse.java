@@ -1,6 +1,6 @@
 package com.example.user.dto;
 
-import com.example.routine.RoutineWindow;
+import com.example.routine.domain.RoutineWindow;
 import java.util.List;
 import java.util.stream.Collectors;
 

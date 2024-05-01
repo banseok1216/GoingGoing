@@ -1,16 +1,13 @@
 package com.example.personal.controller;
 
-import com.example.personal.PersonalSchedule;
-import com.example.personal.dto.PersonalScheduleRequest;
+import com.example.personal.model.PersonalSchedule;
 import com.example.personal.dto.ScheduleRoutineRequest;
 import com.example.personal.service.PersonalScheduleRoutineService;
-import com.example.routine.Routine;
-import com.example.user.User;
+import com.example.routine.domain.Routine;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

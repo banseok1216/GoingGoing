@@ -1,10 +1,6 @@
 package com.example.personal.dto;
 
-import com.example.group.GroupSchedule;
-import com.example.group.dto.GroupScheduleResponse;
-import com.example.routine.RoutineWindow;
-import lombok.Getter;
-import lombok.Setter;
+import com.example.routine.domain.RoutineWindow;
 
 import java.util.List;
 import java.util.stream.Collectors;

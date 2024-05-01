@@ -1,6 +1,7 @@
 package com.example.user;
 
-import com.example.routine.Routine;
+import com.example.routine.domain.Routine;
+import com.example.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

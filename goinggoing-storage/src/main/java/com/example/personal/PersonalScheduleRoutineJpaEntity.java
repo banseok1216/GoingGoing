@@ -1,13 +1,12 @@
 package com.example.personal;
 
-import com.example.routine.Routine;
-import com.example.user.UserJpaEntity;
+import com.example.personal.model.PersonalSchedule;
+import com.example.routine.domain.Routine;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

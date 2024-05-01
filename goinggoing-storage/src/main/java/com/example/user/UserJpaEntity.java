@@ -1,14 +1,11 @@
 package com.example.user;
 
 import com.example.BaseEntity;
-import com.example.group.GroupJpaEntity;
+import com.example.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Lazy;
-
-import java.util.Objects;
 
 @Entity
 @Getter

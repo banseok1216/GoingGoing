@@ -1,10 +1,13 @@
 package com.example.group;
 
+import com.example.group.model.Group;
+import com.example.group.model.GroupSchedule;
+import com.example.group.repository.GroupRepository;
 import com.example.personal.*;
-import com.example.user.User;
+import com.example.personal.model.PersonalSchedule;
+import com.example.user.domain.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

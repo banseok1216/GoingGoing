@@ -1,7 +1,9 @@
 package com.example.user;
 
-import com.example.routine.Routine;
-import com.example.routine.RoutineWindow;
+import com.example.routine.domain.Routine;
+import com.example.routine.domain.RoutineWindow;
+import com.example.user.domain.User;
+import com.example.user.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

@@ -1,15 +1,12 @@
 package com.example.group;
 
-import com.example.user.User;
-import com.example.user.UserJpaEntity;
+import com.example.group.model.GroupSchedule;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Getter

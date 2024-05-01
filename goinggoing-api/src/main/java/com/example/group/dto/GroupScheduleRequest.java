@@ -1,13 +1,9 @@
 package com.example.group.dto;
 
 
-import com.example.group.GroupSchedule;
-import com.example.personal.PersonalSchedule;
-import com.example.user.User;
+import com.example.group.model.GroupSchedule;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public record GroupScheduleRequest(
         Create create,

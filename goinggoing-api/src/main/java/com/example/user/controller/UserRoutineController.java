@@ -1,15 +1,14 @@
 package com.example.user.controller;
 
-import com.example.routine.Routine;
-import com.example.routine.RoutineWindow;
-import com.example.user.User;
+import com.example.routine.domain.Routine;
+import com.example.routine.domain.RoutineWindow;
+import com.example.user.domain.User;
 import com.example.user.dto.UserRoutineRequest;
 import com.example.user.dto.UserRoutineResponse;
 import com.example.user.service.UserRoutineService;
 import com.example.user.service.UserService;
 import com.example.utils.response.DefaultId;
 import com.example.utils.response.HttpResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.*;

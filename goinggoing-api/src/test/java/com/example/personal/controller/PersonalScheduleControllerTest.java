@@ -1,14 +1,12 @@
 package com.example.personal.controller;
 
-import com.example.personal.PersonalSchedule;
+import com.example.personal.model.PersonalSchedule;
 import com.example.personal.dto.PersonalScheduleRequest;
 import com.example.personal.service.PersonalScheduleService;
-import com.example.routine.Routine;
-import com.example.routine.RoutineWindow;
-import com.example.user.User;
+import com.example.routine.domain.Routine;
+import com.example.routine.domain.RoutineWindow;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -17,12 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.cglib.core.Local;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

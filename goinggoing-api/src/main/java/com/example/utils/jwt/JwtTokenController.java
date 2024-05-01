@@ -1,8 +1,7 @@
 package com.example.utils.jwt;
 
-import com.example.user.User;
+import com.example.user.domain.User;
 import com.example.user.service.UserService;
-import com.example.utils.jwt.JwtTokenUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;

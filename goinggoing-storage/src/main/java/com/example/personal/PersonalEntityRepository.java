@@ -1,7 +1,8 @@
 package com.example.personal;
 
-import com.example.group.Group;
-import com.example.routine.Routine;
+import com.example.personal.model.PersonalSchedule;
+import com.example.personal.repository.PersonalRepository;
+import com.example.routine.domain.Routine;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
