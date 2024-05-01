@@ -6,6 +6,8 @@ import com.example.routine.domain.Routine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class PersonalReader {

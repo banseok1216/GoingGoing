@@ -8,6 +8,7 @@ import com.example.personal.model.PersonalSchedule;
 import com.example.user.domain.User;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,14 +45,28 @@ public class GroupEntityRepository implements GroupRepository {
                 groupSchedule.getLocation(),
                 groupSchedule.getDescription());
     }
+    @Override
+    public List<Group> findNotStartedPersonalSchedules() {
+        List<PersonalScheduleJpaEntity> notStartedJpaEntities = personalScheduleJpaRepository.findByScheduleStartTimeBeforeAndScheduleNotificationStart(LocalDateTime.now(), false);
+        return notStartedJpaEntities.stream()
+                .map(PersonalScheduleJpaEntity::toGroup)
+                .toList();
+    }
 
+    @Override
+    public List<Group> findNotDonePersonalSchedules() {
+        List<PersonalScheduleJpaEntity> notDoneJpaEntities = personalScheduleJpaRepository.findByScheduleDoneTimeAfterAndScheduleNotificationDone(LocalDateTime.now(), false);
+        return notDoneJpaEntities.stream()
+                .map(PersonalScheduleJpaEntity::toGroup)
+                .toList();
+    }
     @Override
     public Group readGroup(Group.GroupId groupId) {
         GroupJpaEntity groupJpaEntity = groupJpaRepository.findByGroupId(groupId.value());
         List<PersonalSchedule> personalSchedules = personalScheduleJpaRepository.findAllByUserGroup_GroupId(groupId.value()).stream()
                 .map(schedule -> {List <PersonalScheduleRoutineJpaEntity> routines = personalScheduleRoutineJpaRepository
                             .findAllByPersonalScheduleJpaEntityPersonalScheduleId(schedule.getPersonalScheduleId());
-                    return schedule.toPersonalSchedule(routines);
+                    return schedule.toPersonalScheduleWithRoutine(routines);
                 })
                 .collect(Collectors.toList());
         GroupScheduleJpaEntity groupScheduleJpaEntity = groupScheduleJpaRepository.findByUserGroup_GroupId(groupId.value());

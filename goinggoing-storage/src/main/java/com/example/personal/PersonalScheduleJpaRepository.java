@@ -11,7 +11,10 @@ import java.util.List;
 
 public interface PersonalScheduleJpaRepository extends JpaRepository<PersonalScheduleJpaEntity, Long> {
     List<PersonalScheduleJpaEntity> findAllByUserGroup_GroupId(Long groupId);
-
+    @Query("SELECT ps FROM PersonalScheduleJpaEntity ps JOIN FETCH ps.userGroup WHERE ps.scheduleStartTime < :startTime AND ps.scheduleNotificationStart = :notified")
+    List<PersonalScheduleJpaEntity> findByScheduleStartTimeBeforeAndScheduleNotificationStart(@Param("startTime") LocalDateTime startTime, @Param("notified") boolean notified);
+    @Query("SELECT ps FROM PersonalScheduleJpaEntity ps JOIN FETCH ps.userGroup WHERE ps.scheduleDoneTime > :endTime AND ps.scheduleNotificationDone = :notified")
+    List<PersonalScheduleJpaEntity> findByScheduleDoneTimeAfterAndScheduleNotificationDone(@Param("endTime") LocalDateTime endTime, @Param("notified") boolean notified);
     PersonalScheduleJpaEntity findByPersonalScheduleId(Long personalScheduleId);
 
     void deleteByPersonalScheduleId(Long personalScheduleId);

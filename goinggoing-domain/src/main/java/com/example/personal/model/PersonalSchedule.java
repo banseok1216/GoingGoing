@@ -34,6 +34,12 @@ public class PersonalSchedule {
         PersonalScheduleStatus newPersonalScheduleStatus = newPersonalScheduleTime.checkAndUpdateStatus();
         return new PersonalSchedule(this.id, this.personalDuration, newPersonalScheduleTime, newPersonalScheduleStatus, this.scheduleRoutineWindow, this.user, this.personalScheduleSend);
     }
+    public PersonalSchedule updateStartNotified() {
+       return new PersonalSchedule(this.id, this.personalDuration, this.personalScheduleTime, this.personalScheduleStatus, this.scheduleRoutineWindow, this.user, new PersonalScheduleSend(true,false));
+    }
+    public PersonalSchedule updateEndNotified() {
+        return new PersonalSchedule(this.id, this.personalDuration, this.personalScheduleTime, this.personalScheduleStatus, this.scheduleRoutineWindow, this.user, new PersonalScheduleSend(this.personalScheduleSend.sendStartMessage,true));
+    }
 
     public record PersonalScheduleId(Long value) {
     }

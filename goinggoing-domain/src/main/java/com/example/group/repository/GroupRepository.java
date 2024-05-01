@@ -12,6 +12,11 @@ public interface GroupRepository {
 
     Group.GroupId saveGroupSchedule(GroupSchedule groupSchedule, User user);
     void updateGroupSchedule(GroupSchedule groupSchedule);
+
+    List<Group> findNotStartedPersonalSchedules();
+
+    List<Group> findNotDonePersonalSchedules();
+
     Group readGroup(Group.GroupId groupId);
     List<Group> readGroupList(User user);
     GroupSchedule readGroupSchedule(GroupSchedule.GroupScheduleId groupScheduleId);

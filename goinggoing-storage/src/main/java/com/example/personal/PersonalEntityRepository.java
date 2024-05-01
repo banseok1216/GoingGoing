@@ -1,10 +1,12 @@
 package com.example.personal;
 
+import com.example.group.model.Group;
 import com.example.personal.model.PersonalSchedule;
 import com.example.personal.repository.PersonalRepository;
 import com.example.routine.domain.Routine;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -55,8 +57,9 @@ public class PersonalEntityRepository implements PersonalRepository {
     public PersonalSchedule readPersonalSchedule(PersonalSchedule.PersonalScheduleId personalScheduleId) {
         List<PersonalScheduleRoutineJpaEntity> personalScheduleJpaEntities = personalScheduleRoutineJpaRepository.findAllByPersonalScheduleJpaEntityPersonalScheduleId(personalScheduleId.value());
         PersonalScheduleJpaEntity personalScheduleJpaEntity = personalScheduleJpaRepository.findByPersonalScheduleId(personalScheduleId.value());
-        return personalScheduleJpaEntity.toPersonalSchedule(personalScheduleJpaEntities);
+        return personalScheduleJpaEntity.toPersonalScheduleWithRoutine(personalScheduleJpaEntities);
     }
+
 
     @Override
     public Routine readRoutine(Routine.RoutineId routineId) {

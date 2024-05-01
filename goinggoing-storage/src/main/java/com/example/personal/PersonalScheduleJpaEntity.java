@@ -29,7 +29,7 @@ public class PersonalScheduleJpaEntity {
     private UserJpaEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Schedule_Id")
+    @JoinColumn(name = "Group_Id")
     private GroupJpaEntity userGroup;
 
     @Basic
@@ -50,7 +50,6 @@ public class PersonalScheduleJpaEntity {
     @Basic
     @Column(name = "Schedule_Notification_Start")
     private Boolean scheduleNotificationStart;
-
     @Basic
     @Column(name = "Schedule_Notification_Done")
     private Boolean scheduleNotificationDone;
@@ -83,7 +82,7 @@ public class PersonalScheduleJpaEntity {
                 .build();
     }
 
-    public PersonalSchedule toPersonalSchedule(List<PersonalScheduleRoutineJpaEntity> routineJpaEntities){
+    public PersonalSchedule toPersonalScheduleWithRoutine(List<PersonalScheduleRoutineJpaEntity> routineJpaEntities){
         List<Routine> routines = routineJpaEntities.stream()
                 .map(PersonalScheduleRoutineJpaEntity::toRoutine)
                 .toList();
@@ -95,6 +94,24 @@ public class PersonalScheduleJpaEntity {
                 new RoutineWindow(routines),
                 this.user.toUser(),
                 new PersonalSchedule.PersonalScheduleSend(this.scheduleNotificationStart, this.scheduleNotificationDone)
+        );
+    }
+    public PersonalSchedule toPersonalSchedule(){
+        return PersonalSchedule.withId(
+                new PersonalSchedule.PersonalScheduleId(this.personalScheduleId),
+                this.duration,
+                new PersonalSchedule.PersonalScheduleTime(this.scheduleStartTime, this.scheduleDoneTime),
+                new PersonalSchedule.PersonalScheduleStatus(this.scheduleStart, this.scheduleDone),
+null,
+                this.user.toUser(),
+                new PersonalSchedule.PersonalScheduleSend(this.scheduleNotificationStart, this.scheduleNotificationDone)
+        );
+    }
+    public Group toGroup(){
+        return Group.withId(
+                new Group.GroupId(this.getUserGroup().getGroupId()),
+                null,
+                List.of(this.toPersonalSchedule())
         );
     }
 }
