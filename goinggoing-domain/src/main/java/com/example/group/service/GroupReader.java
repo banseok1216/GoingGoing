@@ -28,7 +28,7 @@ public class GroupReader {
     public GroupSchedule readGroupSchedule(GroupSchedule.GroupScheduleId groupScheduleId){
         GroupSchedule groupSchedule= groupRepository.readGroupSchedule(groupScheduleId);
         if (groupSchedule == null){
-            throw new BusinessException(ErrorCode.GROUP_NOT_FOUND);
+            throw new BusinessException(ErrorCode.GROUP_SCHEDULE_NOT_FOUND);
         }
         return groupRepository.readGroupSchedule(groupScheduleId);
     }

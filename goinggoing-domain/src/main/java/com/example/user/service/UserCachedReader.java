@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class UserCachedReader {
-    private ConcurrentHashMap<String, User> cache;
+    private final ConcurrentHashMap<String, User> cache;
     public UserCachedReader() {
         this.cache = new ConcurrentHashMap<>();
     }
