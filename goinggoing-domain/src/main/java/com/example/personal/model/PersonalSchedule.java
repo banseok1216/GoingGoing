@@ -50,7 +50,7 @@ public class PersonalSchedule {
 
     public record PersonalScheduleTime(LocalDateTime startTime, LocalDateTime doneTime) {
         public PersonalScheduleTime calculateTime(Long totalTime, Integer duration) {
-            return new PersonalScheduleTime(this.doneTime.minusSeconds(totalTime).minusMinutes(duration), this.doneTime.minusSeconds(totalTime));
+            return new PersonalScheduleTime(this.doneTime.minusSeconds(totalTime).minusMinutes(duration), this.doneTime.minusMinutes(duration));
         }
 
         public PersonalScheduleStatus checkAndUpdateStatus() {
