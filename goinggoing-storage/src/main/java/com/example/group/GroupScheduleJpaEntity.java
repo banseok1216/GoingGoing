@@ -46,7 +46,7 @@ public class GroupScheduleJpaEntity {
 
     public static GroupScheduleJpaEntity ofDomain(GroupSchedule groupSchedule, GroupJpaEntity groupJpaEntity) {
         return GroupScheduleJpaEntity.builder()
-                .scheduleId(groupSchedule.getId().value())
+                .scheduleName(groupSchedule.getName())
                 .scheduleDateTime(groupSchedule.getDate())
                 .scheduleLocation(groupSchedule.getLocation())
                 .userGroup(groupJpaEntity)
