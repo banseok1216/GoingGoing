@@ -1,6 +1,6 @@
 package com.example.user.dto;
 
-import com.example.user.domain.User;
+import com.example.user.model.User;
 
 public record UserResponse(
         Long userId,

@@ -1,15 +1,13 @@
 package com.example.goinggoingdomain.user.service;
 
 import com.example.error.BusinessException;
-import com.example.group.service.GroupMemberService;
-import com.example.group.service.GroupReader;
-import com.example.routine.domain.Routine;
-import com.example.user.domain.User;
+import com.example.routine.model.Routine;
+import com.example.user.model.User;
 import com.example.user.repository.UserRepository;
-import com.example.user.service.UserCachedReader;
-import com.example.user.service.UserChecker;
-import com.example.user.service.UserReader;
-import com.example.user.service.UserWriter;
+import com.example.user.implementation.UserCachedHandler;
+import com.example.user.implementation.UserChecker;
+import com.example.user.implementation.UserReader;
+import com.example.user.implementation.UserAppender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,11 +23,11 @@ public class UserImplTest {
     @InjectMocks
     private UserReader userReader;
     @InjectMocks
-    private UserWriter userWriter;
+    private UserAppender userAppender;
     @InjectMocks
     private UserChecker userChecker;
     @InjectMocks
-    private UserCachedReader userCachedReader;
+    private UserCachedHandler userCachedHandler;
 
     @BeforeEach
     void setUp() {
@@ -39,18 +37,18 @@ public class UserImplTest {
     @Test
     public void testPutAndGet() {
         User user = createfirstUser();
-        userCachedReader.put("123", user);
-        User retrievedUser = userCachedReader.get("123");
+        userCachedHandler.put("123", user);
+        User retrievedUser = userCachedHandler.get("123");
         assertEquals(user, retrievedUser);
     }
 
     @Test
     public void testRemove() {
         User user = createfirstUser();
-        userCachedReader.put("123", user);
+        userCachedHandler.put("123", user);
 
-        userCachedReader.remove("123");
-        User retrievedUser = userCachedReader.get("123");
+        userCachedHandler.remove("123");
+        User retrievedUser = userCachedHandler.get("123");
 
         assertNull(retrievedUser);
     }
@@ -60,12 +58,12 @@ public class UserImplTest {
         User user1 = createfirstUser();
         User user2 = createsecondUser();
 
-        userCachedReader.put("user1", user1);
-        userCachedReader.put("user2", user2);
+        userCachedHandler.put("user1", user1);
+        userCachedHandler.put("user2", user2);
 
-        userCachedReader.clear();
-        User retrievedUser1 = userCachedReader.get("user1");
-        User retrievedUser2 = userCachedReader.get("user2");
+        userCachedHandler.clear();
+        User retrievedUser1 = userCachedHandler.get("user1");
+        User retrievedUser2 = userCachedHandler.get("user2");
 
         assertNull(retrievedUser1);
         assertNull(retrievedUser2);

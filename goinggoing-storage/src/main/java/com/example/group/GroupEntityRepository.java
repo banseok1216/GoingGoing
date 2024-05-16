@@ -5,7 +5,7 @@ import com.example.group.model.GroupSchedule;
 import com.example.group.repository.GroupRepository;
 import com.example.personal.*;
 import com.example.personal.model.PersonalSchedule;
-import com.example.user.domain.User;
+import com.example.user.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;

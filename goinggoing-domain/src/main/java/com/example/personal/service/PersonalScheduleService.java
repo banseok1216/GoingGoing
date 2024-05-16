@@ -1,5 +1,7 @@
 package com.example.personal.service;
 
+import com.example.personal.implementation.PersonalReader;
+import com.example.personal.implementation.PersonalWriter;
 import com.example.personal.model.PersonalSchedule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

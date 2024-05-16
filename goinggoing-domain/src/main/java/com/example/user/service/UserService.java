@@ -1,7 +1,8 @@
 package com.example.user.service;
 
 import com.example.error.BusinessException;
-import com.example.user.domain.User;
+import com.example.user.model.User;
+import com.example.user.implementation.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,22 +12,23 @@ import static com.example.error.ErrorCode.USER_LOGIN_PASSWORD_FAIL;
 @RequiredArgsConstructor
 public class UserService {
     private final UserReader userReader;
-    private final UserCachedReader userCachedReader;
-    private final UserWriter userWriter;
+    private final UserCachedHandler userCachedHandler;
+    private final UserAppender userAppender;
     private final UserChecker userChecker;
     private final UserRemover userRemover;
+    private final UserUpdater userUpdater;
 
     public User loginOAuthUser(User userLogin) {
         userChecker.isDuplicate(userLogin);
-        User.UserId userId = userWriter.saveUser(userLogin);
+        User.UserId userId = userAppender.saveUser(userLogin);
         return userReader.readUser(userId);
     }
 
     public User getUser(User.UserId id) {
-        User cachedUser = userCachedReader.get(id.value().toString());
+        User cachedUser = userCachedHandler.get(id.value().toString());
         if (cachedUser == null) {
             User user = userReader.readUser(id);
-            userCachedReader.put(id.value().toString(), user);
+            userCachedHandler.put(id.value().toString(), user);
             return user;
         } else {
             return cachedUser;
@@ -50,18 +52,23 @@ public class UserService {
                 userRegister.getPassword().hashPassword()
                 , null
         );
-        userWriter.saveUser(newUser);
+        userAppender.saveUser(newUser);
     }
 
     public void modifyUser(User updateUser) {
         User savedUser = getUser(updateUser.getId());
         User newUser = User.withId(savedUser.getId(), updateUser.getUserNickname(), updateUser.getUserEmail(), updateUser.getUserType(), updateUser.getPassword(), updateUser.getDeviceToken());
-        userWriter.saveUser(newUser);
-        userCachedReader.put(updateUser.getId().value().toString(), newUser);
+        userAppender.saveUser(newUser);
+        userUpdater.updateUser(newUser);
+        userUpdater.refreshCachedUser(newUser);
     }
     public void logout(User.UserId userId) {
         User savedUser = getUser(userId);
         userRemover.logout(savedUser);
-        userCachedReader.remove(userId.toString());
+        userCachedHandler.remove(userId.toString());
+        userUpdater.refreshCachedUser(savedUser);
+    }
+    public void refreshCachedUser(User.UserId userId){
+        userCachedHandler.remove(userId.toString());
     }
 }

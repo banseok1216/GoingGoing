@@ -1,9 +1,7 @@
 package com.example.personal.repository;
 
 import com.example.personal.model.PersonalSchedule;
-import com.example.routine.domain.Routine;
-
-import java.util.List;
+import com.example.routine.model.Routine;
 
 public interface PersonalRepository {
     void modifyRoutineOrder(PersonalSchedule personalSchedule);

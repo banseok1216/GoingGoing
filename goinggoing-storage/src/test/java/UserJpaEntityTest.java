@@ -1,5 +1,5 @@
 import com.example.user.UserJpaEntity;
-import com.example.user.domain.User;
+import com.example.user.model.User;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,7 +1,6 @@
 package com.example.group.model;
 
 import com.example.personal.model.PersonalSchedule;
-import com.example.routine.domain.Routine;
 import lombok.*;
 
 import java.util.List;

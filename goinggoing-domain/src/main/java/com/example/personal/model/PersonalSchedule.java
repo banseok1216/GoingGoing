@@ -1,8 +1,8 @@
 package com.example.personal.model;
 
 import com.example.group.model.GroupSchedule;
-import com.example.routine.domain.RoutineWindow;
-import com.example.user.domain.User;
+import com.example.routine.model.RoutineWindow;
+import com.example.user.model.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

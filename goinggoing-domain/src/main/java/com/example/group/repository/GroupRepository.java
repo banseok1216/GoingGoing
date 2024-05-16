@@ -3,7 +3,7 @@ package com.example.group.repository;
 import com.example.group.model.Group;
 import com.example.group.model.GroupSchedule;
 import com.example.personal.model.PersonalSchedule;
-import com.example.user.domain.User;
+import com.example.user.model.User;
 
 import java.util.List;
 

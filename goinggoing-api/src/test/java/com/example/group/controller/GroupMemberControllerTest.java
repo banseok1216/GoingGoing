@@ -2,8 +2,7 @@ package com.example.group.controller;
 
 import com.example.group.service.GroupMemberService;
 import com.example.personal.model.PersonalSchedule;
-import com.example.redis.pub.RedisPublisher;
-import com.example.user.domain.User;
+import com.example.user.model.User;
 import com.example.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,8 +31,6 @@ public class GroupMemberControllerTest {
     @MockBean
     private GroupMemberService groupMemberService;
 
-    @MockBean
-    private RedisPublisher redisPublisher;
     @MockBean
     private UserService userService;
 

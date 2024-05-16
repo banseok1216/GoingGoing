@@ -1,8 +1,8 @@
 package com.example.user.repository;
 
-import com.example.routine.domain.Routine;
-import com.example.routine.domain.RoutineWindow;
-import com.example.user.domain.User;
+import com.example.routine.model.Routine;
+import com.example.routine.model.RoutineWindow;
+import com.example.user.model.User;
 
 public interface UserRepository {
     User.UserId saveUser(User user);

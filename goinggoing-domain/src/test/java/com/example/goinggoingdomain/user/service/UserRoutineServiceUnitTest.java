@@ -1,11 +1,11 @@
 package com.example.goinggoingdomain.user.service;
 
-import com.example.routine.domain.Routine;
-import com.example.routine.domain.RoutineWindow;
-import com.example.user.domain.User;
-import com.example.user.service.UserReader;
+import com.example.routine.model.Routine;
+import com.example.routine.model.RoutineWindow;
+import com.example.user.model.User;
+import com.example.user.implementation.UserReader;
 import com.example.user.service.UserRoutineService;
-import com.example.user.service.UserWriter;
+import com.example.user.implementation.UserAppender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 public class UserRoutineServiceUnitTest {
     @Mock
-    private UserWriter userWriter;
+    private UserAppender userAppender;
     @Mock
     private UserReader userReader;
     @InjectMocks
@@ -45,7 +45,7 @@ public class UserRoutineServiceUnitTest {
         when(userReader.readUserRoutines(savedUser.getId())).thenReturn(savedRoutineWindow);
         userRoutineService.deleteUserRoutine(savedUser, routineId);
         ArgumentCaptor<RoutineWindow> routineWindowCaptor = ArgumentCaptor.forClass(RoutineWindow.class);
-        verify(userWriter).saveUserRoutines(routineWindowCaptor.capture());
+        verify(userAppender).saveUserRoutines(routineWindowCaptor.capture());
         assertEquals(1, routineWindowCaptor.getValue().getRoutines().get(0).getIndex());
     }
 
@@ -55,7 +55,7 @@ public class UserRoutineServiceUnitTest {
         Routine.RoutineId inputRoutineId = new Routine.RoutineId(123L);
         User savedUser = createUser();
         Routine routine = createRoutine();
-        when(userWriter.saveUserRoutine(routine, savedUser)).thenReturn(inputRoutineId);
+        when(userAppender.saveUserRoutine(routine, savedUser)).thenReturn(inputRoutineId);
         Routine.RoutineId routineId = userRoutineService.createUserRoutine(routine, savedUser);
         assertEquals(inputRoutineId.value(), routineId.value());
     }

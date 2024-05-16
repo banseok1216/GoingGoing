@@ -1,5 +1,5 @@
 package com.example.utils.jwt;
-import com.example.user.domain.User;
+import com.example.user.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;

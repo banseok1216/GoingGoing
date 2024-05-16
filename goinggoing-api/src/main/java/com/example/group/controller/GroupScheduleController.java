@@ -4,7 +4,7 @@ import com.example.group.model.Group;
 import com.example.group.model.GroupSchedule;
 import com.example.group.dto.GroupScheduleRequest;
 import com.example.group.service.GroupScheduleService;
-import com.example.user.domain.User;
+import com.example.user.model.User;
 import com.example.user.service.UserService;
 import com.example.utils.response.DefaultId;
 import com.example.utils.response.HttpResponse;

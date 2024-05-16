@@ -1,13 +1,13 @@
 package com.example.goinggoingdomain.personal.service;
 
 import com.example.personal.model.PersonalSchedule;
-import com.example.personal.service.PersonalReader;
-import com.example.personal.service.PersonalRemover;
+import com.example.personal.implementation.PersonalReader;
+import com.example.personal.implementation.PersonalRemover;
 import com.example.personal.service.PersonalScheduleRoutineService;
-import com.example.personal.service.PersonalWriter;
-import com.example.routine.domain.Routine;
-import com.example.routine.domain.RoutineWindow;
-import com.example.user.domain.User;
+import com.example.personal.implementation.PersonalWriter;
+import com.example.routine.model.Routine;
+import com.example.routine.model.RoutineWindow;
+import com.example.user.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;

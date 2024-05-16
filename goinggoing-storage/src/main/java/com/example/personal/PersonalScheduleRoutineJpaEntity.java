@@ -1,7 +1,7 @@
 package com.example.personal;
 
 import com.example.personal.model.PersonalSchedule;
-import com.example.routine.domain.Routine;
+import com.example.routine.model.Routine;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

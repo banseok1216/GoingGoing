@@ -9,6 +9,7 @@ goinggoing-common/build/
 goinggoing-domain/build/
 goinggoing-push/build/
 goinggoing-storage/build/
+goinggoing-external/build/
 ### STS ###
 .apt_generated
 .classpath

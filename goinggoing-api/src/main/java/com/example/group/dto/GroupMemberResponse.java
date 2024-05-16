@@ -1,5 +1,5 @@
 package com.example.group.dto;
-import com.example.user.domain.User;
+import com.example.user.model.User;
 
 import java.util.List;
 import java.util.stream.Collectors;

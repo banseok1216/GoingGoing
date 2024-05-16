@@ -1,0 +1,32 @@
+spring:
+  cloud:
+    function:
+      definition: userCached;
+    stream:
+      bindings:
+        userCached-out-0:
+          destination: allUser
+        userCached-in-0:
+          destination: allUser
+        push-out-0:
+          destination: push
+      rabbit:
+        bindings:
+          userCached-out-0:
+            producer:
+              exchangeType: direct
+              routing-key: UserCached
+          userCached-in-0:
+            consumer:
+              exchangeType: direct
+              binding-routing-key: UserCached
+          push-out-0:
+            producer:
+              exchangeType: direct
+              routing-key: Push
+
+  rabbitmq:
+    host: localhost
+    username: root
+    password: root
+    port: 5672

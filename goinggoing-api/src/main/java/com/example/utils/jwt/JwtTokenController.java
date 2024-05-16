@@ -1,6 +1,6 @@
 package com.example.utils.jwt;
 
-import com.example.user.domain.User;
+import com.example.user.model.User;
 import com.example.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;

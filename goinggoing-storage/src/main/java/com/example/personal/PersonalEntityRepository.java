@@ -1,12 +1,10 @@
 package com.example.personal;
 
-import com.example.group.model.Group;
 import com.example.personal.model.PersonalSchedule;
 import com.example.personal.repository.PersonalRepository;
-import com.example.routine.domain.Routine;
+import com.example.routine.model.Routine;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository

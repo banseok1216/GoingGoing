@@ -1,12 +1,12 @@
 package com.example.goinggoingdomain.group.service;
 
 import com.example.group.model.Group;
-import com.example.group.service.GroupReader;
+import com.example.group.implementation.GroupReader;
 import com.example.group.model.GroupSchedule;
-import com.example.group.service.GroupWriter;
+import com.example.group.implementation.GroupWriter;
 import com.example.group.service.GroupMemberService;
 import com.example.personal.model.PersonalSchedule;
-import com.example.user.domain.User;
+import com.example.user.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

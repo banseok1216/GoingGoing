@@ -4,4 +4,5 @@ include 'goinggoing-storage'
 include 'goinggoing-domain'
 include 'goinggoing-push'
 include 'goinggoing-common'
+include 'goinggoing-external'
 

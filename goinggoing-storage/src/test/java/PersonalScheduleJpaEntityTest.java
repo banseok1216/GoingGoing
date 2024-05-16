@@ -1,7 +1,7 @@
 import com.example.personal.PersonalScheduleJpaEntity;
-import com.example.routine.domain.RoutineWindow;
+import com.example.routine.model.RoutineWindow;
 import com.example.user.UserJpaEntity;
-import com.example.user.domain.User;
+import com.example.user.model.User;
 import org.junit.jupiter.api.Test;
 import com.example.group.model.Group;
 import com.example.personal.model.PersonalSchedule;

@@ -1,8 +1,11 @@
 package com.example.user.service;
 
-import com.example.routine.domain.Routine;
-import com.example.routine.domain.RoutineWindow;
-import com.example.user.domain.User;
+import com.example.routine.model.Routine;
+import com.example.routine.model.RoutineWindow;
+import com.example.user.model.User;
+import com.example.user.implementation.UserReader;
+import com.example.user.implementation.UserRemover;
+import com.example.user.implementation.UserAppender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserRoutineService {
     private final UserReader userReader;
     private final UserRemover userRemover;
-    private final UserWriter userWriter;
+    private final UserAppender userAppender;
 
     public RoutineWindow getAllUserRoutine(User user) {
         return userReader.readUserRoutines(user.getId());
@@ -22,10 +25,10 @@ public class UserRoutineService {
     public void deleteUserRoutine(User user,Routine.RoutineId userRoutineId) {
         RoutineWindow routineWindow = userReader.readUserRoutines(user.getId());
         routineWindow.changeRoutineRemove(userRoutineId);
-        userWriter.saveUserRoutines(routineWindow);
+        userAppender.saveUserRoutines(routineWindow);
     }
 
     public Routine.RoutineId createUserRoutine(Routine routine, User user) {
-        return userWriter.saveUserRoutine(routine,user);
+        return userAppender.saveUserRoutine(routine,user);
     }
 }

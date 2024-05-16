@@ -4,11 +4,10 @@ import com.example.error.BusinessException;
 import com.example.group.model.Group;
 import com.example.group.model.GroupSchedule;
 import com.example.group.repository.GroupRepository;
-import com.example.group.service.GroupReader;
-import com.example.group.service.GroupWriter;
+import com.example.group.implementation.GroupReader;
+import com.example.group.implementation.GroupWriter;
 import com.example.personal.model.PersonalSchedule;
-import com.example.user.domain.User;
-import com.example.user.service.UserReader;
+import com.example.user.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

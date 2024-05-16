@@ -1,7 +1,10 @@
 package com.example.personal.service;
 
+import com.example.personal.implementation.PersonalReader;
+import com.example.personal.implementation.PersonalRemover;
+import com.example.personal.implementation.PersonalWriter;
 import com.example.personal.model.PersonalSchedule;
-import com.example.routine.domain.Routine;
+import com.example.routine.model.Routine;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

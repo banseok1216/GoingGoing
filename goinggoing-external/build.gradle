@@ -1,0 +1,9 @@
+dependencies {
+    implementation project(':goinggoing-common')
+    implementation project(':goinggoing-domain')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit:4.0.4'
+}
+
+bootJar { enabled = false }
+jar { enabled = true }

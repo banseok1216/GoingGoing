@@ -1,6 +1,6 @@
 package com.example.user.dto;
 
-import com.example.routine.domain.Routine;
+import com.example.routine.model.Routine;
 
 public record UserRoutineRequest(
         Long routineTime,

@@ -5,7 +5,11 @@ import static org.mockito.Mockito.*;
 
 import com.example.error.BusinessException;
 import com.example.error.ErrorCode;
-import com.example.user.domain.User;
+import com.example.user.model.User;
+import com.example.user.implementation.UserCachedHandler;
+import com.example.user.implementation.UserChecker;
+import com.example.user.implementation.UserReader;
+import com.example.user.implementation.UserAppender;
 import com.example.user.service.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,11 +22,11 @@ public class UserServiceUnitTest {
     @Mock
     private UserChecker userChecker;
     @Mock
-    private UserWriter userWriter;
+    private UserAppender userAppender;
     @Mock
     private UserReader userReader;
     @Mock
-    private UserCachedReader userCachedReader;
+    private UserCachedHandler userCachedHandler;
     @InjectMocks
     private UserService userService;
     @BeforeEach
@@ -35,12 +39,12 @@ public class UserServiceUnitTest {
     @DisplayName("카카오,구글 유저 로그인")
     public void testLoginKakaoUser() {
         User userLogin = User.withId(new User.UserId(123L),"testName","testEmail", User.UserType.OAUTH_KAKAO,null,"testDeviceToken");
-        when(userWriter.saveUser(userLogin)).thenReturn(new User.UserId(123L));
+        when(userAppender.saveUser(userLogin)).thenReturn(new User.UserId(123L));
         when(userReader.readUser(any(User.UserId.class))).thenReturn(userLogin);
         User result = userService.loginOAuthUser(userLogin);
         assertEquals(userLogin, result);
         verify(userChecker, times(1)).isDuplicate(userLogin);
-        verify(userWriter, times(1)).saveUser(userLogin);
+        verify(userAppender, times(1)).saveUser(userLogin);
     }
     @Test
     @DisplayName("일반 유저 로그인 성공")
@@ -65,16 +69,16 @@ public class UserServiceUnitTest {
     public void testRegisterUser() {
         User user = User.withId(new User.UserId(123L),"testName","testEmail", User.UserType.OAUTH_DEFAULT,new User.Password("testPassword"),"testDeviceToken");
         userService.registerUser(user);
-        verify(userWriter).saveUser(argumentCaptor.capture());
+        verify(userAppender).saveUser(argumentCaptor.capture());
         assertEquals(user.getPassword().hashPassword(), argumentCaptor.getValue().getPassword());
     }
     @Test
     @DisplayName("유저가 캐시에 존재")
     void testGetUserFromCache() {
         User user = User.withId(new User.UserId(123L),"testName","testEmail", User.UserType.OAUTH_DEFAULT,new User.Password("testPassword"),"testDeviceToken");
-        when(userCachedReader.get("123")).thenReturn(user);
+        when(userCachedHandler.get("123")).thenReturn(user);
         verify(userReader, never()).readUser(any());
-        verify(userCachedReader, never()).put(any(),any());
+        verify(userCachedHandler, never()).put(any(),any());
     }
     @Test
     @DisplayName("유저가 캐시에 존재하지 않음")
@@ -83,7 +87,7 @@ public class UserServiceUnitTest {
         User databaseUser = User.withId(new User.UserId(123L),"testName","testEmail", User.UserType.OAUTH_DEFAULT,new User.Password("testPassword"),"testDeviceToken");
         when(userReader.readUser(new User.UserId(123L))).thenReturn(databaseUser);
         User resultUser = userService.getUser(new User.UserId(123L));
-        verify(userCachedReader).put(stringArgumentCaptor.capture(), eq(databaseUser));
+        verify(userCachedHandler).put(stringArgumentCaptor.capture(), eq(databaseUser));
         assertEquals("123", stringArgumentCaptor.getValue());
         assertEquals(databaseUser, resultUser);
     }

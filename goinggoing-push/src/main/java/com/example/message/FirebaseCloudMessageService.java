@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -24,8 +25,8 @@ public class FirebaseCloudMessageService {
     private String serviceAccountFilePath;
 
 
-    public void sendMessageTo(String targetToken, String title, String body) throws IOException {
-        String message = makeMessage(targetToken, title, body);
+    public void sendMessageTo(Message messageDto) throws IOException {
+        String message = makeMessage(messageDto.getDeviceToken(), messageDto.getContent());
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(message, MediaType.get("application/json; charset=utf-8"));
         Request request = new Request.Builder()
@@ -36,15 +37,15 @@ public class FirebaseCloudMessageService {
                 .build();
         Response response = client.newCall(request)
                 .execute();
-        System.out.println(response.body().string());
+        System.out.println(Objects.requireNonNull(response.body()).string());
     }
 
-    private String makeMessage(String targetToken, String title, String body) throws JsonProcessingException {
+    private String makeMessage(String targetToken, String body) throws JsonProcessingException {
         FcmMessage fcmMessage = FcmMessage.builder()
                 .message(FcmMessage.Message.builder()
                         .token(targetToken)
                         .notification(FcmMessage.Notification.builder()
-                                .title(title)
+                                .title("알림")
                                 .body(body)
                                 .image(null)
                                 .build()

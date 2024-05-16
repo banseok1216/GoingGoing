@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    function:
+      definition: push;
+    stream:
+      bindings:
+        push-in-0:
+          destination: push
+      rabbit:
+        bindings:
+          push-in-0:
+            consumer:
+              exchangeType: direct
+              binding-routing-key: Push
+  rabbitmq:
+    host: localhost
+    username: root
+    password: root
+    port: 5672

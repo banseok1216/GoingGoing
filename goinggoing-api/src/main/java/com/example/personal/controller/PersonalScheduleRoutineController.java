@@ -3,7 +3,7 @@ package com.example.personal.controller;
 import com.example.personal.model.PersonalSchedule;
 import com.example.personal.dto.ScheduleRoutineRequest;
 import com.example.personal.service.PersonalScheduleRoutineService;
-import com.example.routine.domain.Routine;
+import com.example.routine.model.Routine;
 import com.example.utils.response.HttpResponse;
 import org.springframework.web.bind.annotation.*;
 
