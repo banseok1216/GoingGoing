@@ -13,7 +13,8 @@ GoingGoing은 일정을 기록하고 기억하기 위한 플래너입니다. 여
 
 ## Back-End
 
-![goinggoing](https://github.com/banseok1216/GoingGoing/assets/114564687/8473e02a-eb28-4479-a057-30efcaac60c6)
+![KakaoTalk_20240516_234351870](https://github.com/banseok1216/GoingGoing/assets/114564687/0a590827-0d36-4149-aef1-958f0fe9ea49)
+
 
 GoingGoing은 멀티 모듈 아키텍처를 사용하여 관심사를 분리하고 각 모듈을 재사용 가능하게 만들었습니다. 아래는 주요 기술 및 구성 요소에 대한 설명입니다:
 
