@@ -1,11 +1,12 @@
 package com.example.group.service;
 
 import com.example.error.BusinessException;
+import com.example.group.implementation.GroupUpdater;
 import com.example.group.model.Group;
 import com.example.group.model.GroupSchedule;
 import com.example.group.repository.GroupRepository;
 import com.example.group.implementation.GroupReader;
-import com.example.group.implementation.GroupWriter;
+import com.example.group.implementation.GroupAppender;
 import com.example.personal.model.PersonalSchedule;
 import com.example.user.model.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,9 @@ public class GroupImplTest {
     @InjectMocks
     private GroupReader groupReader;
     @InjectMocks
-    private GroupWriter groupWriter;
+    private GroupAppender groupAppender;
+    @InjectMocks
+    private GroupUpdater groupUpdater;
 
     @BeforeEach
     void setUp() {
@@ -79,12 +82,6 @@ public class GroupImplTest {
         });
     }
 
-    @Test
-    public void testUpdateGroupSchedule() {
-        GroupSchedule groupSchedule = createGroupSchedule();
-        groupWriter.updateGroupSchedule(groupSchedule);
-        verify(groupRepository, times(1)).updateGroupSchedule(groupSchedule);
-    }
 
     @Test
     public void testSaveGroupSchedule() {
@@ -93,7 +90,7 @@ public class GroupImplTest {
 
         when(groupRepository.saveGroupSchedule(groupSchedule, user)).thenReturn(new Group.GroupId(123L));
 
-        Group.GroupId savedGroupId = groupWriter.saveGroupSchedule(groupSchedule, user);
+        Group.GroupId savedGroupId = groupAppender.saveGroupSchedule(groupSchedule, user);
 
         assertNotNull(savedGroupId);
         assertEquals(123L, savedGroupId.value());

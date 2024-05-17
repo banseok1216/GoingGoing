@@ -50,7 +50,7 @@ public class PersonalScheduleRoutineJpaEntity {
                 this.scheduleRoutineIndex);
     }
     public static List<PersonalScheduleRoutineJpaEntity> ofDomain(PersonalSchedule personalSchedule) {
-        return personalSchedule.getScheduleRoutineWindow().getRoutines().stream()
+        return personalSchedule.getRoutineWindow().getRoutines().stream()
                 .map(routine -> PersonalScheduleRoutineJpaEntity.builder()
                         .scheduleRoutineId(personalSchedule.getId().value())
                         .scheduleRoutineIndex(routine.getIndex())

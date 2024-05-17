@@ -5,6 +5,7 @@ import com.example.routine.model.RoutineWindow;
 import com.example.user.model.User;
 import com.example.user.dto.UserRoutineRequest;
 import com.example.user.dto.UserRoutineResponse;
+import com.example.user.model.UserRoutineWindow;
 import com.example.user.service.UserRoutineService;
 import com.example.user.service.UserService;
 import com.example.utils.response.DefaultId;
@@ -30,7 +31,7 @@ public class UserRoutineController {
     public HttpResponse<List<UserRoutineResponse>> getAllUserRoutine(
             @RequestAttribute Long userId
     ) {
-        RoutineWindow routineWindow = userRoutineService.getAllUserRoutine(userService.getUser(new User.UserId(userId)));
+        UserRoutineWindow routineWindow = userRoutineService.getAllUserRoutine(userService.getUser(new User.UserId(userId)));
         return HttpResponse.success(UserRoutineResponse.of(routineWindow));
     }
 

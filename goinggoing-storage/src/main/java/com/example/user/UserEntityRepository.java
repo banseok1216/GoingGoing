@@ -3,6 +3,7 @@ package com.example.user;
 import com.example.routine.model.Routine;
 import com.example.routine.model.RoutineWindow;
 import com.example.user.model.User;
+import com.example.user.model.UserRoutineWindow;
 import com.example.user.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 
@@ -31,7 +32,7 @@ public class UserEntityRepository implements UserRepository {
     }
 
     @Override
-    public void saveUserRoutines(RoutineWindow routineWindow) {
+    public void saveUserRoutines(UserRoutineWindow routineWindow) {
         routineWindow.getRoutines().forEach(routine -> {
             userRoutineJpaRepository.updateUserRoutineIndex(routine.getRoutineId().value(), routine.getIndex());
         });
@@ -54,13 +55,13 @@ public class UserEntityRepository implements UserRepository {
     }
 
     @Override
-    public RoutineWindow readRoutineByUserId(User.UserId userId) {
+    public UserRoutineWindow readRoutineByUserId(User.UserId userId) {
         List<UserRoutineJpaEntity> routines = userRoutineJpaRepository.readAllByUserUserId(userId.value());
         List<Routine> routineList = routines.stream()
                 .map(UserRoutineJpaEntity::toRoutine
                 )
                 .toList();
-        return new RoutineWindow(routineList);
+        return new UserRoutineWindow(routineList);
     }
 
     @Override

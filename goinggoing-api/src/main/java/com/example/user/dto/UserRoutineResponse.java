@@ -1,6 +1,8 @@
 package com.example.user.dto;
 
 import com.example.routine.model.RoutineWindow;
+import com.example.user.model.UserRoutineWindow;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +12,7 @@ public record UserRoutineResponse(
         String routineName,
         Integer index
 ) {
-    public static List<UserRoutineResponse> of(RoutineWindow routineWindow) {
+    public static List<UserRoutineResponse> of(UserRoutineWindow routineWindow) {
         return routineWindow.getRoutines().stream()
                 .map(routine -> new UserRoutineResponse(
                         routine.getRoutineId().value(),

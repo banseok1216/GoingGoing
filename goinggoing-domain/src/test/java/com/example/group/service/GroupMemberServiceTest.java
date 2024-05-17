@@ -3,8 +3,7 @@ package com.example.group.service;
 import com.example.group.model.Group;
 import com.example.group.implementation.GroupReader;
 import com.example.group.model.GroupSchedule;
-import com.example.group.implementation.GroupWriter;
-import com.example.group.service.GroupMemberService;
+import com.example.group.implementation.GroupAppender;
 import com.example.personal.model.PersonalSchedule;
 import com.example.user.model.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +25,7 @@ public class GroupMemberServiceTest {
     @Mock
     private GroupReader groupReader;
     @Mock
-    private GroupWriter groupWriter;
+    private GroupAppender groupAppender;
     @InjectMocks
     private GroupMemberService groupMemberService;
     @BeforeEach
@@ -47,7 +46,7 @@ public class GroupMemberServiceTest {
         Group.GroupId groupId = new Group.GroupId(123L);
         User user = createUser();
         when(groupReader.readGroup(any())).thenReturn(createGroup());
-        when(groupWriter.addMember(any(),any())).thenReturn(new PersonalSchedule.PersonalScheduleId(789L));
+        when(groupAppender.addMember(any(),any())).thenReturn(new PersonalSchedule.PersonalScheduleId(789L));
         PersonalSchedule.PersonalScheduleId personalScheduleId = groupMemberService.addGroupMember(user,groupId);
         assertEquals(personalScheduleId.value(),789L);
     }

@@ -7,15 +7,13 @@ import com.example.personal.model.PersonalSchedule;
 import com.example.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
 @Component
 @RequiredArgsConstructor
-public class GroupWriter {
+public class GroupAppender {
     private final GroupRepository groupRepository;
-    public PersonalSchedule.PersonalScheduleId addMember(Group group, PersonalSchedule personalSchedule){
-        return groupRepository.addMember(group,personalSchedule);
+    public PersonalSchedule.PersonalScheduleId addMember(Group group,User user){
+        return groupRepository.addMember(group,PersonalSchedule.initialized(user,group.getGroupSchedule()));
     }
-    public void updateGroupSchedule(GroupSchedule groupSchedule){groupRepository.updateGroupSchedule(groupSchedule);}
     public Group.GroupId saveGroupSchedule(GroupSchedule groupSchedule, User user){
         return groupRepository.saveGroupSchedule(groupSchedule,user);
     }

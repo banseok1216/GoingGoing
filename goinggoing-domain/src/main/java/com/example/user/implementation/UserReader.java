@@ -6,6 +6,7 @@ import com.example.error.ErrorCode;
 import com.example.routine.model.Routine;
 import com.example.routine.model.RoutineWindow;
 import com.example.user.model.User;
+import com.example.user.model.UserRoutineWindow;
 import com.example.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ public class UserReader {
     public User readUserByEmail(User user) {
         return userRepository.readUserByEmail(user);
     }
-    public RoutineWindow readUserRoutines(User.UserId userId)
+    public UserRoutineWindow readUserRoutines(User.UserId userId)
     {
         return userRepository.readRoutineByUserId(userId);
     }

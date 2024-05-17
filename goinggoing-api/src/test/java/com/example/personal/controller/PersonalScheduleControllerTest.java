@@ -51,8 +51,8 @@ public class PersonalScheduleControllerTest {
         PersonalSchedule personalSchedule = PersonalSchedule.withId(
                 new PersonalSchedule.PersonalScheduleId(123L),
                 5,
-                new PersonalSchedule.PersonalScheduleTime(dateTime.minusHours(1),dateTime),
-                new PersonalSchedule.PersonalScheduleStatus(false,true),
+                new PersonalSchedule.Time(dateTime.minusHours(1),dateTime),
+                new PersonalSchedule.Status(false,true),
                 routineWindow, null,null);
         when(personalScheduleService.loadPersonalSchedule(new PersonalSchedule.PersonalScheduleId(123L))).thenReturn(personalSchedule);
         mockMvc.perform(get("/api/v2/personal/schedule")
@@ -78,11 +78,11 @@ public class PersonalScheduleControllerTest {
                 .andExpect(status().isOk());
         verify(personalScheduleService).modifyPersonalSchedule(argumentCaptor.capture());
         assertEquals(argumentCaptor.getValue().getId().value(),123L);
-        assertEquals(argumentCaptor.getValue().getPersonalDuration(),60);
-        assertNull(argumentCaptor.getValue().getPersonalScheduleSend());
-        assertNull(argumentCaptor.getValue().getPersonalScheduleTime());
-        assertNull(argumentCaptor.getValue().getPersonalScheduleStatus());
-        assertNull(argumentCaptor.getValue().getScheduleRoutineWindow());
+        assertEquals(argumentCaptor.getValue().getDuration(),60);
+        assertNull(argumentCaptor.getValue().getSend());
+        assertNull(argumentCaptor.getValue().getScheduleTime());
+        assertNull(argumentCaptor.getValue().getStatus());
+        assertNull(argumentCaptor.getValue().getRoutineWindow());
     }
     private PersonalScheduleRequest createFakeScheduleRequest() {
         return new PersonalScheduleRequest(60,123L);

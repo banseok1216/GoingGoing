@@ -4,6 +4,7 @@ import com.example.routine.model.Routine;
 import com.example.routine.model.RoutineWindow;
 import com.example.user.model.User;
 import com.example.user.implementation.UserReader;
+import com.example.user.model.UserRoutineWindow;
 import com.example.user.service.UserRoutineService;
 import com.example.user.implementation.UserAppender;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,9 +40,9 @@ public class UserRoutineServiceUnitTest {
     @Test
     @DisplayName("모든 유저 루틴 가져오기")
     public void testGetAllUserRoutine_Success() {
-        RoutineWindow savedRoutineWindow = new RoutineWindow(Arrays.asList(firstRoutine,secondRoutine));
+        UserRoutineWindow savedRoutineWindow = new UserRoutineWindow(Arrays.asList(firstRoutine,secondRoutine));
         when(userReader.readUserRoutines(fakeUser.getId())).thenReturn(savedRoutineWindow);
-        RoutineWindow routineWindow = userRoutineService.getAllUserRoutine(fakeUser);
+        UserRoutineWindow routineWindow = userRoutineService.getAllUserRoutine(fakeUser);
         assertEquals(routineWindow, savedRoutineWindow);
     }
 
@@ -49,10 +50,10 @@ public class UserRoutineServiceUnitTest {
     @DisplayName("유저 루틴 삭제하기")
     void testDeleteUserRoutine_Success() {
         Routine.RoutineId routineId = new Routine.RoutineId(123L);
-        RoutineWindow savedRoutineWindow = new RoutineWindow(Arrays.asList(firstRoutine,secondRoutine));
+        UserRoutineWindow savedRoutineWindow = new UserRoutineWindow(Arrays.asList(firstRoutine,secondRoutine));
         when(userReader.readUserRoutines(fakeUser.getId())).thenReturn(savedRoutineWindow);
         userRoutineService.deleteUserRoutine(fakeUser, routineId);
-        ArgumentCaptor<RoutineWindow> routineWindowCaptor = ArgumentCaptor.forClass(RoutineWindow.class);
+        ArgumentCaptor<UserRoutineWindow> routineWindowCaptor = ArgumentCaptor.forClass(UserRoutineWindow.class);
         verify(userAppender).saveUserRoutines(routineWindowCaptor.capture());
         assertEquals(1, routineWindowCaptor.getValue().getRoutines().get(0).getIndex());
     }

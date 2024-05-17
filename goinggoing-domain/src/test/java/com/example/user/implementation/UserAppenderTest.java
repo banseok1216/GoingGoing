@@ -3,6 +3,7 @@ package com.example.user.implementation;
 import com.example.routine.model.Routine;
 import com.example.routine.model.RoutineWindow;
 import com.example.user.model.User;
+import com.example.user.model.UserRoutineWindow;
 import com.example.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,8 +47,8 @@ public class UserAppenderTest {
 
     @Test
     public void 유저_루틴_리스트_저장_테스트() {
-        RoutineWindow routineWindow = new RoutineWindow(new ArrayList<>());
+        UserRoutineWindow routineWindow = new UserRoutineWindow(new ArrayList<>());
         userAppender.saveUserRoutines(routineWindow);
-        verify(userRepository).saveUserRoutines(any(RoutineWindow.class));
+        verify(userRepository).saveUserRoutines(any(UserRoutineWindow.class));
     }
 }

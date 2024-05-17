@@ -1,8 +1,9 @@
 package com.example.personal.service;
 
+import com.example.personal.implementation.PersonalAppender;
 import com.example.personal.implementation.PersonalReader;
 import com.example.personal.implementation.PersonalRemover;
-import com.example.personal.implementation.PersonalWriter;
+import com.example.personal.implementation.PersonalUpdater;
 import com.example.personal.model.PersonalSchedule;
 import com.example.routine.model.Routine;
 import lombok.RequiredArgsConstructor;
@@ -13,26 +14,30 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class PersonalScheduleRoutineService {
     private final PersonalRemover personalRemover;
-    private final PersonalWriter personalWriter;
+    private final PersonalAppender personalAppender;
     private final PersonalReader personalReader;
+    private final PersonalUpdater personalUpdater;
+
     @Transactional
     public void modifyScheduleRoutine(PersonalSchedule.PersonalScheduleId personalScheduleId, Routine routine) {
         PersonalSchedule personalSchedule = personalReader.readPersonalSchedule(personalScheduleId);
-        personalSchedule.getScheduleRoutineWindow().modifyRoutine(routine);
-        PersonalSchedule updatedPersonalSchedule = personalSchedule.updateStatusAndTime();
-        personalWriter.modifyRoutineOrder(updatedPersonalSchedule);
+        personalUpdater.updateRoutine(personalSchedule, routine);
+        personalUpdater.modifyRoutineOrder(personalSchedule.updateStatusAndTime());
     }
+
     public void createScheduleRoutine(PersonalSchedule.PersonalScheduleId personalScheduleId, Routine routine) {
         PersonalSchedule personalSchedule = personalReader.readPersonalSchedule(personalScheduleId);
-        personalSchedule.getScheduleRoutineWindow().addRoutine(routine);
-        personalWriter.saveRoutine(personalSchedule);
+        personalAppender.appendRoutineInSchedule(personalSchedule, routine);
+        personalAppender.saveRoutine(personalSchedule);
     }
+
     @Transactional
-    public void deleteScheduleRoutine(PersonalSchedule.PersonalScheduleId personalScheduleId,Routine.RoutineId routineId) {
+    public void deleteScheduleRoutine(PersonalSchedule.PersonalScheduleId personalScheduleId, Routine.RoutineId routineId) {
         Routine routine = personalReader.readRoutine(routineId);
         personalRemover.removeRoutine(routine);
         PersonalSchedule personalSchedule = personalReader.readPersonalSchedule(personalScheduleId);
-        PersonalSchedule updatedPersonalSchedule = personalSchedule.updateStatusAndTime();
-        personalWriter.modifyRoutineOrder(updatedPersonalSchedule);
+        personalUpdater.updateRoutine(personalSchedule, routine);
+        personalUpdater.updateScheduleStatus(personalSchedule);
+        personalUpdater.modifyRoutineOrder(personalSchedule);
     }
 }

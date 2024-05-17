@@ -2,21 +2,19 @@ package com.example.scheduling;
 
 import com.example.group.model.Group;
 import com.example.group.implementation.GroupReader;
-import com.example.notification.Notification;
-import com.example.notification.NotificationSender;
+import com.example.notification.model.Notification;
+import com.example.notification.implementation.NotificationSender;
+import com.example.personal.implementation.PersonalUpdater;
 import com.example.personal.model.PersonalSchedule;
 import com.example.personal.implementation.PersonalWriter;
 import com.example.user.implementation.UserCachedHandler;
-import com.example.user.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -24,24 +22,24 @@ import java.util.List;
 @Slf4j
 @EnableSchedulerLock(defaultLockAtMostFor = "PT30S")
 public class SchedulingService {
-    private final PersonalWriter personalWriter;
+    private final PersonalUpdater personalUpdater;
     private final GroupReader groupReader;
     private final NotificationSender notificationSender;
     private final UserCachedHandler userCachedHandler;
 
     public Group modifyScheduleDoneNotifications(Group group) {
         PersonalSchedule personalSchedule = group.getPersonalSchedules().get(0);
-        personalSchedule.updateStatusAndTime();
-        personalSchedule.updateEndNotified();
-        personalWriter.modifyPersonalSchedule(personalSchedule);
+        personalSchedule =personalSchedule.updateStatusAndTime();
+        personalSchedule =personalSchedule.updateEndNotified();
+        personalUpdater.modifyPersonalSchedule(personalSchedule);
         return groupReader.readGroup(group.getId());
     }
 
     private Group modifyScheduleStartNotifications(Group group) {
         PersonalSchedule personalSchedule = group.getPersonalSchedules().get(0);
-        personalSchedule.updateStatusAndTime();
-        personalSchedule.updateStartNotified();
-        personalWriter.modifyPersonalSchedule(personalSchedule);
+        personalSchedule =personalSchedule.updateStatusAndTime();
+        personalSchedule = personalSchedule.updateStartNotified();
+        personalUpdater.modifyPersonalSchedule(personalSchedule);
         return groupReader.readGroup(group.getId());
     }
 

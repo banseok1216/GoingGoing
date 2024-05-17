@@ -1,7 +1,7 @@
 package com.example.group.service;
 
 import com.example.group.implementation.GroupReader;
-import com.example.group.implementation.GroupWriter;
+import com.example.group.implementation.GroupAppender;
 import com.example.group.invite.InviteManager;
 import com.example.group.model.Group;
 import com.example.personal.model.PersonalSchedule;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GroupMemberService {
     private final GroupReader groupReader;
-    private final GroupWriter groupWriter;
+    private final GroupAppender groupAppender;
     private final UserCachedHandler userCachedHandler;
     private final UserReader userReader;
     private final InviteManager inviteManager;
@@ -32,7 +32,7 @@ public class GroupMemberService {
     @Transactional
     public PersonalSchedule.PersonalScheduleId addGroupMember(User user,Group.GroupId groupId) {
         Group group = groupReader.readGroup(groupId);
-        return groupWriter.addMember(group,PersonalSchedule.initialized(user,group.getGroupSchedule()));
+        return groupAppender.addMember(group,user);
     }
     public void inviteGroupMember(User.UserId id, Group.GroupId groupId) {
         User cachedUser = userCachedHandler.get(id.value().toString());

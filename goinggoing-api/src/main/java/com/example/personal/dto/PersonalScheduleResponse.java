@@ -18,12 +18,12 @@ public record PersonalScheduleResponse(
     public static PersonalScheduleResponse of(PersonalSchedule personalSchedule) {
         return new PersonalScheduleResponse(
                 personalSchedule.getId().value(),
-                personalSchedule.getPersonalDuration(),
-                personalSchedule.getPersonalScheduleStatus().start(),
-                personalSchedule.getPersonalScheduleStatus().done(),
-                personalSchedule.getPersonalScheduleTime().startTime(),
-                personalSchedule.getPersonalScheduleTime().doneTime(),
-                ScheduleRoutineResponse.of(personalSchedule.getScheduleRoutineWindow()));
+                personalSchedule.getDuration(),
+                personalSchedule.getStatus().start(),
+                personalSchedule.getStatus().done(),
+                personalSchedule.getScheduleTime().startTime(),
+                personalSchedule.getScheduleTime().doneTime(),
+                ScheduleRoutineResponse.of(personalSchedule.getRoutineWindow()));
     }
 
 }

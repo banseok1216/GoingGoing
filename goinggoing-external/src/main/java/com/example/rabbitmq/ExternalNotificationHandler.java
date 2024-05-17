@@ -1,7 +1,7 @@
 package com.example.rabbitmq;
 
-import com.example.notification.ExternalNotificationSender;
-import com.example.notification.Notification;
+import com.example.notification.external.ExternalNotificationSender;
+import com.example.notification.model.Notification;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -3,6 +3,7 @@ package com.example.routine.model;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -10,7 +11,8 @@ public class Routine {
     private final RoutineId routineId;
     private final Long routineTime;
     private final String routineName;
-    private final Integer index;
+    @Setter
+    private Integer index;
 
     public static Routine withId(
             RoutineId routineId,

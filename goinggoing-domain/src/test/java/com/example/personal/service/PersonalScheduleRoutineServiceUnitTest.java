@@ -1,10 +1,10 @@
 package com.example.personal.service;
 
+import com.example.personal.implementation.PersonalAppender;
+import com.example.personal.implementation.PersonalUpdater;
 import com.example.personal.model.PersonalSchedule;
 import com.example.personal.implementation.PersonalReader;
 import com.example.personal.implementation.PersonalRemover;
-import com.example.personal.service.PersonalScheduleRoutineService;
-import com.example.personal.implementation.PersonalWriter;
 import com.example.routine.model.Routine;
 import com.example.routine.model.RoutineWindow;
 import com.example.user.model.User;
@@ -23,9 +23,11 @@ class PersonalScheduleRoutineServiceUnitTest {
     @Mock
     private PersonalReader personalReader;
     @Mock
-    private PersonalWriter personalWriter;
+    private PersonalAppender personalAppender;
     @Mock
     PersonalRemover personalRemover;
+    @Mock
+    PersonalUpdater personalUpdater;
     @Captor
     private ArgumentCaptor<PersonalSchedule> personalScheduleCaptor;
 
@@ -41,9 +43,9 @@ class PersonalScheduleRoutineServiceUnitTest {
         PersonalSchedule personalSchedule = createPersonalSchedule();
         when(personalReader.readPersonalSchedule(any())).thenReturn(personalSchedule);
         personalScheduleRoutineService.modifyScheduleRoutine(new PersonalSchedule.PersonalScheduleId(1L),createRoutine());
-        verify(personalWriter).modifyRoutineOrder(personalScheduleCaptor.capture());
+        verify(personalUpdater).modifyRoutineOrder(personalScheduleCaptor.capture());
         PersonalSchedule capturedPersonalSchedule = personalScheduleCaptor.getValue();
-        assertNotEquals(personalSchedule.getPersonalScheduleTime().startTime(), capturedPersonalSchedule.getPersonalScheduleTime().startTime());
+        assertNotEquals(personalSchedule.getScheduleTime().startTime(), capturedPersonalSchedule.getScheduleTime().startTime());
     }
     @Test
     public void testDeleteScheduleRoutine() {
@@ -54,26 +56,26 @@ class PersonalScheduleRoutineServiceUnitTest {
         personalScheduleRoutineService.deleteScheduleRoutine(personalScheduleId, routine.getRoutineId());
         verify(personalRemover).removeRoutine(routine);
         verify(personalReader).readPersonalSchedule(personalScheduleId);
-        verify(personalWriter).modifyRoutineOrder(any());
+        verify(personalUpdater).modifyRoutineOrder(any());
     }
     public static PersonalSchedule createPersonalSchedule() {
         PersonalSchedule.PersonalScheduleId personalScheduleId = new PersonalSchedule.PersonalScheduleId(1L);
         Integer personalDuration = 60;
         LocalDateTime startTime = LocalDateTime.now().plusHours(1);
         LocalDateTime doneTime = startTime.plusHours(1);
-        PersonalSchedule.PersonalScheduleTime personalScheduleTime = new PersonalSchedule.PersonalScheduleTime(startTime, doneTime);
-        PersonalSchedule.PersonalScheduleStatus personalScheduleStatus = new PersonalSchedule.PersonalScheduleStatus(false, false);
+        PersonalSchedule.Time time = new PersonalSchedule.Time(startTime, doneTime);
+        PersonalSchedule.Status status = new PersonalSchedule.Status(false, false);
         RoutineWindow routineWindow = createRoutineWindow();
         User user = mock(User.class);
-        PersonalSchedule.PersonalScheduleSend personalScheduleSend = new PersonalSchedule.PersonalScheduleSend(false, false);
+        PersonalSchedule.Send send = new PersonalSchedule.Send(false, false);
         return PersonalSchedule.withId(
                 personalScheduleId,
                 personalDuration,
-                personalScheduleTime,
-                personalScheduleStatus,
+                time,
+                status,
                 routineWindow,
                 user,
-                personalScheduleSend
+                send
         ).updateStatusAndTime();
     }
     public static RoutineWindow createRoutineWindow() {

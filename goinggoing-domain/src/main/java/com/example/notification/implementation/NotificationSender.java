@@ -1,5 +1,7 @@
-package com.example.notification;
+package com.example.notification.implementation;
 
+import com.example.notification.external.ExternalNotificationSender;
+import com.example.notification.model.Notification;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

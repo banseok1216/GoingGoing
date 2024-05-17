@@ -1,7 +1,8 @@
 package com.example.personal.service;
 
+import com.example.personal.implementation.PersonalAppender;
 import com.example.personal.implementation.PersonalReader;
-import com.example.personal.implementation.PersonalWriter;
+import com.example.personal.implementation.PersonalUpdater;
 import com.example.personal.model.PersonalSchedule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class PersonalScheduleService {
     private final PersonalReader personalReader;
-    private final PersonalWriter personalWriter;
+    private final PersonalUpdater personalUpdater;
 
     public PersonalSchedule loadPersonalSchedule(PersonalSchedule.PersonalScheduleId personalScheduleId) {
         return personalReader.readPersonalSchedule(personalScheduleId);
@@ -21,15 +22,7 @@ public class PersonalScheduleService {
     @Transactional
     public void modifyPersonalSchedule(PersonalSchedule personalSchedule) {
         PersonalSchedule savedPersonalSchedule = personalReader.readPersonalSchedule(personalSchedule.getId());
-        PersonalSchedule newPersonalSchedule = PersonalSchedule.withId(
-                savedPersonalSchedule.getId(),
-                personalSchedule.getPersonalDuration(),
-                savedPersonalSchedule.getPersonalScheduleTime(),
-                savedPersonalSchedule.getPersonalScheduleStatus(),
-                savedPersonalSchedule.getScheduleRoutineWindow(),
-                savedPersonalSchedule.getUser(),
-                savedPersonalSchedule.getPersonalScheduleSend()
-        );
-        personalWriter.modifyPersonalSchedule(newPersonalSchedule.updateStatusAndTime());
+        PersonalSchedule newPersonalSchedule = personalUpdater.updatePersonalSchedule(savedPersonalSchedule,personalSchedule);
+        personalUpdater.modifyPersonalSchedule(newPersonalSchedule.updateStatusAndTime());
     }
 }

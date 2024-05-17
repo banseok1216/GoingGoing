@@ -3,6 +3,7 @@ package com.example.user.implementation;
 import com.example.routine.model.Routine;
 import com.example.routine.model.RoutineWindow;
 import com.example.user.model.User;
+import com.example.user.model.UserRoutineWindow;
 import com.example.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class UserAppender {
         return userRepository.saveUserRoutine(userRoutine, user);
     }
 
-    public void saveUserRoutines(RoutineWindow userRoutines) {
+    public void saveUserRoutines(UserRoutineWindow userRoutines) {
         userRepository.saveUserRoutines(userRoutines);
     }
 }

@@ -1,8 +1,6 @@
 package com.example.rabbitmq;
 
-import com.example.group.model.Group;
-import com.example.notification.Notification;
-import com.example.user.model.User;
+import com.example.notification.model.Notification;
 
 public record NotificationMessage(
         String deviceToken,

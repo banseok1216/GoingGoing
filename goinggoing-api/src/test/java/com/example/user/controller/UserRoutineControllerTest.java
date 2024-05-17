@@ -2,6 +2,7 @@ package com.example.user.controller;
 import com.example.routine.model.Routine;
 import com.example.routine.model.RoutineWindow;
 import com.example.user.model.User;
+import com.example.user.model.UserRoutineWindow;
 import com.example.user.service.UserRoutineService;
 import com.example.user.service.UserService;
 
@@ -44,7 +45,7 @@ public class UserRoutineControllerTest {
 
     @Test
     public void testGetAllUserRoutine() throws Exception {
-        RoutineWindow routineWindow = new RoutineWindow(Arrays.asList(
+        UserRoutineWindow routineWindow = new UserRoutineWindow(Arrays.asList(
                 Routine.withId(new Routine.RoutineId(123L), 1L, "testName1", 1),
                 Routine.withId(new Routine.RoutineId(456L), 2L, "testName2", 2)
         ));

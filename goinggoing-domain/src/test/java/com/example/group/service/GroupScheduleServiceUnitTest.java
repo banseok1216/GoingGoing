@@ -1,11 +1,11 @@
 package com.example.group.service;
 
+import com.example.group.implementation.GroupUpdater;
 import com.example.group.model.Group;
 import com.example.group.model.GroupSchedule;
 import com.example.group.implementation.GroupReader;
 import com.example.group.implementation.GroupRemover;
-import com.example.group.service.GroupScheduleService;
-import com.example.group.implementation.GroupWriter;
+import com.example.group.implementation.GroupAppender;
 import com.example.user.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,9 @@ public class GroupScheduleServiceUnitTest {
     @Mock
     private GroupReader groupReader;
     @Mock
-    private GroupWriter groupWriter;
+    private GroupAppender groupAppender;
+    @Mock
+    private GroupUpdater groupUpdater;
     @Mock
     private GroupRemover groupRemover;
     @InjectMocks
@@ -41,7 +43,6 @@ public class GroupScheduleServiceUnitTest {
         when(groupReader.readGroupSchedule(groupSchedule.getId())).thenReturn(groupSchedule);
         groupScheduleService.modifyGroupSchedule(createGroupScheduleObject2());
         ArgumentCaptor<GroupSchedule> captor = ArgumentCaptor.forClass(GroupSchedule.class);
-        verify(groupWriter).updateGroupSchedule(captor.capture());
         GroupSchedule modifiedGroupSchedule = captor.getValue();
         assertNotEquals(groupSchedule.getName(), modifiedGroupSchedule.getName());
         assertNotEquals(groupSchedule.getDescription(), modifiedGroupSchedule.getDescription());
@@ -53,7 +54,7 @@ public class GroupScheduleServiceUnitTest {
     void testCreateGroupSchedule() {
         GroupSchedule groupSchedule = createGroupScheduleObject1();
         User user = createUser();
-        when(groupWriter.saveGroupSchedule(groupSchedule, user)).thenReturn(new Group.GroupId(789L));
+        when(groupAppender.saveGroupSchedule(groupSchedule, user)).thenReturn(new Group.GroupId(789L));
         Group.GroupId groupId = groupScheduleService.createGroupSchedule(groupSchedule, user);
         assertEquals(789L, groupId.value());
     }

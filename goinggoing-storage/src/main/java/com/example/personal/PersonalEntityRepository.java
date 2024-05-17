@@ -36,13 +36,13 @@ public class PersonalEntityRepository implements PersonalRepository {
     public void modifyPersonalSchedule(PersonalSchedule personalSchedule) {
         personalScheduleJpaRepository.updatePersonalSchedule(
                 personalSchedule.getId().value(),
-                personalSchedule.getPersonalDuration(),
-                personalSchedule.getPersonalScheduleTime().startTime(),
-                personalSchedule.getPersonalScheduleTime().doneTime(),
-                personalSchedule.getPersonalScheduleStatus().start(),
-                personalSchedule.getPersonalScheduleStatus().done(),
-                personalSchedule.getPersonalScheduleSend().sendStartMessage(),
-                personalSchedule.getPersonalScheduleSend().sendEndMessage()
+                personalSchedule.getDuration(),
+                personalSchedule.getScheduleTime().startTime(),
+                personalSchedule.getScheduleTime().doneTime(),
+                personalSchedule.getStatus().start(),
+                personalSchedule.getStatus().done(),
+                personalSchedule.getSend().sendStartMessage(),
+                personalSchedule.getSend().sendEndMessage()
         );
     }
 

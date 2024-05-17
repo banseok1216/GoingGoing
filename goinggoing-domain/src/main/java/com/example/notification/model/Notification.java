@@ -1,4 +1,4 @@
-package com.example.notification;
+package com.example.notification.model;
 
 import com.example.user.model.User;
 import lombok.Getter;

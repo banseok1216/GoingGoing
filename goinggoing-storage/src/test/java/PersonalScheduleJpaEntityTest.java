@@ -18,21 +18,21 @@ public class PersonalScheduleJpaEntityTest {
         PersonalSchedule personalSchedule = PersonalSchedule.withId(
                 new PersonalSchedule.PersonalScheduleId(1L),
                 30,
-                new PersonalSchedule.PersonalScheduleTime(LocalDateTime.of(2024, 5, 2, 10, 0), LocalDateTime.of(2024, 5, 2, 11, 0)),
-                new PersonalSchedule.PersonalScheduleStatus(true, false),
+                new PersonalSchedule.Time(LocalDateTime.of(2024, 5, 2, 10, 0), LocalDateTime.of(2024, 5, 2, 11, 0)),
+                new PersonalSchedule.Status(true, false),
                 new RoutineWindow(new ArrayList<>()),
                 user,
-                new PersonalSchedule.PersonalScheduleSend(true, false)
+                new PersonalSchedule.Send(true, false)
         );
         Group group = Group.withId(new Group.GroupId(1L), null, null);
         PersonalScheduleJpaEntity entity = PersonalScheduleJpaEntity.ofDomain(personalSchedule, group);
-        assertEquals(personalSchedule.getPersonalDuration(), entity.getDuration());
-        assertEquals(personalSchedule.getPersonalScheduleTime().startTime(), entity.getScheduleStartTime());
-        assertEquals(personalSchedule.getPersonalScheduleTime().doneTime(), entity.getScheduleDoneTime());
-        assertEquals(personalSchedule.getPersonalScheduleStatus().start(), entity.getScheduleStart());
-        assertEquals(personalSchedule.getPersonalScheduleStatus().done(), entity.getScheduleDone());
-        assertEquals(personalSchedule.getPersonalScheduleSend().sendStartMessage(), entity.getScheduleNotificationStart());
-        assertEquals(personalSchedule.getPersonalScheduleSend().sendEndMessage(), entity.getScheduleNotificationDone());
+        assertEquals(personalSchedule.getDuration(), entity.getDuration());
+        assertEquals(personalSchedule.getScheduleTime().startTime(), entity.getScheduleStartTime());
+        assertEquals(personalSchedule.getScheduleTime().doneTime(), entity.getScheduleDoneTime());
+        assertEquals(personalSchedule.getStatus().start(), entity.getScheduleStart());
+        assertEquals(personalSchedule.getStatus().done(), entity.getScheduleDone());
+        assertEquals(personalSchedule.getSend().sendStartMessage(), entity.getScheduleNotificationStart());
+        assertEquals(personalSchedule.getSend().sendEndMessage(), entity.getScheduleNotificationDone());
         assertEquals(group.getId().value(), entity.getUserGroup().getGroupId());
         assertEquals(UserJpaEntity.ofDomain(user).getUserId(),entity.getUser().getUserId());
     }

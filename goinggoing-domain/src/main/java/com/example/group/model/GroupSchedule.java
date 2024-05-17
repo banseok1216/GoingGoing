@@ -22,5 +22,8 @@ public class GroupSchedule {
     public static GroupSchedule withId(GroupScheduleId id,String name,String description, String location,LocalDateTime date) {
         return new GroupSchedule(id,name,description,location,date);
     }
+    public GroupSchedule update(GroupSchedule groupSchedule) {
+        return new GroupSchedule(this.id,groupSchedule.name,groupSchedule.description,groupSchedule.location,groupSchedule.date);
+    }
 
 }

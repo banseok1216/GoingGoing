@@ -72,13 +72,13 @@ public class PersonalScheduleJpaEntity {
         return PersonalScheduleJpaEntity.builder()
                 .user(UserJpaEntity.ofDomain(personalSchedule.getUser()))
                 .userGroup(GroupJpaEntity.builder().groupId(group.getId().value()).build())
-                .duration(personalSchedule.getPersonalDuration())
-                .scheduleStart(personalSchedule.getPersonalScheduleStatus().start())
-                .scheduleDone(personalSchedule.getPersonalScheduleStatus().done())
-                .scheduleStartTime(personalSchedule.getPersonalScheduleTime().startTime())
-                .scheduleDoneTime(personalSchedule.getPersonalScheduleTime().doneTime())
-                .scheduleNotificationStart(personalSchedule.getPersonalScheduleSend().sendStartMessage())
-                .scheduleNotificationDone(personalSchedule.getPersonalScheduleSend().sendEndMessage())
+                .duration(personalSchedule.getDuration())
+                .scheduleStart(personalSchedule.getStatus().start())
+                .scheduleDone(personalSchedule.getStatus().done())
+                .scheduleStartTime(personalSchedule.getScheduleTime().startTime())
+                .scheduleDoneTime(personalSchedule.getScheduleTime().doneTime())
+                .scheduleNotificationStart(personalSchedule.getSend().sendStartMessage())
+                .scheduleNotificationDone(personalSchedule.getSend().sendEndMessage())
                 .build();
     }
 
@@ -89,22 +89,22 @@ public class PersonalScheduleJpaEntity {
         return PersonalSchedule.withId(
                 new PersonalSchedule.PersonalScheduleId(this.personalScheduleId),
                 this.duration,
-                new PersonalSchedule.PersonalScheduleTime(this.scheduleStartTime, this.scheduleDoneTime),
-                new PersonalSchedule.PersonalScheduleStatus(this.scheduleStart, this.scheduleDone),
+                new PersonalSchedule.Time(this.scheduleStartTime, this.scheduleDoneTime),
+                new PersonalSchedule.Status(this.scheduleStart, this.scheduleDone),
                 new RoutineWindow(routines),
                 this.user.toUser(),
-                new PersonalSchedule.PersonalScheduleSend(this.scheduleNotificationStart, this.scheduleNotificationDone)
+                new PersonalSchedule.Send(this.scheduleNotificationStart, this.scheduleNotificationDone)
         );
     }
     public PersonalSchedule toPersonalSchedule(){
         return PersonalSchedule.withId(
                 new PersonalSchedule.PersonalScheduleId(this.personalScheduleId),
                 this.duration,
-                new PersonalSchedule.PersonalScheduleTime(this.scheduleStartTime, this.scheduleDoneTime),
-                new PersonalSchedule.PersonalScheduleStatus(this.scheduleStart, this.scheduleDone),
+                new PersonalSchedule.Time(this.scheduleStartTime, this.scheduleDoneTime),
+                new PersonalSchedule.Status(this.scheduleStart, this.scheduleDone),
 null,
                 this.user.toUser(),
-                new PersonalSchedule.PersonalScheduleSend(this.scheduleNotificationStart, this.scheduleNotificationDone)
+                new PersonalSchedule.Send(this.scheduleNotificationStart, this.scheduleNotificationDone)
         );
     }
     public Group toGroup(){

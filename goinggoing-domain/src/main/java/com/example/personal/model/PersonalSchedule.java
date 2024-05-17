@@ -13,58 +13,68 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PersonalSchedule {
     private final PersonalScheduleId id;
-    private final Integer personalDuration;
-    private final PersonalScheduleTime personalScheduleTime;
-    private final PersonalScheduleStatus personalScheduleStatus;
-    private final RoutineWindow scheduleRoutineWindow;
+    private final Integer duration;
+    private final Time scheduleTime;
+    private final Status status;
+    private final RoutineWindow routineWindow;
     private User user;
-    private final PersonalScheduleSend personalScheduleSend;
+    private final Send send;
 
-
-    public static PersonalSchedule withId(PersonalScheduleId personalScheduleId, Integer personalDuration, PersonalScheduleTime personalScheduleTime, PersonalScheduleStatus personalScheduleStatus, RoutineWindow scheduleRoutineWindow, User user, PersonalScheduleSend personalScheduleSend) {
-        return new PersonalSchedule(personalScheduleId, personalDuration, personalScheduleTime, personalScheduleStatus, scheduleRoutineWindow, user, personalScheduleSend);
+    public static PersonalSchedule withId(PersonalScheduleId id, int duration, Time scheduleTime, Status status, RoutineWindow routineWindow, User user, Send send) {
+        return new PersonalSchedule(id, duration, scheduleTime, status, routineWindow, user, send);
     }
 
     public static PersonalSchedule initialized(User user, GroupSchedule groupSchedule) {
-        return new PersonalSchedule(null, 0, new PersonalScheduleTime(groupSchedule.getDate(), groupSchedule.getDate()), new PersonalScheduleStatus(false, false), null, user, new PersonalScheduleSend(false, false));
+        LocalDateTime dateTime = groupSchedule.getDate();
+        Time scheduleTime = new Time(dateTime, dateTime);
+        return new PersonalSchedule(null, 0, scheduleTime, Status.initial(), null, user, Send.initial());
     }
 
     public PersonalSchedule updateStatusAndTime() {
-        PersonalScheduleTime newPersonalScheduleTime = this.personalScheduleTime.calculateTime(this.scheduleRoutineWindow.calculateTotalTime(), this.personalDuration);
-        PersonalScheduleStatus newPersonalScheduleStatus = newPersonalScheduleTime.checkAndUpdateStatus();
-        return new PersonalSchedule(this.id, this.personalDuration, newPersonalScheduleTime, newPersonalScheduleStatus, this.scheduleRoutineWindow, this.user, this.personalScheduleSend);
+        Time newScheduleTime = scheduleTime.calculateTime(routineWindow.calculateTotalTime(), duration);
+        Status newStatus = newScheduleTime.checkAndUpdateStatus();
+        return withId(id, duration, newScheduleTime, newStatus, routineWindow, user, send);
     }
     public PersonalSchedule updateStartNotified() {
-       return new PersonalSchedule(this.id, this.personalDuration, this.personalScheduleTime, this.personalScheduleStatus, this.scheduleRoutineWindow, this.user, new PersonalScheduleSend(true,false));
+        return withId(id, duration, scheduleTime, status, routineWindow, user, send.updatedSendStart());
     }
     public PersonalSchedule updateEndNotified() {
-        return new PersonalSchedule(this.id, this.personalDuration, this.personalScheduleTime, this.personalScheduleStatus, this.scheduleRoutineWindow, this.user, new PersonalScheduleSend(this.personalScheduleSend.sendStartMessage,true));
+        return withId(id, duration, scheduleTime, status, routineWindow, user, send.updatedSendEnd());
     }
-
-    public record PersonalScheduleId(Long value) {
+    public PersonalSchedule updatePersonalSchedule(PersonalSchedule updated) {
+        return withId(id, updated.duration, updated.scheduleTime, updated.status, updated.routineWindow,updated.user, updated.send);
     }
-
-    public record PersonalScheduleSend(Boolean sendStartMessage, Boolean sendEndMessage) {
-    }
-
-
-    public record PersonalScheduleTime(LocalDateTime startTime, LocalDateTime doneTime) {
-        public PersonalScheduleTime calculateTime(Long totalTime, Integer duration) {
-            return new PersonalScheduleTime(this.doneTime.minusSeconds(totalTime).minusMinutes(duration), this.doneTime.minusMinutes(duration));
+    public record PersonalScheduleId(Long value) {}
+    public record Send(Boolean sendStartMessage, Boolean sendEndMessage) {
+        public static Send initial() {
+            return new Send(false,false);
         }
-
-        public PersonalScheduleStatus checkAndUpdateStatus() {
+        public Send updatedSendStart() {
+            return new Send(true, this.sendEndMessage);
+        }
+        public Send updatedSendEnd() {
+            return new Send(this.sendStartMessage, true);
+        }
+    }
+    public record Time(LocalDateTime startTime, LocalDateTime doneTime) {
+        public Time calculateTime(long totalTime, int duration) {
+            LocalDateTime newStartTime = doneTime.minusSeconds(totalTime).minusMinutes(duration);
+            return new Time(newStartTime, doneTime.minusMinutes(duration));
+        }
+        public Status checkAndUpdateStatus() {
             LocalDateTime currentTime = LocalDateTime.now();
-            if (this.doneTime.isBefore(currentTime)) {
-                return new PersonalScheduleStatus(true, true);
-            } else if (this.startTime.isAfter(currentTime)) {
-                return new PersonalScheduleStatus(false, false);
+            if (doneTime.isBefore(currentTime)) {
+                return new Status(true, true);
+            } else if (startTime.isAfter(currentTime)) {
+                return new Status(false, false);
             } else {
-                return new PersonalScheduleStatus(true, false);
+                return new Status(true, false);
             }
         }
     }
-
-    public record PersonalScheduleStatus(Boolean start, Boolean done) {
+    public record Status(Boolean start, Boolean done) {
+        public static Status initial(){
+            return new Status(false,false);
+        };
     }
 }
