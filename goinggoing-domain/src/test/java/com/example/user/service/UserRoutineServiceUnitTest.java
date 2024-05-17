@@ -1,4 +1,4 @@
-package com.example.goinggoingdomain.user.service;
+package com.example.user.service;
 
 import com.example.routine.model.Routine;
 import com.example.routine.model.RoutineWindow;
@@ -10,13 +10,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
+
 import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class UserRoutineServiceUnitTest {
     @Mock
     private UserAppender userAppender;
+    Routine firstRoutine;
+    Routine secondRoutine;
+    User fakeUser;
     @Mock
     private UserReader userReader;
     @InjectMocks
@@ -24,15 +29,19 @@ public class UserRoutineServiceUnitTest {
 
     @BeforeEach
     void setUp() {
+        firstRoutine = Routine.withId(new Routine.RoutineId(123L), 1L, "testName1", 1);
+        secondRoutine = Routine.withId(new Routine.RoutineId(456L), 2L, "testName2", 2);
+        fakeUser =User.withId(new User.UserId(123L), "user1", null, null, null, null);
         MockitoAnnotations.openMocks(this);
+
     }
+
     @Test
     @DisplayName("모든 유저 루틴 가져오기")
     public void testGetAllUserRoutine_Success() {
-        User user = createUser();
-        RoutineWindow savedRoutineWindow = createRoutineWindow();
-        when(userReader.readUserRoutines(user.getId())).thenReturn(savedRoutineWindow);
-        RoutineWindow routineWindow = userRoutineService.getAllUserRoutine(user);
+        RoutineWindow savedRoutineWindow = new RoutineWindow(Arrays.asList(firstRoutine,secondRoutine));
+        when(userReader.readUserRoutines(fakeUser.getId())).thenReturn(savedRoutineWindow);
+        RoutineWindow routineWindow = userRoutineService.getAllUserRoutine(fakeUser);
         assertEquals(routineWindow, savedRoutineWindow);
     }
 
@@ -40,10 +49,9 @@ public class UserRoutineServiceUnitTest {
     @DisplayName("유저 루틴 삭제하기")
     void testDeleteUserRoutine_Success() {
         Routine.RoutineId routineId = new Routine.RoutineId(123L);
-        User savedUser = createUser();
-        RoutineWindow savedRoutineWindow = createRoutineWindow();
-        when(userReader.readUserRoutines(savedUser.getId())).thenReturn(savedRoutineWindow);
-        userRoutineService.deleteUserRoutine(savedUser, routineId);
+        RoutineWindow savedRoutineWindow = new RoutineWindow(Arrays.asList(firstRoutine,secondRoutine));
+        when(userReader.readUserRoutines(fakeUser.getId())).thenReturn(savedRoutineWindow);
+        userRoutineService.deleteUserRoutine(fakeUser, routineId);
         ArgumentCaptor<RoutineWindow> routineWindowCaptor = ArgumentCaptor.forClass(RoutineWindow.class);
         verify(userAppender).saveUserRoutines(routineWindowCaptor.capture());
         assertEquals(1, routineWindowCaptor.getValue().getRoutines().get(0).getIndex());
@@ -53,25 +61,10 @@ public class UserRoutineServiceUnitTest {
     @DisplayName("유저 루틴 만들기")
     void testCreateUserRoutine_Success() {
         Routine.RoutineId inputRoutineId = new Routine.RoutineId(123L);
-        User savedUser = createUser();
-        Routine routine = createRoutine();
-        when(userAppender.saveUserRoutine(routine, savedUser)).thenReturn(inputRoutineId);
-        Routine.RoutineId routineId = userRoutineService.createUserRoutine(routine, savedUser);
+        Routine routine = firstRoutine;
+        when(userAppender.saveUserRoutine(routine, fakeUser)).thenReturn(inputRoutineId);
+        Routine.RoutineId routineId = userRoutineService.createUserRoutine(routine, fakeUser);
         assertEquals(inputRoutineId.value(), routineId.value());
     }
 
-    public User createUser() {
-        return User.withId(new User.UserId(123L), null, null, null, null, null);
-    }
-
-    public RoutineWindow createRoutineWindow() {
-        return new RoutineWindow(Arrays.asList(
-                Routine.withId(new Routine.RoutineId(123L), 1L, "testName1", 1),
-                Routine.withId(new Routine.RoutineId(456L), 2L, "testName2", 2)
-        ));
-    }
-
-    public Routine createRoutine() {
-        return Routine.withId(new Routine.RoutineId(123L), 1L, "testName1", 1);
-    }
 }

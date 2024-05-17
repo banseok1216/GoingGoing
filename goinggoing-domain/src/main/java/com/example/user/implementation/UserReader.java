@@ -21,6 +21,9 @@ public class UserReader {
         }
         return user;
     }
+    public User readUserByEmail(User user) {
+        return userRepository.readUserByEmail(user);
+    }
     public RoutineWindow readUserRoutines(User.UserId userId)
     {
         return userRepository.readRoutineByUserId(userId);

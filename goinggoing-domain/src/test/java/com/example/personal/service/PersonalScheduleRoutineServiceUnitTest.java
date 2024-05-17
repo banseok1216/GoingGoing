@@ -1,4 +1,4 @@
-package com.example.goinggoingdomain.personal.service;
+package com.example.personal.service;
 
 import com.example.personal.model.PersonalSchedule;
 import com.example.personal.implementation.PersonalReader;

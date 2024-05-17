@@ -12,8 +12,11 @@ import org.springframework.stereotype.Component;
 public class UserChecker {
     private final UserRepository userRepository;
     public void isDuplicate(User user){
-        if (!userRepository.check(user)){
+        if (userRepository.check(user)){
             throw new BusinessException(ErrorCode.USER_IS_DUPLICATE);
         }
+    }
+    public boolean isNotExist(User user){
+        return userRepository.check(user);
     }
 }

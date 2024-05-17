@@ -1,4 +1,4 @@
-package com.example.goinggoingdomain;
+package com.example;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

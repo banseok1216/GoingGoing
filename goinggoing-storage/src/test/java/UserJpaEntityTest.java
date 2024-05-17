@@ -27,7 +27,7 @@ public class UserJpaEntityTest {
                 .userNickname("nickname")
                 .userEmail("email@example.com")
                 .password("password")
-                .userType(User.UserType.OAUTH_DEFAULT)
+                .userType(User.UserType.LOCAL)
                 .userDeviceToken("deviceToken")
                 .build();
         User user = userJpaEntity.toUser();

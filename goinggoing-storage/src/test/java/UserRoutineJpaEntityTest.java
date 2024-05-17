@@ -12,7 +12,7 @@ public class UserRoutineJpaEntityTest {
     @Test
     public void testOfDomain() {
         Routine routine = Routine.withoutId(100L, "testName", 1);
-        User user = User.withId(new User.UserId(1L), "username", "email@example.com", User.UserType.OAUTH_DEFAULT, new User.Password("password"), "deviceToken");
+        User user = User.withId(new User.UserId(1L), "username", "email@example.com", User.UserType.LOCAL, new User.Password("password"), "deviceToken");
 
         UserRoutineJpaEntity userRoutineJpaEntity = UserRoutineJpaEntity.ofDomain(routine, user);
 

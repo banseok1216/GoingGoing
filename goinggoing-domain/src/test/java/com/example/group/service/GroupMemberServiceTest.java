@@ -1,4 +1,4 @@
-package com.example.goinggoingdomain.group.service;
+package com.example.group.service;
 
 import com.example.group.model.Group;
 import com.example.group.implementation.GroupReader;

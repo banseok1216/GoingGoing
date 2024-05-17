@@ -10,7 +10,7 @@ public record UserRequest(
             String password
     ) {
         public User toDefaultLoginUser(String deviceToken) {
-            return User.withoutId(null, userEmail, User.UserType.OAUTH_DEFAULT, new User.Password(password), deviceToken);
+            return User.withoutId(null, userEmail, User.UserType.LOCAL, new User.Password(password), deviceToken);
         }
     }
     public record oauthLogin(
@@ -30,7 +30,7 @@ public record UserRequest(
             String userNickname
     ){
         public User toDefaultRegisterUser() {
-            return User.withoutId(userNickname, userEmail, User.UserType.OAUTH_DEFAULT, new User.Password(password),null);
+            return User.withoutId(userNickname, userEmail, User.UserType.LOCAL, new User.Password(password),null);
         }
     }
 }

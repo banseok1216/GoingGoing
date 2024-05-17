@@ -1,4 +1,4 @@
-package com.example.goinggoingdomain.group.service;
+package com.example.group.service;
 
 import com.example.error.BusinessException;
 import com.example.group.model.Group;

@@ -54,7 +54,7 @@ public class UserController {
             @RequestBody UserRequest.defaultLogin request,
             @RequestHeader String deviceToken
     ) {
-        User user = userService.loginDefaultUser(request.toDefaultLoginUser(deviceToken));
+        User user = userService.loginLocalUser(request.toDefaultLoginUser(deviceToken));
         HttpHeaders headers = new HttpHeaders();
         headers.add(accessHeaderString, tokenPrefix + jwtTokenUtil.createAccessToken(user));
         headers.add(refreshHeaderString, tokenPrefix + jwtTokenUtil.createRefreshToken(user));

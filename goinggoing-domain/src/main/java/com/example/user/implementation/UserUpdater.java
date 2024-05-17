@@ -18,5 +18,4 @@ public class UserUpdater {
     public void refreshCachedUser(User user) {
         externalUserSender.sendUserCachedRefresh(user);
     }
-
 }

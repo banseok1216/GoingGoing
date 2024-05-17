@@ -19,9 +19,11 @@ public class UserService {
     private final UserUpdater userUpdater;
 
     public User loginOAuthUser(User userLogin) {
-        userChecker.isDuplicate(userLogin);
-        User.UserId userId = userAppender.saveUser(userLogin);
-        return userReader.readUser(userId);
+        if(userChecker.isNotExist(userLogin)){
+            User.UserId userId = userAppender.saveUser(userLogin);
+            return userReader.readUser(userId);
+        };
+        return userReader.readUserByEmail(userLogin);
     }
 
     public User getUser(User.UserId id) {
@@ -35,7 +37,7 @@ public class UserService {
         }
     }
 
-    public User loginDefaultUser(User userLogin) {
+    public User loginLocalUser(User userLogin) {
         User user = userReader.readUser(userLogin.getId());
         if (userLogin.getPassword().matches(user.getPassword().password())) {
             return user;
@@ -45,22 +47,14 @@ public class UserService {
     }
     public void registerUser(User userRegister) {
         userChecker.isDuplicate(userRegister);
-        User newUser = User.withoutId(
-                userRegister.getUserNickname(),
-                userRegister.getUserEmail(),
-                userRegister.getUserType(),
-                userRegister.getPassword().hashPassword()
-                , null
-        );
-        userAppender.saveUser(newUser);
+        userAppender.saveUser(userRegister.hashedPassword());
     }
 
     public void modifyUser(User updateUser) {
         User savedUser = getUser(updateUser.getId());
-        User newUser = User.withId(savedUser.getId(), updateUser.getUserNickname(), updateUser.getUserEmail(), updateUser.getUserType(), updateUser.getPassword(), updateUser.getDeviceToken());
-        userAppender.saveUser(newUser);
-        userUpdater.updateUser(newUser);
-        userUpdater.refreshCachedUser(newUser);
+        User updatedUser = savedUser.update(updateUser);
+        userUpdater.updateUser(updatedUser);
+        userUpdater.refreshCachedUser(updatedUser);
     }
     public void logout(User.UserId userId) {
         User savedUser = getUser(userId);

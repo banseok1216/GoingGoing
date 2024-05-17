@@ -49,6 +49,11 @@ public class UserEntityRepository implements UserRepository {
     }
 
     @Override
+    public User readUserByEmail(User user) {
+        return userJpaRepository.findByUserEmail(user.getUserEmail()).toUser();
+    }
+
+    @Override
     public RoutineWindow readRoutineByUserId(User.UserId userId) {
         List<UserRoutineJpaEntity> routines = userRoutineJpaRepository.readAllByUserUserId(userId.value());
         List<Routine> routineList = routines.stream()

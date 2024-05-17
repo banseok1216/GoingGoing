@@ -93,7 +93,7 @@ public class UserControllerTest {
     @Test
     public void testLogin() throws Exception {
         User user = User.withId(new User.UserId(123L),null,null,null,null,null);
-        when(userService.loginDefaultUser(any(User.class))).thenReturn(user);
+        when(userService.loginLocalUser(any(User.class))).thenReturn(user);
         when(jwtTokenUtil.createAccessToken(user)).thenReturn("mockedAccessToken");
         when(jwtTokenUtil.createRefreshToken(user)).thenReturn("mockedRefreshToken");
         mockMvc.perform(post("/api/v2/login")
@@ -102,7 +102,7 @@ public class UserControllerTest {
                         .content("{\"username\": \"test\", \"password\": \"test123\"}"))
                 .andExpect(jsonPath("$.data.id").value(user.getId().value()))
                 .andExpect(status().isOk());
-        verify(userService).loginDefaultUser(any(User.class));
+        verify(userService).loginLocalUser(any(User.class));
     }
     @Test
     public void testGetUser() throws Exception {
